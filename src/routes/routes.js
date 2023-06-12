@@ -1,6 +1,13 @@
 const express = require("express")
 const Router = express.Router()
 
+const loginUser =require("../controllers/userContorller/userLogin")
+const createUser = require("../controllers/userContorller/createUser")
+
+Router.post("/create/user/",createUser)
+Router.post("/login/user/", loginUser)
+
+
 Router.get("/",(req,res)=>{
     res.send("home page")
 })

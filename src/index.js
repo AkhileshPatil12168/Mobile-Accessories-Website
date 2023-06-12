@@ -1,7 +1,10 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const multer = require("multer");
 require("dotenv").config()
+
+app.use(multer().any());
 
 const Router = require("./routes/routes");
 
