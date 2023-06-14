@@ -2,9 +2,14 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const multer = require("multer");
+const cors = require("cors")
 require("dotenv").config()
 
 app.use(multer().any());
+
+app.use(cors({
+  origin: 'http://localhost:4000'
+}))
 
 const Router = require("./routes/routes");
 

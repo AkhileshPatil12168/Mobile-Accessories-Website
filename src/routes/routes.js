@@ -9,7 +9,7 @@ Router.post("/login/user/", loginUser)
 
 
 Router.get("/",(req,res)=>{
-    res.send("home page")
+    res.send({data : {name: "akhilesh",age :20}})
 })
 
 Router.all("/*",  (req, res) =>{
