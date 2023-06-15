@@ -15,7 +15,7 @@ const Router = require("./routes/routes");
 
 app.use(express.json());
 app.use("/", Router);
-
+//mongodb+srv://akhileshpatil12168:********@mobileaccessoriesdata.joq9gxm.mongodb.net/
 mongoose
   .connect(
     process.env.mongoClust,
@@ -28,6 +28,6 @@ mongoose
 
 
 
-app.listen(process.env.port, () => {
+app.listen(process.env.port || 3000, () => {
   console.log("server is live");
 });

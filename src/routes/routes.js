@@ -8,7 +8,7 @@ Router.post("/create/user/",createUser)
 Router.post("/login/user/", loginUser)
 
 
-Router.get("/",(req,res)=>{
+Router.get("/app",(req,res)=>{
     res.send({data : {name: "akhilesh",age :20}})
 })
 
