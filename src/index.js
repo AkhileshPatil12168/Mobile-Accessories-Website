@@ -29,5 +29,5 @@ mongoose
 
 
 app.listen(process.env.port || 3000, () => {
-  console.log("server is live");
+  console.log("server is live: http://localhost:3000/");
 });

@@ -49,47 +49,48 @@ const createUser = async (req, res) => {
         password = await bcrypt.hash(password, 10)
 
 
+        if (address){
+            let { shipping, billing } = JSON.parse(address)
 
-        if (!address) return res.status(400).send({ status: false, message: "address is required" })
-        if (!isNotProvided(address)) return res.status(400).send({ status: false, message: "provide the address" })
+            if (!shipping) return res.status(400).send({ status: false, message: "shipping address is required" })
+    
+    
+            if (!isNotProvided(shipping.street)) return res.status(400).send({ status: false, message: "shipping street address is required" })
+            let streetS = validTrim(shipping.street)
+            if (!streetS) return res.status(400).send({ status: false, message: "shipping street address is required" })
+    
+            if (!isNotProvided(shipping.city)) return res.status(400).send({ status: false, message: "shipping city address is required" })
+            let cityS = validTrim(shipping.city)
+            if (!cityS) return res.status(400).send({ status: false, message: "shipping city address is required" })
+    
+            if (!isNotProvided(shipping.pincode)) return res.status(400).send({ status: false, message: "shipping pincode is required" })
+            let pincodeS = shipping.pincode.trim()
+            if (!pincodeS) return res.status(400).send({ status: false, message: "shipping pincode is required" })
+            if (!isValidPincode(pincodeS)) return res.status(400).send({ status: false, message: "shipping pincode is not valid" })
+    
+            //_____________________________________
+    
+            if (!billing) return res.status(400).send({ status: false, message: "billing address is required" })
+    
+            if (!isNotProvided(billing.street)) return res.status(400).send({ status: false, message: "billing street address is required" })
+            let streetB = validTrim(billing.street)
+            if (!streetB) return res.status(400).send({ status: false, message: "billing street address is required" })
+            //_________________________
+            if (!isNotProvided(billing.city)) return res.status(400).send({ status: false, message: "billing city address is required" })
+            let cityB = validTrim(billing.city)
+            if (!cityB) return res.status(400).send({ status: false, message: "billing city address is required" })
+            //___________________________
+            if (!isNotProvided(billing.pincode)) return res.status(400).send({ status: false, message: "billing pincode is required" })
+            let pincodeB = validTrim(billing.pincode)
+            if (!pincodeB) return res.status(400).send({ status: false, message: "billing pincode is required" })
+            if (!isValidPincode(pincodeB)) return res.status(400).send({ status: false, message: "billing pincode is not valid" })
+        }
 
-        let { shipping, billing } = JSON.parse(address)
-
-        if (!shipping) return res.status(400).send({ status: false, message: "shipping address is required" })
-
-
-        if (!isNotProvided(shipping.street)) return res.status(400).send({ status: false, message: "shipping street address is required" })
-        let streetS = validTrim(shipping.street)
-        if (!streetS) return res.status(400).send({ status: false, message: "shipping street address is required" })
-
-        if (!isNotProvided(shipping.city)) return res.status(400).send({ status: false, message: "shipping city address is required" })
-        let cityS = validTrim(shipping.city)
-        if (!cityS) return res.status(400).send({ status: false, message: "shipping city address is required" })
-
-        if (!isNotProvided(shipping.pincode)) return res.status(400).send({ status: false, message: "shipping pincode is required" })
-        let pincodeS = shipping.pincode.trim()
-        if (!pincodeS) return res.status(400).send({ status: false, message: "shipping pincode is required" })
-        if (!isValidPincode(pincodeS)) return res.status(400).send({ status: false, message: "shipping pincode is not valid" })
-
-        //_____________________________________
-
-        if (!billing) return res.status(400).send({ status: false, message: "billing address is required" })
-
-        if (!isNotProvided(billing.street)) return res.status(400).send({ status: false, message: "billing street address is required" })
-        let streetB = validTrim(billing.street)
-        if (!streetB) return res.status(400).send({ status: false, message: "billing street address is required" })
-        //_________________________
-        if (!isNotProvided(billing.city)) return res.status(400).send({ status: false, message: "billing city address is required" })
-        let cityB = validTrim(billing.city)
-        if (!cityB) return res.status(400).send({ status: false, message: "billing city address is required" })
-        //___________________________
-        if (!isNotProvided(billing.pincode)) return res.status(400).send({ status: false, message: "billing pincode is required" })
-        let pincodeB = validTrim(billing.pincode)
-        if (!pincodeB) return res.status(400).send({ status: false, message: "billing pincode is required" })
-        if (!isValidPincode(pincodeB)) return res.status(400).send({ status: false, message: "billing pincode is not valid" })
-
-        if (files.length == 0) return res.status(400).send({ status: false, message: "provide a profile image" })
-        if (!isValidImage(files[0].originalname)) return res.status(400).send({ status: false, message: "provide a valid image" })
+         //shipping: { street: shahu park, city: kolhapur, pincode:416004, }, billing: { street: shahu park,city: kolhapur,pincode: 416004, }
+        if (files.length > 0) {
+            if (!isValidImage(files[0].originalname)) return res.status(400).send({ status: false, message: "provide a valid image" })
+        }
+        
         //    uploding is pending
 
 
