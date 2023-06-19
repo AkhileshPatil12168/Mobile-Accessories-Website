@@ -16,7 +16,7 @@ Router.put("/user/:userId/profile", authentication, updateUser);
 Router.delete("/user/:userId/profile", authentication, deleteUser);
 
 Router.get("/app", (req, res) => {
-  res.send({ data: { name: "akhilesh", age: 20 } });
+  res.send({ data: { name: "akhilesh",lname :"patil", age: 20 } });
 });
 
 Router.all("/*", (req, res) => {

@@ -1,5 +1,6 @@
 const userModel = require("../../models/userModel");
 const bcrypt = require("bcrypt");
+const  uploadFile  = require("../Amazom S3 Bucket/bucketController");
 
 const {
   emptyBody,
@@ -192,9 +193,9 @@ const createUser = async (req, res) => {
         return res
           .status(400)
           .send({ status: false, message: "provide a valid image" });
-    }
 
-    //    uploding is pending
+      profileImage = await uploadFile(files[0], "profile/");
+    }
 
     let user = {
       fname: fname,
@@ -224,7 +225,7 @@ const createUser = async (req, res) => {
       data: createUser,
     });
   } catch (error) {
-    return res.status(500).send({ status: false, msg: error.message });
+    return res.status(500).send({ status: false, msg: error });
   }
 };
 

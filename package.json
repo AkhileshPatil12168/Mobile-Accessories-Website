@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "home-router":"nodemon src/index.js --host  192.168.1.11",
+    "home-router": "nodemon src/index.js --host  192.168.1.11",
     "start": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "akhilesh patil",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.1399.0",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.1.4",

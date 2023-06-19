@@ -1,5 +1,5 @@
 const userModel = require("../../models/userModel");
-
+const uploadFile = require("../Amazom S3 Bucket/bucketController");
 const {
   emptyBody,
   isNotProvided,
@@ -247,6 +247,7 @@ const updateUser = async (req, res) => {
         return res
           .status(400)
           .send({ status: false, message: "provide a valid image" });
+      profileImage = await uploadFile(files[0], "profile/");
     }
 
     let updateData = await userModel.findByIdAndUpdate(userId, data, {
