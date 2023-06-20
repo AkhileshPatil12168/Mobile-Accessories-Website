@@ -36,7 +36,7 @@ const isValidPincode = (value) => {
 }
 
 const isValidImage = (value) => {
-    return /([/|.|\w|\s|-])*\.(?:jpg|png|jpeg)/.test(value)
+    return /^([/|\w|\s|-])*\.((jpg)|(png)|(jpeg))$/.test(value)
 }
 
 const isValidObjectId = (value) => {
@@ -55,16 +55,9 @@ const isValidTitle = (value) => {
 
 
 
-
-
-const isValidSize = (value) => {
-    return ["S", "XS", "M", "X", "L", "XXL", "XL"].includes(value)
-}
-
-
 const isValidStatus = function (status) {
     return ['pending', 'completed', 'cancelled'].indexOf(status) !== -1
 }
 
 
-module.exports = { emptyBody, isNotProvided, validTrim, isValidWord, isValidEmail, isValidPhone, isValidPwd, isValidPincode, isValidImage, isValidObjectId, isValidString, isValidSize, isValidTitle, isValidStatus }
+module.exports = { emptyBody, isNotProvided, validTrim, isValidWord, isValidEmail, isValidPhone, isValidPwd, isValidPincode, isValidImage, isValidObjectId, isValidString,  isValidTitle, isValidStatus }
