@@ -3,11 +3,11 @@ const Router = express.Router();
 
 const authentication = require("../middleware/authentication");
 
-const loginUser = require("../controllers/userContorller/userLogin");
-const createUser = require("../controllers/userContorller/createUser");
-const getUserDetails = require("../controllers/userContorller/getUser");
-const updateUser = require("../controllers/userContorller/updateUser");
-const deleteUser = require("../controllers/userContorller/deleteUser");
+const loginUser = require("../controllers/userController/userLogin");
+const createUser = require("../controllers/userController/createUser");
+const getUserDetails = require("../controllers/userController/getUser");
+const updateUser = require("../controllers/userController/updateUser");
+const deleteUser = require("../controllers/userController/deleteUser");
 
 Router.post("/create/user/", createUser);
 Router.post("/login/user/", loginUser);
