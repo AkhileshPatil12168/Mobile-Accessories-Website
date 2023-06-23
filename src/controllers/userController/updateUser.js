@@ -93,7 +93,7 @@ const updateUser = async (req, res) => {
             password = password.trim();
             if (!isValidPwd(password))
                 return res.status(400).send({ status: false, message: "enter a valid password" });
-            data.password = await bcrypt.hash(password, 10);
+            data.password = await bcrypt.hash(password, process.env.SALT);
         }
 
         if (address) {

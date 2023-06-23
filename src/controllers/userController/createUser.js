@@ -60,7 +60,7 @@ const createUser = async (req, res) => {
         password = password.trim();
         if (!isValidPwd(password))
             return res.status(400).send({ status: false, message: "enter a valid password" });
-        password = await bcrypt.hash(password, 10);
+        password = await bcrypt.hash(password, process.env.SALT);
 
         if (address) {
             let { shipping, billing } = JSON.parse(address);
