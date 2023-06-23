@@ -9,11 +9,22 @@ const getUserDetails = require("../controllers/userController/getUser");
 const updateUser = require("../controllers/userController/updateUser");
 const deleteUser = require("../controllers/userController/deleteUser");
 
+const createdProduct = require("../controllers/productController/createProduct")
+const {getProductByFilter , getProductById} = require("../controllers/productController/getProduct")
+const updateProduct =require("../controllers/productController/updateProduct")
+const delProduct = require("../controllers/productController/deleteProduct")
+
 Router.post("/create/user/", createUser);
 Router.post("/login/user/", loginUser);
 Router.get("/user/:userId/profile", authentication, getUserDetails);
 Router.put("/user/:userId/profile", authentication, updateUser);
 Router.delete("/user/:userId/profile", authentication, deleteUser);
+
+Router.post("/admin/create/product", createdProduct)
+Router.get('/products',getProductByFilter)
+Router.get('/products/:productId',getProductById)
+Router.put("/admin/products/:productId",updateProduct)
+Router.delete('/admin/products/:productId',delProduct)
 
 Router.get("/app", (req, res) => {
   res.send({ data: { name: "akhilesh",lname :"patil", age: 20 } });
