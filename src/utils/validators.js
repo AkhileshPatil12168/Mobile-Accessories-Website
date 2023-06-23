@@ -36,7 +36,7 @@ const isValidPincode = (value) => {
 }
 
 const isValidImage = (value) => {
-    return /^([/|\w|\s|-])*\.((jpg)|(png)|(jpeg))$/.test(value)
+    return /^([/|\w|\s|+-.])*\.((jpg)|(png)|(jpeg))$/.test(value)
 }
 
 const isValidObjectId = (value) => {
@@ -50,7 +50,7 @@ const isValidString = function (value) {
 }
 
 const isValidTitle = (value) => {
-    return /^[a-zA-Z0-9 ]{2,20}$/.test(value)
+    return /^[a-zA-Z0-9 ]{5,}$/.test(value)
 }
 
 
