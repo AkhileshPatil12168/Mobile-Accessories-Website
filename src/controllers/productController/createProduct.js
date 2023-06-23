@@ -19,7 +19,8 @@ const createProduct = async function (req, res) {
       description,
       price,
       category,
-      compatibale_models,
+      compatible_models,
+      available_Quantity,
       isFreeShipping,
       productImage,
     } = data;
@@ -32,8 +33,8 @@ const createProduct = async function (req, res) {
       return res
         .status(400)
         .send({ status: false, message: "title is in incorrect format" });
-   title = validTrim(title);
-    let isUniqueTitle = await productModel.findOne({ title:title });
+    title = validTrim(title);
+    let isUniqueTitle = await productModel.findOne({ title: title });
     if (isUniqueTitle) {
       return res
         .status(400)
@@ -48,30 +49,39 @@ const createProduct = async function (req, res) {
       return res
         .status(400)
         .send({ status: false, message: "description is in incorrect format" });
-   description = validTrim(description);
+    description = validTrim(description);
 
-
-   if (!category || category.length == 0)
-   return res
-     .status(400)
-     .send({ status: false, message: "categorys are requried" });
-    for(let eachCategory of category){
-        let final = validTrim(eachCategory)
-        if(final =="")return res
-        .status(400)
-        .send({ status: false, message: "empty category cannot be provided" });
-    }
-     
-    if (!compatibale_models || compatibale_models.length == 0)
+    category = JSON.parse(category)
+    if (!category || category.length == 0)
       return res
         .status(400)
-        .send({ status: false, message: "compatibale models are requried" });
-        for(let eachModel of compatibale_models ){
-            let final = validTrim(eachModel)
-            if(final =="")return res
-            .status(400)
-            .send({ status: false, message: "empty model name cannot be provided" });
-        }
+        .send({ status: false, message: "categorys are requried" });
+    for (let eachCategory of category) {
+      let final = validTrim(eachCategory);
+      if (final == "")
+        return res
+          .status(400)
+          .send({
+            status: false,
+            message: "empty category cannot be provided",
+          });
+    }
+
+    if (!compatible_models )
+    return res
+    .status(400)
+    .send({ status: false, message: "compatibale models are requried" });
+    compatible_models = JSON.parse(compatible_models)
+    for (let eachModel of compatible_models) {
+      let final = validTrim(eachModel);
+      if (final == "")
+        return res
+          .status(400)
+          .send({
+            status: false,
+            message: "empty model name cannot be provided",
+          });
+    }
 
     if (!price || price == 0)
       return res
@@ -80,48 +90,40 @@ const createProduct = async function (req, res) {
 
     price = validTrim(price);
     if (!Number(price))
-      return res
-        .status(400)
-        .send({
-          status: false,
-          message: "price should be in valid number/decimal format",
-        });
-   price = Number(price).toFixed(2);
+      return res.status(400).send({
+        status: false,
+        message: "price should be in valid number/decimal format",
+      });
+    price = Number(price).toFixed(2);
 
     if (isFreeShipping) {
       let a = ["true", "false"];
       isFreeShipping = validTrim(isFreeShipping);
       if (!a.includes(isFreeShipping))
-        return res
-          .status(400)
-          .send({
-            status: false,
-            message: "type should be Boolean or true/false",
-          });
-     isFreeShipping = validTrim(isFreeShipping);
+        return res.status(400).send({
+          status: false,
+          message: "type should be Boolean or true/false",
+        });
+      isFreeShipping = validTrim(isFreeShipping);
     }
 
-    if(!available_Quantity || available_Quantity==0)return res
-    .status(400)
-    .send({
-      status: false,
-      message: "quantity is mandatory",
-    });
+    if (!available_Quantity )
+      return res.status(400).send({
+        status: false,
+        message: "quantity is mandatory",
+      });
 
-    available_Quantity = validTrim(available_Quantity)
+    available_Quantity = validTrim(available_Quantity);
     if (!Number(available_Quantity))
-      return res
-        .status(400)
-        .send({
-          status: false,
-          message: "quantity should be in valid number format",
-        });
-    if(Number(available_Quantity)<1)return res
-    .status(400)
-    .send({
-      status: false,
-      message: "should have at least one product",
-    });
+      return res.status(400).send({
+        status: false,
+        message: "quantity should be in valid number format",
+      });
+    if (Number(available_Quantity) < 1)
+      return res.status(400).send({
+        status: false,
+        message: "should have at least one product",
+      });
 
     let files = req.files;
 
@@ -129,25 +131,25 @@ const createProduct = async function (req, res) {
       return res
         .status(400)
         .send({ status: false, message: "provide a product image" });
-    if (!files.every((v)=>isValidImage(v.originalname)==true))
+    if (!files.every((v) => isValidImage(v.originalname) == true))
       return res
         .status(400)
         .send({ status: false, message: "provide a valid image" });
 
-      productImage =   files.map(async (img)=>await uploadFile(img,"product/") )
+    let productImagePromises =  await files.map(  (img) =>  uploadFile(img, "product/"));
+    productImage = await Promise.all(productImagePromises)
 
-     //await uploadFile(files[0]);
+    //await uploadFile(files[0]);
 
-    const product = {
+    const product = {   
       title: title,
       description: description,
       price: price,
-      type: type,
       category: category,
-      compatibale_models: compatibale_models,
+      compatible_models: compatible_models,
       isFreeShipping: isFreeShipping,
       productImage: productImage,
-      available_Quantity:available_Quantity
+      available_Quantity: available_Quantity,
     };
 
     const createdProduct = await productModel.create(product);
@@ -158,6 +160,6 @@ const createProduct = async function (req, res) {
   } catch (error) {
     return res.status(500).send({ status: false, msg: error.message });
   }
-};
+}; 
 
 module.exports = createProduct;
