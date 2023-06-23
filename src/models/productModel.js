@@ -18,11 +18,7 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    type:{
-        type : [String],
-        required: true,
-        trim: true
-    },
+  
     category:{
         type : [String],
         required: true,
@@ -38,7 +34,11 @@ const productSchema = new mongoose.Schema({
         default: false
     },
     productImage: {
-        type: String
+        type: [String]
+    },
+    available_Quantity:{
+        type :Number,
+        required: true,
     },
 
     deletedAt: {
