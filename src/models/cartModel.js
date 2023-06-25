@@ -5,39 +5,36 @@ let cartSchema = new mongoose.Schema(
     {
         userId: {
             type: objectId,
-            ref: "user",
+            ref: "User",
             required: true,
-            unique: true
+            unique: true,
         },
         items: [
             {
                 productId: {
                     type: objectId,
-                    ref: "products",
-                    required: true
+                    ref: "product",
                 },
                 quantity: {
                     type: Number,
-                    required: true,
-                    minlen: 1
                 },
+                title: { type: String },
+                price: { type: Number },
+                productImage: [],
             },
         ],
         totalPrice: {
             type: Number,
-            required: true
         },
         totalItems: {
             type: Number,
-            required: true
         },
         totalQuantity: {
             type: Number,
-            required: true
         },
         isFreeShipping: {
             type: Boolean,
-            default: false
+            default: false,
         },
     },
     { timestamps: true }
