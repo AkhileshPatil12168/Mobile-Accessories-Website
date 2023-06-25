@@ -26,7 +26,7 @@ const loginUser = async function (req, res) {
         if (!actualPassword)
             return res.status(400).send({ status: false, msg: "Incorrect email or password" });
 
-        const userId = await bcrypt.hash(user["_id"].toString(), process.env.SALT);
+        const userId = await bcrypt.hash(user["_id"].toString(), Number(process.env.SALT));
         let token = jwt.sign({ userId: userId }, process.env.TOKEN_KEY, {
             expiresIn: "1d",
         });

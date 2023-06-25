@@ -1,4 +1,6 @@
 const userModel = require("../../models/userModel");
+const cartModel = require("../../models/cartModel");
+
 const bcrypt = require("bcrypt");
 const uploadFile = require("../Amazom S3 Bucket/bucketController");
 
@@ -60,7 +62,7 @@ const createUser = async (req, res) => {
         password = password.trim();
         if (!isValidPwd(password))
             return res.status(400).send({ status: false, message: "enter a valid password" });
-        password = await bcrypt.hash(password, process.env.SALT);
+        password = await bcrypt.hash(password, Number(process.env.SALT));
 
         if (address) {
             let { shipping, billing } = JSON.parse(address);
@@ -181,6 +183,12 @@ const createUser = async (req, res) => {
             },
         };
         const createUser = await userModel.create(user);
+        await cartModel.create({
+            userId: createUser["_id"],
+            totalQuantity: 0,
+            totalPrice: 0,
+            totalItems: 0,
+        });
 
         res.status(201).send({
             status: true,
