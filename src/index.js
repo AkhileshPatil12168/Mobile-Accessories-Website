@@ -10,9 +10,11 @@ app.use(multer().any());
 
 app.use(
     cors({
-        //origin : origin: process.env.iphoneHotspot+':'+process.env.forntEndPort     //iphone hotspot
-        //origin : origin: process.env.laptopHostspot+':'+process.env.forntEndPort  //laptop hotspot
-        //origin: process.env.homeRouter+':'+process.env.forntEndPort  //home router
+        // origin: process.env.iphoneHotspot+':'+process.env.forntEndPort ,    //iphone hotspot
+        // origin: 'http://'+process.env.laptopHostspot+':'+process.env.forntEndPort,    //laptop hotspot
+        // origin: process.env.homeRouter+':'+process.env.forntEndPort,        //home router
+        // origin :  'http://localhost:3001'
+        origin:'http://192.168.1.11:3001'
     })
 );
 
@@ -32,6 +34,6 @@ mongoose
 //process.env.laptopHotspot
 //process.env.homeRouter
 
-app.listen(process.env.port, () => {
+app.listen(process.env.port,/*'192.168.1.11'*/ () => {
     console.log("server is live");
 });
