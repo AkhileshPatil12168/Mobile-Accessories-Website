@@ -1,15 +1,17 @@
+const adminModel = require("../../models/adminModel");
 const userModel = require("../../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { emptyBody, isValidEmail } = require("../../utils/validators");
 
-const loginUser = async function (req, res) {
+const login = async function (req, res) {
     try {
         if (emptyBody(req.body))
             return res.status(400).send({ status: false, msg: "Email and Password is Requierd" });
 
-        const { email, password } = req.body;
-
+        const { email, password, userType } = req.body;
+        let model;
+        
         if (!email) return res.status(400).send({ status: false, msg: "User Email is Requierd" });
 
         if (!password)
@@ -18,7 +20,12 @@ const loginUser = async function (req, res) {
         if (!isValidEmail(email))
             return res.status(400).send({ status: false, msg: "Enter Valid Email Id" });
 
-        let user = await userModel.findOne({ email }).select({ _id: 1, password: 1 }).lean();
+        if (!userType) return res.status(400).send({ status: false, msg: "User type is Requierd" });
+
+        if (userType == "admin") model = adminModel;
+        if (userType == "user") model = userModel;
+
+        let user = await model.findOne({ email:email, isDeleted:false }).select({ _id: 1, password: 1 }).lean();
         if (!user) return res.status(400).send({ status: false, msg: "User not Exist" });
 
         let actualPassword = await bcrypt.compare(password, user.password);
@@ -43,4 +50,4 @@ const loginUser = async function (req, res) {
         return res.status(500).send({ status: false, msg: err.message });
     }
 };
-module.exports = loginUser;
+module.exports = login;
