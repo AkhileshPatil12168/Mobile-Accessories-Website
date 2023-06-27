@@ -23,13 +23,13 @@ const getUserDetails = async function (req, res) {
 
         const userData = await userModel
             .findById(userId)
-            .select({ __v: 0, updatedAt: 0, createdAt: 0, isDeleted: 0 })
+            .select({ __v: 0, updatedAt: 0, createdAt: 0, isDeleted: 0, password: 0 })
             .lean();
         if (!userData) return res.status(404).send({ status: false, message: "user not found." });
 
         return res
             .status(200)
-            .send({ status: true, message: "User profile details", data: userData });
+            .send({ status: true, message: "Users profile details", data: userData });
     } catch (err) {
         res.status(500).send({ status: false, message: err.message });
     }
