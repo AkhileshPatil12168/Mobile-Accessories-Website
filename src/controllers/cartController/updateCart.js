@@ -50,7 +50,7 @@ const updatCart = async (req, res) => {
                         userCart.totalQuantity = userCart.totalQuantity + 1;
                         userCart.totalItems = userCart.totalItems + 1;
                         if (userCart.totalPrice > 500) userCart.isFreeShipping = true;
-                        else userCart.isFreeShipping = true;
+                        else userCart.isFreeShipping = false;
                         break;
                     }
                 }
