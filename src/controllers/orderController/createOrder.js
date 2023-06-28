@@ -192,7 +192,7 @@ const createOrder = async (req, res) => {
         if (!address)
             return res.status(400).send({ status: false, message: "address is required" });
 
-        let orderdedDate = new Date().toISOString().slice(0, 10);
+        let orderdedDate = Date.now() + 19800000;
 
         const orderData = {
             userId: userId,
