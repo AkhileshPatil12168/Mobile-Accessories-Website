@@ -25,7 +25,7 @@ const isValidPhone = (value) => {
 };
 
 const isValidPwd = (value) => {
-    return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/.test(value);
+    return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(value);
 };
 
 const isValidPincode = (value) => {
@@ -53,14 +53,6 @@ const isValidUserName = (value) => {
 const isValidStatus = (status) => {
     return ["pending", "completed", "cancelled"].indexOf(status) !== -1;
 };
-function getToken(headers) {
-    for (let header of headers) {
-        if (header.includes("Bearer")) {
-            return header.split(" ")[1];
-        }
-    }
-    return "";
-}
 
 module.exports = {
     emptyBody,
@@ -76,5 +68,4 @@ module.exports = {
     isValidString,
     isValidUserName,
     isValidStatus,
-    getToken,
 };
