@@ -32,7 +32,15 @@ const updateProduct = async (req, res) => {
         if (emptyBody(data))
             return res.status(400).send({ status: false, message: "provide some data" });
 
-        let { title, description, price, isFreeShipping, compatible_models, category } = data;
+        let {
+            title,
+            description,
+            price,
+            isFreeShipping,
+            compatible_models,
+            category,
+            available_Quantity,
+        } = data;
         data.isDeleted = false;
         if (title || title === "") {
             title = validTrim(title);
@@ -75,6 +83,24 @@ const updateProduct = async (req, res) => {
             data.price = Number(price).toFixed(2);
         }
 
+        if (available_Quantity) {
+            price = validTrim(available_Quantity);
+            if (!isNotProvided(available_Quantity))
+                return res
+                    .status(400)
+                    .send({ status: false, message: "available_Quantity cannot be empty" });
+
+            if (!Number(available_Quantity))
+                return res.status(400).send({
+                    status: false,
+                    message: "available_Quantity should be in valid number format",
+                });
+            if (available_Quantity < 0)
+                return res
+                    .status(400)
+                    .send({ status: false, message: "available_Quantity can not be negative" });
+            data.available_Quantity = Number(available_Quantity);
+        }
         if (isFreeShipping) {
             let a = ["true", "false"];
             isFreeShipping = validTrim(isFreeShipping);
