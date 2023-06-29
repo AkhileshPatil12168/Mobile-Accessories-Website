@@ -171,7 +171,7 @@ const getProductByFilter = async function (req, res) {
                 };
             }
 
-            const productData = await productModel.find(filters).select({title:1,price:1, productImage:1}).lean();
+            const productData = await productModel.find(filters).select({title:1,price:1, productImage:1,available_Quantity:1}).lean();
             if (productData.length == 0)
                 return res.status(404).send({
                     status: false,
@@ -193,7 +193,7 @@ const getProductByFilter = async function (req, res) {
         } else {
             const productData = await productModel.find({
                 isDeleted: false,
-            }).select({title:1,price:1, productImage:1}).lean();
+            }).select({title:1,price:1, productImage:1,available_Quantity:1}).lean();
             return res.status(200).send({
                 status: true,
                 data: productData,
