@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const userModel = require("../../models/userModel");
 const cartModel = require("../../models/cartModel");
 const orderModel = require("../../models/orderModel");
+const productModel = require("../../models/productModel");
 
 const {
     emptyBody,
@@ -194,6 +195,30 @@ const createOrder = async (req, res) => {
 
         let orderdedDate = Date.now() + 19800000;
 
+        const productIds = cart.items.map((i) => i.productId);
+
+        const productData = await productModel
+            .find({ _id: { $in: productIds }, isDeleted: false })
+            .select({ available_Quantity: 1 })
+            .lean();
+        if (!productData)
+            return res.status(400).send({ status: false, message: "product not found" });
+
+        for (let product of productData) {
+            for (let cartItem of cart.items) {
+                if (cartItem.productId == product["_id"].toString()) {
+                    if (product.available_Quantity < cartItem.quantity)
+                        return res
+                            .status(409)
+                            .send({ status: false, message: "product might be out of stock" , data : cartItem });
+
+                    break;
+                }
+            }
+        }
+
+
+
         const orderData = {
             userId: userId,
             name: name,
@@ -208,15 +233,19 @@ const createOrder = async (req, res) => {
             isFreeShipping: cart.isFreeShipping,
             status: "pending",
         };
-
+        
         const orderCreated = await orderModel.create(orderData);
-
+        
         await cartModel.findByIdAndUpdate(
             cart["_id"],
             { items: [], totalPrice: 0, totalItems: 0, totalQuantity: 0 },
             { new: true }
-        );
-
+            );
+            for(let cartItem of cart.items){
+    
+                await productModel.findByIdAndUpdate(cartItem.productId,{   $inc: {available_Quantity:-cartItem.quantity}})
+            }
+            
         return res.status(201).send({ status: true, message: "Success", data: orderCreated });
     } catch (error) {
         res.status(500).send({ status: false, message: error.message });
