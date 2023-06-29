@@ -32,13 +32,24 @@ const updatCart = async (req, res) => {
             if (value == 1) {
                 for (let item of userCart.items) {
                     if (item.productId == productId) {
+                        if (productData.available_Quantity < 1)
+                            return res
+                                .status(400)
+                                .send({ status: false, message: "no more product left" });
                         item.quantity = item.quantity + 1;
+                        if (item.quantity > productData.available_Quantity)
+                            return res
+                                .status(400)
+                                .send({ status: false, message: "no more product left" });
                         userCart.totalPrice += productData.price;
                         userCart.totalQuantity = userCart.totalQuantity + 1;
-
                         break;
                     }
                     if (userCart.items.indexOf(item) + 1 == userCart.items.length) {
+                        if (productData.available_Quantity < 1)
+                            return res
+                                .status(400)
+                                .send({ status: false, message: "no more product left" });
                         userCart.items.push({
                             productId: productId,
                             title: productData.title,
@@ -90,6 +101,9 @@ const updatCart = async (req, res) => {
         } else {
             if (userCart.items.length == 0 && value == -1)
                 return res.status(400).send({ status: false, message: "cart is empty" });
+
+            if (productData.available_Quantity < 1)
+                return res.status(400).send({ status: false, message: "no more product left" });
             const cart = await cartModel.findByIdAndUpdate(
                 userCart["_id"],
                 {
