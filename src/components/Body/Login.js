@@ -60,14 +60,13 @@ const Login = () => {
                                 Sign in
                             </button>
                         </div>
-                        <div className="text-sm">
-                            <Link
-                                to="/signup"
-                                className="font-semibold text-indigo-600 hover:text-indigo-500 ml-[340px]"
-                            >
-                                signup
-                            </Link>
-                        </div>
+                        <Link to="/signup">
+                            <div className="text-sm">
+                                <a className="font-semibold text-indigo-600 hover:text-indigo-500 ml-[340px]">
+                                    signup
+                                </a>
+                            </div>
+                        </Link>
                     </form>
                 </div>
             </div>
