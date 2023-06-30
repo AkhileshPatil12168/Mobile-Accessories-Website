@@ -61,12 +61,12 @@ const Login = () => {
                             </button>
                         </div>
                         <div className="text-sm">
-                            <a
-                                href="/signup"
+                            <Link
+                                to="/signup"
                                 className="font-semibold text-indigo-600 hover:text-indigo-500 ml-[340px]"
                             >
                                 signup
-                            </a>
+                            </Link>
                         </div>
                     </form>
                 </div>
