@@ -25,7 +25,7 @@ const Body = () => {
             {products.map((p) => {
                 const productId = p._id
                 return (
-                    <Link to={"https://mobileaccbackend.onrender.com/products/" + productId} key={productId}>
+                    <Link to={"https://mobileacc.netlify.app/products/" + productId} key={productId}>
                         <Card {...p} />
                     </Link>
                 );
