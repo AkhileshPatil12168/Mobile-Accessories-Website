@@ -8,9 +8,9 @@ const Body = () => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        getProduct();
+        getProducts();
     }, []);
-    async function getProduct() {
+    async function getProducts() {
         try {
             const response = await axios.get(" http://localhost:3000/products");
 
@@ -23,8 +23,9 @@ const Body = () => {
     return (
         <div className="flex flex-wrap w-fit p-10 ">
             {products.map((p) => {
+                const productId = p._id
                 return (
-                    <Link to={"http://products/" + p._id} key={p._id}>
+                    <Link to={"http://localhost:3001/products/" + productId} key={productId}>
                         <Card {...p} />
                     </Link>
                 );

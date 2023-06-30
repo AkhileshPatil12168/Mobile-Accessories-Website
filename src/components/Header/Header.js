@@ -14,7 +14,7 @@ const Title = () => {
 const Header = () => {
     const [isLoggedIn, setLoggedIN] = useState(false);
     return (
-        <div className="flex justify-between bg-blue-200 shadow-lg  fixed top-0 left-0 w-full h-[90px] z-50   ">
+        <div className="flex justify-between bg-blue-200   ">
             <Title />
 
             <ul className="flex py-7 ">
@@ -30,19 +30,21 @@ const Header = () => {
             </ul>
 
             {isLoggedIn ? (
+                <Link to="/">
                 <button
-                    className=" m-2 p-2 mr-4 w-24 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+                    className=" m-2  mr-4 w-24 h-16 bg-blue-500 text-white   "
                     onClick={() => setLoggedIN(false)}
                 >
                     Logout
-                </button>
+                </button></Link>
             ) : (
+                <Link to="/login">
                 <button
-                    className="m-2 p-2 mr-4 w-24 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
-                    onClick={() => setLoggedIN(true)}
+                    className="m-2  mr-4 w-24 h-16 bg-blue-500 text-white  "
+                    
                 >
                     Login
-                </button>
+                </button></Link>
             )}
         </div>
     );
