@@ -18,14 +18,14 @@ const {
 
 const createUser = async (req, res) => {
     try {
-        let files = req.files;
+        let files = req.files; 
 
-        let { fname, lname, email, phone, password, address, profileImage } = req.body;
+        let { fname, lname, email, phone, password, address, profileImage } = req.body;    
 
-        let streetS, cityS, pincodeS, streetB, cityB, pincodeB;
+        let streetS, cityS, pincodeS, streetB, cityB, pincodeB;     
 
         if (emptyBody(req.body))
-            return res.status(400).send({ status: false, message: "provide some data" });
+            return res.status(400).send({ status: false, message: "provide some data" }); 
 
         if (!fname)
             return res.status(400).send({ status: false, message: "First name is required" });
