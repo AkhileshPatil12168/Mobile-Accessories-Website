@@ -12,7 +12,7 @@ const Body = () => {
     }, []);
     async function getProducts() {
         try {
-            const response = await axios.get(" http://localhost:3000/products");
+            const response = await axios.get("https://mobileaccbackend.onrender.com/products");
 
             setProducts(response.data.data);
         } catch (error) {
@@ -25,7 +25,7 @@ const Body = () => {
             {products.map((p) => {
                 const productId = p._id
                 return (
-                    <Link to={"http://localhost:3001/products/" + productId} key={productId}>
+                    <Link to={"https://mobileaccbackend.onrender.com/products/" + productId} key={productId}>
                         <Card {...p} />
                     </Link>
                 );

@@ -37,7 +37,7 @@ const Signup = () => {
         try {
             e.preventDefault();
             //const { fname, lname, email, phone, password } = user;
-            const response = await axios.post(" http://localhost:3000/create/user/", user);
+            const response = await axios.post(" https://mobileaccbackend.onrender.com/create/user/", user);
             const res = await response.json();
             console.log(res);
         } catch (error) {
