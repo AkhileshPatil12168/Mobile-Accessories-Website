@@ -27,7 +27,10 @@ const Login = (props) => {
             let response = await axios.post(
                 "https://mobileaccbackend.onrender.com/login/user/",
                 data,
-                { withCredentials: true }
+                {headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  withCredentials: true }
             );
             setUserData(response.data.data.userId);
             setToken(response.data.data.token);
