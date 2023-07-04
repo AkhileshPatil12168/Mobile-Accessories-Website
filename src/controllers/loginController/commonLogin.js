@@ -42,6 +42,7 @@ const login = async function (req, res) {
         });
         // res.setHeader("Content-Type", "application/json");
         // res.set("Authorization", `Bearer ${token}`);
+        res.setHeader('Access-Control-Allow-Origin', '*');
         res.cookie("token", `${token}`, {
             expires: new Date(Date.now() + 3600000),
             httpOnly: false,
