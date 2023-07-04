@@ -1,7 +1,6 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, redirect, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Body from "../Body/Body";
 
 const Login = (props) => {
     const navigate = useNavigate();
@@ -15,8 +14,6 @@ const Login = (props) => {
 
     const [token, setToken] = useState("");
 
-   
-
     let name, value;
     const handleSubmit = (e) => {
         name = e.target.name;
@@ -28,16 +25,18 @@ const Login = (props) => {
         try {
             e.preventDefault();
 
-            let response = await axios.post("https://mobileaccbackend.onrender.com/login/user/", data);
+            let response = await axios.post(
+                "https://mobileaccbackend.onrender.com/login/user/",
+                data,
+                { withCredentials: true }
+            );
             setUserData(response.data.data.userId);
             setToken(response.data.data.token);
-            navigate("/?user="+response.data.data.userId)
+            navigate("/?user=" + response.data.data.userId);
         } catch (error) {
             console.log(error);
         }
     };
-   
-  
 
     return (
         <>

@@ -21,7 +21,7 @@ const Header = (props) => {
             setUserId(cUserId);
         }
     }, []);
-    console.log("cookie call");
+    console.log(cToken);
 
     const handleLogout = () => {
         cookies.remove("token", { path: "/" });
@@ -59,7 +59,7 @@ const Header = (props) => {
                 </div>
             </Link>
 
-            {cToken && cUserId ? (
+            {cToken && cUserId? (
                 <button
                     className=" m-2  mr-4 w-24 h-16 bg-blue-500 text-white   "
                     onClick={() => {
