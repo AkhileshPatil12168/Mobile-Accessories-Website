@@ -11,7 +11,7 @@ app.use(multer().any());
 app.use(cookieParser());
 
 app.use("*",cors({
-    origin:"https://mobileacc.netlify.app",
+    origin:true,
     credentials:true
 }))
 
