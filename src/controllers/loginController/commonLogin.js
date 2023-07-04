@@ -44,11 +44,11 @@ const login = async function (req, res) {
         // res.set("Authorization", `Bearer ${token}`);
         res.cookie("token", `${token}`, {
             expires: new Date(Date.now() + 3600000),
-            httpOnly: true,
+            //httpOnly: true,
         });
         res.cookie("user", `${user._id}`, {
             expires: new Date(Date.now() + 3600000),
-            httpOnly: true,
+           // httpOnly: true,
         });
 
         return res.status(200).send({

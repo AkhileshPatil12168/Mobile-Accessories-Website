@@ -17,7 +17,8 @@ app.use(
         // origin: process.env.homeRouter+':'+process.env.forntEndPort,        //home router
         //origin: "http://localhost:3001", 
         origin: "https://mobileacc.netlify.app",
-        credentials: true
+        credentials: true,
+        origin:true
        // origin:'http://192.168.1.11:3001'
     })
 );
