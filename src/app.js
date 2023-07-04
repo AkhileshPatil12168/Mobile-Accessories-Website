@@ -1,16 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet  } from "react-router-dom";
 
 import Header from "./components/Header/Header";
-import Body from "./components/Body/Body";
-import Footer from "./components/Footer/Footer";
-import Orders from "./components/Header/components/Orders";
-import Cart from "./components/Header/components/Cart";
-import Error from "./components/ErrorHandler";
-import Product from "./components/Body/components/product/getProduct";
-import Login from "./components/Body/Login";
-import Signup from "./components/Body/components/SignupForm";
+
+import Body from "./components/Body/Body"
+import Orders from "./components/Body/Orders"
+import Cart from "./components/Body/Cart"
+import Product from "./components/Body/getProduct"
+import Login from "./components/forms/Login"
+import Signup from "./components/forms/SignupForm"
+import User from "./components/Header/Header"
+
+import Footer from "./components/Footer/Footer"
+import ConnectUs from "./components/Body/ConnectUs";
 
 const AppLayout = () => { 
     return (
@@ -35,6 +38,8 @@ const appRouter = createBrowserRouter([
             { path: "/products/:id", element: <Product /> },
             { path: "/login", element: <Login /> },
             { path: "/signup", element: <Signup /> },
+            { path: "/user/account", element: <User /> },
+            {path: "/connect", element: <ConnectUs /> }
         ],
     },
 ]);

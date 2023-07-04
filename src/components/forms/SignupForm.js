@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
+import { redirect, Link } from "react-router-dom";
+import Login from "./Login";
 
 const Signup = () => {
     let [user, setUser] = useState({
@@ -8,43 +10,43 @@ const Signup = () => {
         email: "",
         phone: "",
         password: "",
-        profileImage:null
-        
     });
-    const [img, setImg]= useState('')
-    let name, value;
+    const [img, setImg] = useState("");
+    const [signupData, setSignupData] = useState(null);
+
     const handleSubmit = (e) => {
+        let name, value;
         name = e.target.name;
-       // console.log(e.target.files[0])
-        if(name == "profileImage")value = e.target.files
-        else value = e.target.value;
-
-
+        value = e.target.value;
         setUser({ ...user, [name]: value });
         console.log(e.target.value);
-        //console.log(e.target.files);
-        //console.log(user)
     };
-    const handleImg = (e)=>{
-        const file = e.target.files[0];
-        console.log(file)
-        setImg(file);
-        setUser({ ...user, profileImage: file });
-        console.log(img)
-    }
+
+    const handleImg = (e) => {
+        setImg(e.target.files);
+    };
 
     const postData = async (e) => {
         try {
             e.preventDefault();
-            //const { fname, lname, email, phone, password } = user;
-            const response = await axios.post(" https://mobileaccbackend.onrender.com/create/user/", user);
-            const res = await response.json();
-            console.log(res);
+            const formData = new FormData();
+            formData.append("profileImage", img[0]);
+            formData.append("fname", user.fname);
+            formData.append("lname", user.lname);
+            formData.append("email", user.email);
+            formData.append("phone", user.phone);
+            formData.append("password", user.password);
+            let response = await axios.post(" http://localhost:3000/create/user/", formData);
+
+            console.log(response);
+            if (response) setSignupData(response?.data?.data);
         } catch (error) {
-            console.log(error);
+            console.log(error?.response?.data);
         }
     };
-    return (
+    return signupData ? (
+        <Login {...signupData} />
+    ) : (
         <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -188,14 +190,7 @@ const Signup = () => {
                                 Profile Image
                             </label>
                             <div className="mt-2">
-                                <input
-                                   
-                                    name="profileImage"
-                                    type="file"
-                
-                                    onChange={handleImg}
-                                   
-                                />
+                                <input name="profileImage" type="file" onChange={handleImg} />
                             </div>
                         </div>
 
@@ -212,12 +207,12 @@ const Signup = () => {
                         </div>
                     </form>
                     <div className="text-sm">
-                        <a
-                            href="/login"
+                        <Link
+                            to="/login"
                             className="font-semibold text-indigo-600 hover:text-indigo-500 ml-[340px]"
                         >
                             login
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>
