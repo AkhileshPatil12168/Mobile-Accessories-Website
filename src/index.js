@@ -15,9 +15,9 @@ app.use(
         // origin: process.env.iphoneHotspot+':'+process.env.forntEndPort ,    //iphone hotspot
         // origin: 'http://'+process.env.laptopHostspot+':'+process.env.forntEndPort,    //laptop hotspot
         // origin: process.env.homeRouter+':'+process.env.forntEndPort,        //home router
-        origin: "http://localhost:3001", 
+        //origin: "http://localhost:3001", 
+        origin: "https://mobileacc.netlify.app/",
         credentials: true
-       // origin: "https://mobileacc.netlify.app",
        // origin:'http://192.168.1.11:3001'
     })
 );
