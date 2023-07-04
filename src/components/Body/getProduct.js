@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "axios"; 
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 const Product = () => {
