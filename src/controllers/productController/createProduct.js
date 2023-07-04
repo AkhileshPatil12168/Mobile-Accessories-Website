@@ -25,7 +25,7 @@ const createProduct = async function (req, res) {
       productImage,
     } = data;
 
-    if (!title)
+    if (!title) 
       return res
         .status(400)
         .send({ status: false, message: "title must be present" });

@@ -2,21 +2,23 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const multer = require("multer");
+const cookieParser = require('cookie-parser')
 
 const cors = require("cors");
 require("dotenv").config();
 
 app.use(multer().any());
+app.use(cookieParser());
 
 app.use(
     cors({
         // origin: process.env.iphoneHotspot+':'+process.env.forntEndPort ,    //iphone hotspot
         // origin: 'http://'+process.env.laptopHostspot+':'+process.env.forntEndPort,    //laptop hotspot
         // origin: process.env.homeRouter+':'+process.env.forntEndPort,        //home router
-        //origin: "http://localhost:3001",
-        
-        origin: "https://mobileacc.netlify.app",
-        //origin:'http://192.168.1.11:3001'
+        origin: "http://localhost:3001", 
+        credentials: true
+       // origin: "https://mobileacc.netlify.app",
+       // origin:'http://192.168.1.11:3001'
     })
 );
 
@@ -39,6 +41,6 @@ mongoose
 app.listen(
     process.env.port,
     /*'192.168.1.11'*/ () => {
-        console.log("server is live");
+        console.log("server is live at " +process.env.port);
     }
 );

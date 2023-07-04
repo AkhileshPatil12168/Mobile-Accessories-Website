@@ -18,14 +18,14 @@ const {
 
 const createUser = async (req, res) => {
     try {
-        let files = req.files; 
+        let files = req.files;
 
-        let { fname, lname, email, phone, password, address, profileImage } = req.body;    
+        let { fname, lname, email, phone, password, address, profileImage } = req.body;
 
-        let streetS, cityS, pincodeS, streetB, cityB, pincodeB;     
+        let streetS, cityS, pincodeS, streetB, cityB, pincodeB;
 
         if (emptyBody(req.body))
-            return res.status(400).send({ status: false, message: "provide some data" }); 
+            return res.status(400).send({ status: false, message: "provide some data" });
 
         if (!fname)
             return res.status(400).send({ status: false, message: "First name is required" });
@@ -154,7 +154,6 @@ const createUser = async (req, res) => {
                     .send({ status: false, message: "billing pincode is not valid" });
         }
 
-        //{"shipping": { "street": "shahu park", "city": "kolhapur", "pincode":"416004" }, "billing": { "street": "shahu park","city": "kolhapur","pincode": "416004" }}
         if (files.length > 0) {
             if (!isValidImage(files[0].originalname))
                 return res.status(400).send({ status: false, message: "provide a valid image" });
@@ -190,7 +189,7 @@ const createUser = async (req, res) => {
             totalItems: 0,
         });
 
-        res.status(201).send({
+        return res.status(201).send({
             status: true,
             message: "User created successfully",
             data: createUser,

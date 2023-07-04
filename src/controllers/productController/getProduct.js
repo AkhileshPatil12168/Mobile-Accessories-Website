@@ -1,5 +1,5 @@
 const productModel = require("../../models/productModel");
-
+const { getToken } = require("../../utils/utilityFunctions");
 const {
     emptyBody,
     isValidString,
@@ -24,10 +24,13 @@ const getProductById = async function (req, res) {
                 message: "provide a valid Product Id",
             });
 
-        let productsDetails = await productModel.findOne({
-            _id: productId,
-            isDeleted: false,
-        }).select({deletedAt:0, isDeleted:0, updatedAt:0,createdAt:0}).lean();
+        let productsDetails = await productModel
+            .findOne({
+                _id: productId,
+                isDeleted: false,
+            })
+            .select({ deletedAt: 0, isDeleted: 0, updatedAt: 0, createdAt: 0 })
+            .lean();
         if (!productsDetails)
             return res.status(404).send({
                 status: false,
@@ -49,7 +52,8 @@ const getProductById = async function (req, res) {
 
 const getProductByFilter = async function (req, res) {
     try {
-        const filters = req.query;
+        const filters = req.body;
+
         let { title, price, category, compatible_models, priceLessThan, priceGreaterThan } =
             filters;
 
@@ -171,7 +175,10 @@ const getProductByFilter = async function (req, res) {
                 };
             }
 
-            const productData = await productModel.find(filters).select({title:1,price:1, productImage:1,available_Quantity:1}).lean();
+            const productData = await productModel
+                .find(filters)
+                .select({ title: 1, price: 1, productImage: 1, available_Quantity: 1 })
+                .lean();
             if (productData.length == 0)
                 return res.status(404).send({
                     status: false,
@@ -191,9 +198,12 @@ const getProductByFilter = async function (req, res) {
                 });
             }
         } else {
-            const productData = await productModel.find({
-                isDeleted: false,
-            }).select({title:1,price:1, productImage:1,available_Quantity:1}).lean();
+            const productData = await productModel
+                .find({
+                    isDeleted: false,
+                })
+                .select({ title: 1, price: 1, productImage: 1, available_Quantity: 1 })
+                .lean();
             return res.status(200).send({
                 status: true,
                 data: productData,

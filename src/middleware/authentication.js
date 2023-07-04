@@ -1,13 +1,11 @@
 const jwt = require("jsonwebtoken");
-const { getToken } = require("../utils/utilityFunctions");
 
 const authentication = async (req, res, next) => {
     try {
-        const Headers = req.rawHeaders;
-        let token = getToken(Headers);
+        const  token =req.cookies.token
 
         if (!token) {
-            return res.status(400).send({ status: false, message: "provide token in the headers" });
+            return res.status(400).send({ status: false, message: "provide token in the cookie" });
         }
 
         jwt.verify(token, process.env.TOKEN_KEY, function (err, decodedToken) {

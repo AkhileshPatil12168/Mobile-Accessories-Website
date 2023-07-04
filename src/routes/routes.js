@@ -73,8 +73,22 @@ Router.put("/user/:userId/order/cancleorder/:orderId/", authentication, cancleOr
 Router.delete("/user/:userId/order/:orderId", authentication, deleteOrder);
 
 //_____TEST APIs_____
-Router.get("/test", (req, res) => {
-    res.send({ data: { name: "akki", lname: "patil", age: 20 } });
+Router.get("/set", (req, res) => {
+    res.cookie("token", "a;sldfkjalsdjkfj;alsdjkfalsdjfjalsdjkfj", {
+        expires: new Date(Date.now() + 25000),
+        httpOnly: true,
+    });
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader("x-api-token", `Bearer $token`);
+    
+     res.send({ data: "cookie is set" });
+ });
+ const {getToken} = require("../utils/utilityFunctions")
+Router.get("/app", (req, res) => {
+   const  data =req.cookies
+   const Headers = req.rawHeaders
+        let token = getToken(Headers);  
+    res.send({ data: data, token:token });
 });
 
 //_____FOR NOT VALID APIs_____

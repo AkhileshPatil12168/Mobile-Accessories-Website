@@ -11,7 +11,7 @@ const login = async function (req, res) {
 
         const { email, password, userType } = req.body;
         let model;
-        
+
         if (!email) return res.status(400).send({ status: false, msg: "User Email is Requierd" });
 
         if (!password)
@@ -25,7 +25,10 @@ const login = async function (req, res) {
         if (userType == "admin") model = adminModel;
         if (userType == "user") model = userModel;
 
-        let user = await model.findOne({ email:email, isDeleted:false }).select({ _id: 1, password: 1 }).lean();
+        let user = await model
+            .findOne({ email: email, isDeleted: false })
+            .select({ _id: 1, password: 1 })
+            .lean();
         if (!user) return res.status(400).send({ status: false, msg: "User not Exist" });
 
         let actualPassword = await bcrypt.compare(password, user.password);
@@ -37,9 +40,16 @@ const login = async function (req, res) {
         let token = jwt.sign({ userId: userId }, process.env.TOKEN_KEY, {
             expiresIn: "1d",
         });
-        res.setHeader("Content-Type", "application/json");
-
-        res.set("Authorization", `Bearer ${token}`);
+        // res.setHeader("Content-Type", "application/json");
+        // res.set("Authorization", `Bearer ${token}`);
+        res.cookie("token", `${token}`, {
+            expires: new Date(Date.now() + 3600000),
+            //httpOnly: true,
+        });
+        res.cookie("user", `${user._id}`, {
+            expires: new Date(Date.now() + 3600000),
+            //httpOnly: true,
+        });
 
         return res.status(200).send({
             status: true,
@@ -47,7 +57,7 @@ const login = async function (req, res) {
             data: { userId: user._id, token: token },
         });
     } catch (err) {
-        return res.status(500).send({ status: false, msg: err.message });
+        return res.status(500).send({ status: false, data: err.message });
     }
 };
 module.exports = login;
