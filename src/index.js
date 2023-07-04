@@ -10,18 +10,23 @@ require("dotenv").config();
 app.use(multer().any());
 app.use(cookieParser());
 
-app.use(
-    cors({
-        // origin: process.env.iphoneHotspot+':'+process.env.forntEndPort ,    //iphone hotspot
-        // origin: 'http://'+process.env.laptopHostspot+':'+process.env.forntEndPort,    //laptop hotspot
-        // origin: process.env.homeRouter+':'+process.env.forntEndPort,        //home router
-        //origin: "http://localhost:3001", 
-        origin: "https://mobileacc.netlify.app",
-        credentials: true,
-        origin:true
-       // origin:'http://192.168.1.11:3001'
-    })
-);
+app.use("*",cors({
+    origin:"https://mobileacc.netlify.app",
+    credentials:true
+}))
+
+// app.use(
+//     cors({
+//         // origin: process.env.iphoneHotspot+':'+process.env.forntEndPort ,    //iphone hotspot
+//         // origin: 'http://'+process.env.laptopHostspot+':'+process.env.forntEndPort,    //laptop hotspot
+//         // origin: process.env.homeRouter+':'+process.env.forntEndPort,        //home router
+//         //origin: "http://localhost:3001", 
+//         origin: "https://mobileacc.netlify.app",
+//         credentials: true,
+//         origin:true
+//        // origin:'http://192.168.1.11:3001'
+//     })
+// );
 
 const Router = require("./routes/routes");
 
