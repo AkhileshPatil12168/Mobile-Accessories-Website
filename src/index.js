@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const multer = require("multer");
-const cookieParser = require('cookie-parser')
+const cookieParser = require("cookie-parser");
 
 const cors = require("cors");
 require("dotenv").config();
@@ -10,23 +10,23 @@ require("dotenv").config();
 app.use(multer().any());
 app.use(cookieParser());
 
-app.use("*",cors({
-    origin:true,
-    credentials:true
-}))
+// app.use("*",cors({
+//     origin:true,
+//     credentials:true
+// }))
 
-// app.use(
-//     cors({
-//         // origin: process.env.iphoneHotspot+':'+process.env.forntEndPort ,    //iphone hotspot
-//         // origin: 'http://'+process.env.laptopHostspot+':'+process.env.forntEndPort,    //laptop hotspot
-//         // origin: process.env.homeRouter+':'+process.env.forntEndPort,        //home router
-//         //origin: "http://localhost:3001", 
-//         origin: "https://mobileacc.netlify.app",
-//         credentials: true,
-//         origin:true
-//        // origin:'http://192.168.1.11:3001'
-//     })
-// );
+app.use(
+    cors({
+        // origin: process.env.iphoneHotspot+':'+process.env.forntEndPort ,    //iphone hotspot
+        // origin: 'http://'+process.env.laptopHostspot+':'+process.env.forntEndPort,    //laptop hotspot
+        // origin: process.env.homeRouter+':'+process.env.forntEndPort,        //home router
+        origin: "http://localhost:3001",
+        // origin: "https://mobileacc.netlify.app",
+        credentials: true,
+
+        // origin:'http://192.168.1.11:3001'
+    })
+);
 
 const Router = require("./routes/routes");
 
@@ -47,6 +47,6 @@ mongoose
 app.listen(
     process.env.port,
     /*'192.168.1.11'*/ () => {
-        console.log("server is live at " +process.env.port);
+        console.log("server is live at " + process.env.port);
     }
 );
