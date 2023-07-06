@@ -10,7 +10,7 @@ import Cart from "./components/Body/Cart"
 import Product from "./components/Body/getProduct"
 import Login from "./components/forms/Login"
 import Signup from "./components/forms/SignupForm"
-import User from "./components/Header/Header"
+import User from "./components/Body/User"
 
 import Footer from "./components/Footer/Footer"
 import ConnectUs from "./components/Body/ConnectUs";

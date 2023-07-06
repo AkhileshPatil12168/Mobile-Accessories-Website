@@ -51,13 +51,13 @@ const Header = (props) => {
                 <Link to="/connect">
                     <li className="px-2">connect us</li>
                 </Link>
-            </ul>
-
             <Link to="/user/account">
                 <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
                     <span className="font-medium text-gray-600 dark:text-gray-300">{userName}</span>
                 </div>
             </Link>
+            </ul>
+
 
             {cToken && cUserId? (
                 <button

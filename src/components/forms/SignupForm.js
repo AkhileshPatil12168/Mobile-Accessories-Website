@@ -37,12 +37,12 @@ const Signup = () => {
             formData.append("phone", user.phone);
             formData.append("password", user.password);
             let response = await axios.post(
-                "https://mobileaccbackend.onrender.com/create/user/",
+                "http://localhost:3000/create/user/",
                 formData,
-                { headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  withCredentials: true }
+                // { headers: {
+                //     'Content-Type': 'application/json'
+                //   },
+                //   withCredentials: true }
             );
 
             console.log(response);

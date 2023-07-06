@@ -12,6 +12,7 @@ const Login = (props) => {
     const [userData, setUserData] = useState("");
 
     const [token, setToken] = useState("");
+    const [err, setErr] = useState("")
 
     let name, value;
     const handleSubmit = (e) => {
@@ -25,18 +26,19 @@ const Login = (props) => {
             e.preventDefault();
 
             let response = await axios.post(
-                "https://mobileaccbackend.onrender.com/login/user/",
+                "http://localhost:3000/login/user/",
                 data,
-                {headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  withCredentials: true }
+                // {headers: {
+                //     'Content-Type': 'application/json'
+                //   },
+                //   withCredentials: true }
             );
             setUserData(response.data.data.userId);
             setToken(response.data.data.token);
-            navigate("/?user=" + response.data.data.userId);
+            navigate(-1);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
+            setErr(error?.response?.data?.msg)
         }
     };
 
@@ -110,6 +112,7 @@ const Login = (props) => {
                             </div>
                         </Link>
                     </form>
+                    <div className="bg-red-300 h-14 ">{err}</div>
                 </div>
             </div>
         </>
