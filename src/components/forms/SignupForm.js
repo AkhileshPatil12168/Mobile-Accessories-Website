@@ -11,15 +11,33 @@ const Signup = () => {
         phone: "",
         password: "",
     });
+
+    let [admin, setAdmin] = useState({
+        userName: "",
+        email: "",
+        password: "",
+        secretKey: "",
+    });
+
+    let [userType, setUserType] = useState("user");
+
     const [img, setImg] = useState("");
     const [signupData, setSignupData] = useState(null);
 
     const handleSubmit = (e) => {
-        let name, value;
-        name = e.target.name;
-        value = e.target.value;
-        setUser({ ...user, [name]: value });
-        console.log(e.target.value);
+        if (userType == "user") {
+            let name, value;
+            name = e.target.name;
+            value = e.target.value;
+            setUser({ ...user, [name]: value });
+            console.log(e.target.value);
+        }
+        if (userType == "admin") {
+            let name, value;
+            name = e.target.name;
+            value = e.target.value;
+            setAdmin({ ...admin, [name]: value });
+        }
     };
 
     const handleImg = (e) => {
@@ -30,15 +48,21 @@ const Signup = () => {
         try {
             e.preventDefault();
             const formData = new FormData();
-            formData.append("profileImage", img[0]);
-            formData.append("fname", user.fname);
-            formData.append("lname", user.lname);
-            formData.append("email", user.email);
-            formData.append("phone", user.phone);
-            formData.append("password", user.password);
+            if (userType == "user") {
+                formData.append("profileImage", img[0]);
+                for (let key in user) {
+                    formData.append(key, user[key]);
+                }
+            }
+            if (userType == "admin") {
+                for (let key in admin) {
+                    formData.append(key, admin[key]);
+                }
+            }
+
             let response = await axios.post(
-                "http://localhost:3000/create/user/",
-                formData,
+                `http://localhost:3000/create/${userType}/`,
+                formData
                 // { headers: {
                 //     'Content-Type': 'application/json'
                 //   },
@@ -58,120 +82,106 @@ const Signup = () => {
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                        create a new account
+                        {userType} signup
                     </h2>
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                     <form className="space-y-6" method="post">
-                        <div>
-                            <label
-                                htmlFor="fname"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                First Name
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="fname"
-                                    name="fname"
-                                    type="text"
-                                    autoComplete="given-name"
-                                    required
-                                    value={user.fname}
-                                    onChange={handleSubmit}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
+                        {userType == "user" ? (
+                            <>
+                                <div>
+                                    <label className="block text-sm font-medium leading-6 text-gray-900">
+                                        First Name
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            id="fname"
+                                            name="fname"
+                                            type="text"
+                                            autoComplete="given-name"
+                                            required
+                                            value={user.fname}
+                                            onChange={handleSubmit}
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        />
+                                    </div>
+                                </div>
 
-                        <div>
-                            <label
-                                htmlFor="lname"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                Last Name
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="lname"
-                                    name="lname"
-                                    type="text"
-                                    autoComplete="family-name"
-                                    required
-                                    value={user.lname}
-                                    onChange={handleSubmit}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
+                                <div>
+                                    <label className="block text-sm font-medium leading-6 text-gray-900">
+                                        Last Name
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            id="lname"
+                                            name="lname"
+                                            type="text"
+                                            autoComplete="family-name"
+                                            required
+                                            value={user.lname}
+                                            onChange={handleSubmit}
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        />
+                                    </div>
+                                </div>
 
-                        <div>
-                            <label
-                                htmlFor="phone"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                Phone Number
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="phone"
-                                    name="phone"
-                                    type="text"
-                                    autoComplete="tel"
-                                    required
-                                    value={user.phone}
-                                    onChange={handleSubmit}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
+                                <div>
+                                    <label className="block text-sm font-medium leading-6 text-gray-900">
+                                        Phone Number
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            id="phone"
+                                            name="phone"
+                                            type="text"
+                                            autoComplete="tel"
+                                            required
+                                            value={user.phone}
+                                            onChange={handleSubmit}
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        />
+                                    </div>
+                                </div>
 
-                        <div>
-                            <label
-                                htmlFor="email"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                Email address
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    required
-                                    value={user.email}
-                                    onChange={handleSubmit}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
+                                <div>
+                                    <label className="block text-sm font-medium leading-6 text-gray-900">
+                                        Email address
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            id="email"
+                                            name="email"
+                                            type="email"
+                                            autoComplete="email"
+                                            required
+                                            value={user.email}
+                                            onChange={handleSubmit}
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        />
+                                    </div>
+                                </div>
 
-                        <div>
+                                <div>
+                                    <label className="block text-sm font-medium leading-6 text-gray-900">
+                                        Password
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            id="password"
+                                            name="password"
+                                            type="password"
+                                            autoComplete="current-password"
+                                            required
+                                            value={user.password}
+                                            onChange={handleSubmit}
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        />
+                                    </div>
+                                </div>
+                                {/* {<div>
                             <label
-                                htmlFor="password"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                Password
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    autoComplete="current-password"
-                                    required
-                                    value={user.password}
-                                    onChange={handleSubmit}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
-
-                        {/* {<div>
-                            <label
-                                htmlFor="address"
+                               
                                 className="block text-sm font-medium leading-6 text-gray-900"
                             >
                                 Address
@@ -189,16 +199,108 @@ const Signup = () => {
                             </div>
                         </div>} */}
 
-                        <div>
-                            <label
-                                htmlFor="profileImage"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                Profile Image
-                            </label>
-                            <div className="mt-2">
-                                <input name="profileImage" type="file" onChange={handleImg} />
-                            </div>
+                                <div>
+                                    <label className="block text-sm font-medium leading-6 text-gray-900">
+                                        Profile Image
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            name="profileImage"
+                                            type="file"
+                                            onChange={handleImg}
+                                        />
+                                    </div>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <div>
+                                    <label className="block text-sm font-medium leading-6 text-gray-900">
+                                        UserName
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            id="userName"
+                                            name="userName"
+                                            type="text"
+                                            autoComplete="given-name"
+                                            required
+                                            value={admin.userName}
+                                            onChange={handleSubmit}
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium leading-6 text-gray-900">
+                                        Email address
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            id="email"
+                                            name="email"
+                                            type="email"
+                                            autoComplete="email"
+                                            required
+                                            value={admin.email}
+                                            onChange={handleSubmit}
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium leading-6 text-gray-900">
+                                        Password
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            id="password"
+                                            name="password"
+                                            type="password"
+                                            autoComplete="current-password"
+                                            required
+                                            value={admin.password}
+                                            onChange={handleSubmit}
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium leading-6 text-gray-900">
+                                        secretKey
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            id="secretKey"
+                                            name="secretKey"
+                                            type="password"
+                                            autoComplete="secretKey"
+                                            required
+                                            value={admin.secretKey}
+                                            onChange={handleSubmit}
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        />
+                                    </div>
+                                </div>
+                            </>
+                        )}
+
+                        <div className="m-1 p-1 flex space-x-3">
+                            <input
+                                type="radio"
+                                value="user"
+                                name="userType"
+                                onClick={() => setUserType("user")}
+                            />
+                            user
+                            <input
+                                type="radio"
+                                value="admin"
+                                name="userType"
+                                onClick={() => setUserType("admin")}
+                            />
+                            admin
                         </div>
 
                         <div>
