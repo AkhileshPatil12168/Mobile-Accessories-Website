@@ -1,79 +1,74 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Title from "./Title";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Cookies from "universal-cookie";
+import LoginContext from "../../util/loginContext";
 
-const Header = (props) => {
-    const [params] = useSearchParams();
+const Header = () => {
+    
     const cookies = new Cookies();
     const navigate = useNavigate();
 
-    const [isLogedIn, setLogedIn] = useState(false);
-    const [token, setToken] = useState(null);
     const [userId, setUserId] = useState(null);
 
     const cToken = cookies.get("token");
     const cUserId = cookies.get("user");
     useEffect(() => {
         if (cToken && cUserId) {
-            setToken(cToken);
-            setLogedIn(true);
             setUserId(cUserId);
         }
     }, []);
-    console.log(cToken);
 
     const handleLogout = () => {
         cookies.remove("token", { path: "/" });
         cookies.remove("user", { path: "/" });
-        setToken(null);
-        setUserId(null);
-        setLogedIn(false);
-        setUserId(null);
         navigate("/");
     };
 
     const userName = "hl";
     return (
-        <div className="flex justify-between bg-blue-200   ">
-            <Title {...{ userId: userId }} />
+        <div className="flex flex-col md:flex-row justify-between bg-blue-200 w-full h-full">
+  <Title {...{ userId: userId }} />
 
-            <ul className="flex py-7 ">
-                <li className="px-2">
-                    <Link to="/">Home</Link>
-                </li>
-                <Link to="/orders">
-                    <li className="px-2">Orders</li>
-                </Link>
-                <Link to="/cart">
-                    <li className="px-2">Cart</li>
-                </Link>
-                <Link to="/connect">
-                    <li className="px-2">connect us</li>
-                </Link>
-            <Link to="/user/account">
-                <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                    <span className="font-medium text-gray-600 dark:text-gray-300">{userName}</span>
-                </div>
-            </Link>
-            </ul>
+  <ul className="flex py-7">
+    <li className="px-2">
+      <Link to="/">Home</Link>
+    </li>
+    <Link to={cToken && cUserId ? "/orders" : "/login"}>
+      <li className="px-2">Orders</li>
+    </Link>
+    <Link to={cToken && cUserId ? "/cart" : "/login"}>
+      <li className="px-2">Cart</li>
+    </Link>
+    <Link to="/connect">
+      <li className="px-2">Connect Us</li>
+    </Link>
+    <Link to={cToken && cUserId ? "/user/account" : "/login"}>
+      <li className="px-2">Your Account</li>
+    </Link>
+  </ul>
 
+  {cToken && cUserId ? (
+    <button
+      className="m-2 mr-4 w-24 h-16 bg-blue-500 text-white rounded-md"
+      onClick={() => {
+        handleLogout();
+      }}
+    >
+      Logout
+    </button>
+  ) : (
+    <div className="pt-4">
+      <Link to="/login">
+        <button className="w-20 h-12 bg-blue-500 text-white">Login</button>
+      </Link>
+      <Link to="/signup">
+        <button className="m-2 w-20 h-12 bg-blue-500 text-white">Signup</button>
+      </Link>
+    </div>
+  )}
+</div>
 
-            {cToken && cUserId? (
-                <button
-                    className=" m-2  mr-4 w-24 h-16 bg-blue-500 text-white   "
-                    onClick={() => {
-                        handleLogout();
-                    }}
-                >
-                    logout
-                </button>
-            ) : (
-                <Link to="/login">
-                    <button className="m-2  mr-4 w-24 h-16 bg-blue-500 text-white">login</button>
-                </Link>
-            )}
-        </div>
     );
 };
 

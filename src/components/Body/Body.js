@@ -6,7 +6,9 @@ import ShimmerBody from "./ShimmerCard";
 
 import Card from "./Card";
 
-const Body = () => {
+const Body = (props) => {
+    const {userId, token}= props
+    //console.log(token+"          props")
     const [products, setProducts] = useState([]);
     useEffect(() => {
         getProducts();
@@ -20,7 +22,7 @@ const Body = () => {
         }
     }
 
-    return !products ? (
+    return (!products) ? (
         <ShimmerBody />
     ) : (
         <div className="flex flex-wrap w-fit p-10 ">
