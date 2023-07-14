@@ -1,9 +1,10 @@
 import axios from "axios";
-import { useState } from "react";
-import { redirect, Link } from "react-router-dom";
-import Login from "./Login";
+import { useState,useEffect } from "react";
+import { redirect, Link , useNavigate} from "react-router-dom";
+
 
 const Signup = () => {
+    const navigate = useNavigate();
     let [user, setUser] = useState({
         fname: "",
         lname: "",
@@ -21,8 +22,11 @@ const Signup = () => {
 
     let [userType, setUserType] = useState("user");
 
-    const [img, setImg] = useState("");
+    const [img, setImg] = useState('');
     const [signupData, setSignupData] = useState(null);
+    const [color, setColor] = useState("bg-white");
+    const [res, setRes] = useState("");
+    const [statCode, setStatCode] = useState(null);
 
     const handleSubmit = (e) => {
         if (userType == "user") {
@@ -49,7 +53,7 @@ const Signup = () => {
             e.preventDefault();
             const formData = new FormData();
             if (userType == "user") {
-                formData.append("profileImage", img[0]);
+                formData.append("image", img[0]);
                 for (let key in user) {
                     formData.append(key, user[key]);
                 }
@@ -63,20 +67,30 @@ const Signup = () => {
             let response = await axios.post(
                 `http://localhost:3000/create/${userType}/`,
                 formData
-                // { headers: {
-                //     'Content-Type': 'application/json'
-                //   },
-                //   withCredentials: true }
             );
+            console.log(response,"hello");
+            setRes(response.data.message);
+            setColor("bg-green-300");
+            setStatCode(response?.status);
 
-            console.log(response);
             if (response) setSignupData(response?.data?.data);
         } catch (error) {
-            console.log(error?.response?.data);
+            setRes(error?.response?.data.message);
+            setColor("bg-red-300");
+            setStatCode(error?.response?.status);
+            console.log(error)
+            
         }
     };
+
+    useEffect(() => {
+        setColor("bg-white");
+        setRes("");
+    }, [user,admin]);
+    
+
     return signupData ? (
-        <Login {...signupData} />
+        navigate("/login")
     ) : (
         <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -86,7 +100,7 @@ const Signup = () => {
                     </h2>
                 </div>
 
-                <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
                     <form className="space-y-6" method="post">
                         {userType == "user" ? (
                             <>
@@ -103,7 +117,7 @@ const Signup = () => {
                                             required
                                             value={user.fname}
                                             onChange={handleSubmit}
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                 </div>
@@ -121,7 +135,7 @@ const Signup = () => {
                                             required
                                             value={user.lname}
                                             onChange={handleSubmit}
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                 </div>
@@ -139,7 +153,7 @@ const Signup = () => {
                                             required
                                             value={user.phone}
                                             onChange={handleSubmit}
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                 </div>
@@ -157,7 +171,7 @@ const Signup = () => {
                                             required
                                             value={user.email}
                                             onChange={handleSubmit}
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                 </div>
@@ -175,29 +189,10 @@ const Signup = () => {
                                             required
                                             value={user.password}
                                             onChange={handleSubmit}
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                 </div>
-                                {/* {<div>
-                            <label
-                               
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                Address
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="address"
-                                    name="address"
-                                    type="text"
-                                    required
-                                    value={user.address}
-                                    onChange={handleSubmit}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>} */}
 
                                 <div>
                                     <label className="block text-sm font-medium leading-6 text-gray-900">
@@ -227,7 +222,7 @@ const Signup = () => {
                                             required
                                             value={admin.userName}
                                             onChange={handleSubmit}
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                 </div>
@@ -244,7 +239,7 @@ const Signup = () => {
                                             required
                                             value={admin.email}
                                             onChange={handleSubmit}
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                 </div>
@@ -262,7 +257,7 @@ const Signup = () => {
                                             required
                                             value={admin.password}
                                             onChange={handleSubmit}
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                 </div>
@@ -279,14 +274,14 @@ const Signup = () => {
                                             required
                                             value={admin.secretKey}
                                             onChange={handleSubmit}
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                 </div>
                             </>
                         )}
 
-                        <div className="m-1 p-1 flex space-x-3">
+                        <div className=" flex space-x-3">
                             <input
                                 type="radio"
                                 value="user"
@@ -322,7 +317,9 @@ const Signup = () => {
                         >
                             login
                         </Link>
+
                     </div>
+                    <div className={`${color} h-14 mt-2 rounded-lg text-center pt-4`}>{res}</div>
                 </div>
             </div>
         </>
