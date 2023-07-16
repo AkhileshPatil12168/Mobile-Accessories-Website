@@ -3,7 +3,7 @@
 const ShimmerCard = () => {
     return (
       <div className="box-border  h-fit w-72 bg-blue-300  border-4 ml-14">
-            <img src="" className="h-72 w-64 bg-white m-2.5"></img>
+            <div className="h-72 w-64 bg-gray-200 m-2.5"></div>
             <div  >
                 <h1></h1>
                 <h3></h3>
