@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 const Items = (props) => {
     const { productImage, title, quantity, price, index } = props;
     const [bgColor, setBgColor] = useState("");
+
     useEffect(() => {
         if (index % 2 == 0) setBgColor("bg-gray-200");
     });
@@ -30,75 +31,54 @@ const Items = (props) => {
         </div>
     );
 };
-const Order = () => {
+const AdminOrder = () => {
     const navigate = useNavigate();
     const cookies = new Cookies();
-    const cUserId = cookies.get("user");
+    const cAdminId = cookies.get("admin");
     const { orderId } = useParams();
 
     console.log(orderId);
 
     const [order, setOrder] = useState({});
-    const [orderResponse, setOrderResponse] = useState();
-
+    const [updateResponse, setUpdateResponse] = useState("");
     const orderDetails = async () => {
         try {
             const response = await axios.get(
-                `http://localhost:3000/user/${cUserId}/order/${orderId}`
+                `http://localhost:3000/admin/${cAdminId}/order/${orderId}`
             );
-            setOrder(response.data.data);
-            console.log(response.data.data);
+            const order = response.data.data;
+            setOrder(order);
+            console.log(order);
         } catch (error) {
             console.log(error);
         }
     };
-
-    const cancelOrder = async () => {
+    const updateOrder = async (status) => {
         try {
             const response = await axios.put(
-                `http://localhost:3000/user/${cUserId}/order/cancleorder/${orderId}`,
-                { cancle: true }
+                `http://localhost:3000/admin/${cAdminId}/order/${orderId}`,
+                { status: status }
             );
 
             const updatedOrder = response.data.data;
-            const responseStatus = response.status;
+            const responseMessage = response.data.message;
             setOrder(updatedOrder);
-            setOrderResponse(responseStatus);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const deleteOrder = async () => {
-        try {
-            const response = await axios.delete(
-                `http://localhost:3000/user/${cUserId}/order/deleteorder/${orderId}`
-            );
-
-            const updatedOrder = response.data.data;
-            const responseStatus = response.status;
-            setOrder(updatedOrder);
-            setOrderResponse(responseStatus);
+            setUpdateResponse(responseMessage);
         } catch (error) {
             console.log(error);
         }
     };
 
     useEffect(() => {
-        if (orderResponse == 204) {
-            setOrderResponse(null);
-            navigate("/orders");
-        } else {
-            setOrderResponse(null);
-            orderDetails();
-        }
-    }, [ orderResponse]);
+        orderDetails();
+    }, [updateResponse]);
 
     useEffect(() => {
         orderDetails();
     }, []);
+    console.log(order.cancellable);
 
-    return!cUserId ?(navigate("/login")): (
+    return !cAdminId ?(navigate("/login")):(
         <div className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">Order Details</h1>
 
@@ -135,7 +115,7 @@ const Order = () => {
                             <strong>Ordered Date:</strong> {order?.orderdedDate}
                         </p>
                         <p className="mb-2">
-                            <strong>Cancellable:</strong> {order?.cancellable ? "Yes" : "No"}
+                            <strong>Cancellable:</strong> {order.cancellable ? "Yes" : "No"}
                         </p>
                         <p className="mb-2">
                             <strong>Status:</strong> {order?.status}
@@ -189,24 +169,24 @@ const Order = () => {
                 </div>
             </div>
             <div className="flex justify-end ">
-                {order?.status != "pending" ? (
+                {order.status == "pending" ? (
                     <div className="pr-2">
                         <button
-                            onClick={()=>deleteOrder()}
-                            className="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-red-500"
+                            onClick={() => updateOrder("completed")}
+                            className="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-green-500"
                         >
-                            Delete Order
+                            Complete Order
                         </button>
                     </div>
                 ) : (
                     <></>
                 )}
 
-                {order?.cancellable && order?.status == "pending" ? (
+                {order.cancellable && order.status == "pending" ? (
                     <div>
                         <button
-                            onClick={()=>cancelOrder()}
-                            className="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-red-500"
+                            onClick={() => updateOrder("cancelled")}
+                            className="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-red-600 "
                         >
                             Cancel Order
                         </button>
@@ -218,4 +198,4 @@ const Order = () => {
         </div>
     );
 };
-export default Order;
+export default AdminOrder;

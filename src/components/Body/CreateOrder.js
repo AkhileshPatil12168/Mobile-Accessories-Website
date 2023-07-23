@@ -9,6 +9,7 @@ const CreateOrder = () => {
     const cUserId = cookies.get("user");
 
     const [summery, setSummery] = useState({});
+    const [userData, setUserData] = useState({});
     const [info, setInfo] = useState({
         name: "",
         email: "",
@@ -63,24 +64,28 @@ const CreateOrder = () => {
     const getInfo = async () => {
         try {
             const response = await axios.get(`http://localhost:3000/user/${cUserId}/profile`);
-            let { fname, lname, email, phone, address } = response.data.data;
+            //let { fname, lname, email, phone, address } = response.data.data;
+            setUserData(response.data.data);
+            // setInfo({ ...info, name: fname + " " + lname, email: email, phone: phone });
+            // setInfo({
+            //     ...info,
+            //     shippingAddressStreet: address.shipping.street,
+            //     shippingAddressCity: address.shipping.city,
+            //     shippingAddressPincode: address.shipping.pincode,
+            // });
+            // setInfo({
+            //     ...info,
+            //     billingAddressStreet: address.billing.street,
+            //     billingAddressCity: address.billing.city,
+            //     billingAddressPincode: address.billing.pincode,
+            // });
 
-            setInfo({
-                name: fname + " " + lname,
-                email: email,
-                phone: phone,
-                shippingAddressStreet: address.shipping.street,
-                shippingAddressCity: address.shipping.city,
-                shippingAddressPincode: address.shipping.pincode,
-                billingAddressStreet: address.billing.street,
-                billingAddressCity: address.billing.city,
-                billingAddressPincode: address.billing.pincode,
-            });
             console.log(response.data.data);
         } catch (error) {
             console.log(error);
         }
     };
+    console.log(info);
 
     const createOrder = async () => {
         try {
@@ -102,11 +107,9 @@ const CreateOrder = () => {
                 },
             };
 
-            const response = await axios.post(`http://localhost:3000/user/${cUserId}/order/`, 
-                data,
-            );
+            const response = await axios.post(`http://localhost:3000/user/${cUserId}/order/`, data);
             console.log(response.data.data["_id"]);
-            setOrderId(response.data.data["_id"])
+            setOrderId(response.data.data["_id"]);
         } catch (error) {
             console.log(error);
         }
@@ -115,15 +118,36 @@ const CreateOrder = () => {
     useEffect(() => {
         getSummery();
         getInfo();
+
+        console.log("apicall");
     }, []);
+    useEffect(() => {
+        setInfo({
+            ...info,
+            name: userData.fname + " " + userData.lname,
+            email: userData.email,
+            phone: userData.phone,
+            shippingAddressStreet: userData?.address?.shipping?.street,
+            shippingAddressCity: userData?.address?.shipping?.city,
+            shippingAddressPincode: userData?.address?.shipping?.pincode,
+            billingAddressStreet: userData?.address?.billing?.street,
+            billingAddressCity: userData?.address?.billing?.city,
+            billingAddressPincode: userData?.address?.billing?.pincode,
+        });
+  
+    }, [userData]);
+
     useEffect(() => {}, [info, checked]);
+
     useEffect(() => {
         if (orderId) {
             navigate(`/user/order/${orderId}`);
         }
     }, [orderId]);
 
-    return (
+    return !cUserId ? (
+        navigate("/login")
+    ) : (
         <div className="container mx-auto p-4 bg-white rounded-lg shadow">
             <h1 className="text-center text-2xl font-bold mb-4">Order Summary</h1>
 

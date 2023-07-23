@@ -117,7 +117,7 @@ const Cart = () => {
         getCart();
     }, [statCode]);
 
-    return (
+    return !cUserId ?(navigate("/login")):(
         <div className="container mx-auto p-4 bg-white rounded-lg shadow">
             <h1 className="text-center text-2xl font-bold mb-4">Cart</h1>
         <div className="max-h-[420]	 overflow-auto">

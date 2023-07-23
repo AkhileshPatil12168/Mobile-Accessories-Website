@@ -30,14 +30,20 @@ const Items = (props) => {
 };
 const OrderDetails = (props) => {
     const { status, orderdedDate, totalPrice } = props;
+    const [color, setColor]=useState("")
+    useEffect(()=>{
+        if(status=="pending")setColor("text-blue-500")
+        else if(status=="completed")setColor("text-green-500")
+        else if(status=="cancelled")setColor("text-red-500")
+    },[props])
     return (
         <>
             <div className="bg-blue-200 p-2 rounded-t-lg">
                 <h2 className="text-lg font-bold text-center">Order Details</h2>
             </div>
             <div className="p-4">
-                <p className="mb-2">
-                    <strong>Status:</strong> {status}
+                <p className="mb-2 flex ">
+                    <strong >Status:</strong> <p className={`${color} pl-1`}> {status}</p>
                 </p>
                 <p className="mb-2">
                     <strong>Total Price:</strong> ₹{totalPrice}
@@ -98,7 +104,7 @@ const Orders = () => {
     useEffect(() => {
         getOrders();
     }, []);
-    return (
+    return !cUserId ?(navigate("/login")):(
         <div>
             <p className="text-center text-lg font-bold">orders</p>
             {orders.map((order, index) => {

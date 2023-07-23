@@ -61,8 +61,8 @@ const Product = () => {
                     <p className="leading-[1.6] text-[#555] mb-5">
                         Description : {product?.description}
                     </p>
-                    <p className="text-2xl text-[#ff5722] mb-2.5">Price: ₹989</p>
-                    <p className="product-category">Category: Back Cover</p>
+                    <p className="text-2xl text-[#ff5722] mb-2.5">Price: {product?.price}</p>
+                    <p className="product-category">Category: {product?.category.join(", ")}</p>
                     <p className="product-compatible-models">
                         Compatible Models: {product?.compatible_models.join(", ")}
                     </p>

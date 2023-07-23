@@ -19,8 +19,13 @@ import ConnectUs from "./components/Body/ConnectUs";
 import CreateOrder from "./components/Body/CreateOrder";
 import Order from "./components/Body/Order";
 import Admin from "./components/Body/Admin";
-import AdminOrdersPage from "./components/Body/AdminOrders";
-
+import AdminOrders from "./components/Body/AdminOrders";
+import AdminOrder from "./components/Body/AdminOrder";
+import AdminProducts from "./components/Body/AdminProducts";
+import CreateProduct from "./components/Body/AdminCreateProduct";
+import ProductDetails from "./components/Body/AdminProduct";
+import AboutUs from "./components/Body/AboutUs";
+import TestCss from "./components/Test/TestCss";
 
 const AppLayout = () => {
     return (
@@ -42,19 +47,32 @@ const appRouter = createBrowserRouter([
             { path: "/", element: <Body /> },
             { path: "/orders", element: <Orders /> },
             { path: "/cart", element: <Cart /> },
-            { path: "/products/:id", element: <Product /> },
+            { path: "/product/:id", element: <Product /> },
             { path: "/login", element: <Login /> },
             { path: "/signup", element: <Signup /> },
             { path: "/user/account", element: <User /> },
-            { path: "/connect", element: <ConnectUs /> },
+            { path: "/contactus", element: <ConnectUs /> },
+            { path: "/aboutus", element: <AboutUs /> },
+
+
+
             { path: "/reset/:usertype/:userId/resetpassword/:token", element: <ResetPassword /> },
             { path: "/request/resetpassword", element: <ForgotPassword /> },
+
             { path: "/user/create/order/", element: <CreateOrder /> },
             { path: "/user/order/:orderId", element: <Order /> },
 
-            {path: "/admin", element:<Admin />},
-            {path : "/admin/orders/" ,element : <AdminOrdersPage/>} 
-        
+            { path: "/admin", element: <Admin /> },
+            { path: "/admin/orders", element: <AdminOrders /> },
+            { path: "/admin/order/:orderId", element: <AdminOrder /> },
+
+            { path: "/admin/create/product", element: <CreateProduct /> },
+
+            { path: "/admin/products/summery", element: <AdminProducts /> },
+            
+            { path: "/admin/product/:productId", element: <ProductDetails /> },
+
+            { path: "/testcss", element: <TestCss /> }
 
         ],
     },
