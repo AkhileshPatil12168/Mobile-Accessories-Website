@@ -12,9 +12,7 @@ const deleteAdmin = async (req, res) => {
             return res.status(400).send({ status: false, message: "Please provide userId." });
 
         if (!isValidObjectId(userId))
-            return res
-                .status(400)
-                .send({ status: false, message: "Please provide a valid userId." });
+        return res.status(403).send({ status: false, message: "please login again" });
         let isCorrectUser = await bcrypt.compare(userId, decodedToken.userId);
         if (!isCorrectUser)
             return res.status(403).send({ status: false, message: "please login again" });
@@ -33,12 +31,12 @@ const deleteAdmin = async (req, res) => {
 
         let user = await adminModel.findById(userId).lean();
         if (!user || user.isDeleted == true)
-            return res.status(400).send({ status: false, msg: "User not Exist" });
+            return res.status(400).send({ status: false, message: "User not Exist" });
 
         let actualPassword = await bcrypt.compare(password, user.password);
 
         if (!actualPassword)
-            return res.status(400).send({ status: false, msg: "Incorrect password" });
+            return res.status(400).send({ status: false, message: "Incorrect password" });
 
         let updateData = await adminModel.findByIdAndUpdate(
             userId,

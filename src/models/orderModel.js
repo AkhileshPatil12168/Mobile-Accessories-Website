@@ -86,6 +86,9 @@ const orderSchema = new mongoose.Schema(
         deliveredDate :{
             type:Date
         },
+        cancelledDate :{
+            type:Date
+        },
         cancellable: {
             type: Boolean,
             default: true,

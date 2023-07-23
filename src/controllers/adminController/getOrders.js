@@ -15,9 +15,7 @@ const getOrdersAdmin = async (req, res) => {
             return res.status(400).send({ status: false, message: "Please provide userId." });
 
         if (!isValidObjectId(userId))
-            return res
-                .status(400)
-                .send({ status: false, message: "Please provide a valid userId." });
+        return res.status(403).send({ status: false, message: "please login again" });
 
         const isCorrectUser = await bcrypt.compare(userId, decodedToken.userId);
 
@@ -43,7 +41,7 @@ const getOrdersAdmin = async (req, res) => {
         let orderData = await orderModel
             .find(data)
             .sort({ orderdedDate: -1 })
-            .select({ deliveredDate: 1, items: 1, totalPrice: 1, status: 1, orderdedDate: 1 })
+            .select({ deliveredDate: 1, items: 1, totalPrice: 1, status: 1, orderdedDate: 1,cancelledDate:1,deliveredDate:1 })
             .lean();
         if (orderData.length == 0)
             return res.status(404).send({ status: false, message: "orders Not Found" });
@@ -64,9 +62,7 @@ const getOrderByIdAdmin = async (req, res) => {
             return res.status(400).send({ status: false, message: "Please provide userId." });
 
         if (!isValidObjectId(userId))
-            return res
-                .status(400)
-                .send({ status: false, message: "Please provide a valid userId." });
+        return res.status(403).send({ status: false, message: "please login again" });
 
         if (!isValidObjectId(orderId))
             return res
@@ -84,7 +80,7 @@ const getOrderByIdAdmin = async (req, res) => {
 
         let orderData = await orderModel
             .findById(orderId)
-            .select({ cancellable: 0, deletedAt: 0, isDeleted: 0 })
+            .select({  deletedAt: 0, isDeleted: 0 })
             .lean();
         if (!orderData) return res.status(404).send({ status: false, message: "order Not Found" });
 

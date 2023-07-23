@@ -15,9 +15,7 @@ const updatCart = async (req, res) => {
             return res.status(400).send({ status: false, message: "Please provide userId." });
 
         if (!isValidObjectId(userId))
-            return res
-                .status(400)
-                .send({ status: false, message: "Please provide a valid userId." });
+            return res.status(403).send({ status: false, message: "please login again" });
 
         let isCorrectUser = await bcrypt.compare(userId, decodedToken.userId);
         if (!isCorrectUser)
@@ -27,6 +25,14 @@ const updatCart = async (req, res) => {
         if (!productData)
             return res.status(400).send({ status: false, message: "product not found" });
         let userCart = await cartModel.findOne({ userId: userId }).lean();
+        if(!userCart){
+           userCart = await cartModel.create({
+                userId: userId,
+                totalQuantity: 0,
+                totalPrice: 0,
+                totalItems: 0,
+            });
+        }
 
         if (userCart.totalItems > 0) {
             if (value == 1) {
@@ -128,7 +134,7 @@ const updatCart = async (req, res) => {
                 .send({ status: true, message: "Product has been added to the Cart", data: cart });
         }
     } catch (error) {
-        return res.status(500).send({ status: false, msg: error.message });
+        return res.status(500).send({ status: false, message: error.message });
     }
 };
 

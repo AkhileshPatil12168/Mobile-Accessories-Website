@@ -17,7 +17,7 @@ const isValidWord = function (value) {
 };
 
 const isValidEmail = (value) => {
-    return /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(value);
+    return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value);
 };
 
 const isValidPhone = (value) => {
@@ -33,7 +33,7 @@ const isValidPincode = (value) => {
 };
 
 const isValidImage = (value) => {
-    return /^([/|\w|\s|+-.])*\.((jpg)|(png)|(jpeg))$/.test(value);
+    return /^([/|\w|\s|+-.()])*\.((jpg)|(png)|(jpeg))$/.test(value);
 };
 
 const isValidObjectId = (value) => {
@@ -42,9 +42,11 @@ const isValidObjectId = (value) => {
 
 const isValidString = function (value) {
     if (value && value == undefined) return false;
-    if (typeof value == "string" && value.trim().length == 0) return false;
+    if (typeof value == "string" && value.trim().length == 0 ) return false;
+ 
     return true;
 };
+
 
 const isValidUserName = (value) => {
     return /^[a-zA-Z0-9 ]{4,}$/.test(value);

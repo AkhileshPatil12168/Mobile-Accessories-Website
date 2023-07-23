@@ -11,16 +11,17 @@ const getOrders = async (req, res) => {
         let { status } = filters;
 
         if (!userId)
-            return res.status(400).send({ status: false, message: "Please provide userId." });
-
+        return res.status(400).send({ status: false, message: "Please provide userId." });
+        
         if (!isValidObjectId(userId))
-            return res
-                .status(400)
-                .send({ status: false, message: "Please provide a valid userId." });
-
+        return res
+        .status(400)
+        .send({ status: false, message: "Please provide a valid userId." });
+        
         let isCorrectUser = await bcrypt.compare(userId, decodedToken.userId);
         if (!isCorrectUser)
-            return res.status(403).send({ status: false, message: "please login again" });
+        return res.status(403).send({ status: false, message: "please login again" });
+        const data = { userId: userId, isDeleted: false,  };
 
         if (status) {
             if (!isValidStatus(status))
@@ -28,14 +29,15 @@ const getOrders = async (req, res) => {
                     status: false,
                     message: "Please provide only pending, completed, cancelled.",
                 });
+                data.status = status
+
         }
 
-        const data = { userId: userId, isDeleted: false, status: status };
 
         let orderData = await orderModel
             .find(data)
             .sort({ orderdedDate: -1 })
-            .select({ deliveredDate: 1, items: 1, totalPrice: 1, status: 1, orderdedDate: 1 })
+            .select({ deliveredDate: 1, items: 1, totalPrice: 1, status: 1, orderdedDate: 1, })
             .lean();
         if (orderData.length == 0)
             return res.status(404).send({ status: false, message: "orders Not Found" });
@@ -56,9 +58,7 @@ const getOrderById = async (req, res) => {
             return res.status(400).send({ status: false, message: "Please provide userId." });
 
         if (!isValidObjectId(userId))
-            return res
-                .status(400)
-                .send({ status: false, message: "Please provide a valid userId." });
+        return res.status(403).send({ status: false, message: "please login again" });
 
         if (!isValidObjectId(orderId))
             return res
@@ -71,7 +71,7 @@ const getOrderById = async (req, res) => {
 
         let orderData = await orderModel
             .findOne({ _id: orderId, isDeleted: false })
-            .select({ cancellable: 0, deletedAt: 0, isDeleted: 0 })
+            .select({ deletedAt: 0, isDeleted: 0 })
             .lean();
         if (!orderData) return res.status(404).send({ status: false, message: "order Not Found" });
 

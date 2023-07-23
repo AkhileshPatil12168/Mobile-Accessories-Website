@@ -2,15 +2,19 @@ const jwt = require("jsonwebtoken");
 
 const authentication = async (req, res, next) => {
     try {
-        const  token =req.cookies.token
+
+        let  token =req.cookies.token 
+        
+        if(req.route.path=="/:userId/reset/password/:token")token = req.params.token
+        
 
         if (!token) {
             return res.status(400).send({ status: false, message: "provide token in the cookie" });
         }
 
-        jwt.verify(token, process.env.TOKEN_KEY, function (err, decodedToken) {
+        jwt.verify(token, process.env.TOKEN_KEY, function (err, decodedToken) { 
             if (err) {
-                return res.status(401).send({ status: false, message: err.message });
+                return res.status(401).send({ status: false, message: "token might be expried or not valid" });
             } else {
                 req.verifyed = decodedToken;
                 next();

@@ -12,15 +12,13 @@ const getCart = async (req, res) => {
             return res.status(400).send({ status: false, message: "Please provide userId." });
 
         if (!isValidObjectId(userId))
-            return res
-                .status(400)
-                .send({ status: false, message: "Please provide a valid userId." });
+        return res.status(403).send({ status: false, message: "please login again" });
 
         let isCorrectUser = await bcrypt.compare(userId, decodedToken.userId);
         if (!isCorrectUser)
             return res.status(403).send({ status: false, message: "please login again" });
 
-        let cartData = await cartModel.findOne({ userId: userId });
+        let cartData = await cartModel.findOne({ userId: userId }).select({updatedAt:0,createdAt:0,__v:0}).lean();
         if (!cartData) return res.status(404).send({ status: false, message: "Cart Not Found" });
 
         return res.status(200).send({ status: true, message: "success", data: cartData });

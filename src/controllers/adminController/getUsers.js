@@ -14,9 +14,7 @@ const getUsers = async function (req, res) {
             return res.status(400).send({ status: false, message: "Please provide userId." });
 
         if (!isValidObjectId(userId))
-            return res
-                .status(400)
-                .send({ status: false, message: "Please provide a valid userId." });
+        return res.status(403).send({ status: false, message: "please login again" });
 
         let isCorrectUser = await bcrypt.compare(userId, decodedToken.userId);
 
@@ -53,9 +51,7 @@ const getUser = async function (req, res) {
             return res.status(400).send({ status: false, message: "Please provide userId." });
 
         if (!isValidObjectId(userId))
-            return res
-                .status(400)
-                .send({ status: false, message: "Please provide a valid userId." });
+        return res.status(403).send({ status: false, message: "please login again" });
 
         if (!customerUserId)
             return res

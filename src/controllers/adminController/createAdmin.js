@@ -68,7 +68,7 @@ const createAdmin = async (req, res) => {
             data: createAdmin,
         });
     } catch (error) {
-        return res.status(500).send({ status: false, msg: error });
+        return res.status(500).send({ status: false, message: error });
     }
 };
 

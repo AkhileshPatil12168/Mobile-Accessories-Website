@@ -22,7 +22,7 @@ app.use(
         // origin: process.env.homeRouter+':'+process.env.forntEndPort,        //home router
         origin: "http://localhost:3001",
         // origin: "https://mobileacc.netlify.app",
-        credentials: true,
+       credentials: true,
 
         // origin:'http://192.168.1.11:3001'
     })
@@ -46,7 +46,7 @@ mongoose
 
 app.listen(
     process.env.port,
-    /*'192.168.1.11'*/ () => {
+    /*'192.168.1.11', */ () => {
         console.log("server is live at " + process.env.port);
     }
 );

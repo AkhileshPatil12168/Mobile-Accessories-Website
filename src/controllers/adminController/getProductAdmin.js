@@ -7,7 +7,7 @@ const {
     isValidObjectId,
 } = require("../../utils/validators");
 
-const getProductById = async function (req, res) {
+const getProductByIdAdmin = async function (req, res) {
     try {
         let productId = req.params.productId;
 
@@ -23,13 +23,7 @@ const getProductById = async function (req, res) {
                 message: "provide a valid Product Id",
             });
 
-        let productsDetails = await productModel
-            .findOne({
-                _id: productId,
-                isDeleted: false,
-            })
-            .select({ deletedAt: 0, isDeleted: 0, updatedAt: 0, createdAt: 0 })
-            .lean();
+        let productsDetails = await productModel.findById(productId).lean();
         if (!productsDetails)
             return res.status(404).send({
                 status: false,
@@ -49,7 +43,7 @@ const getProductById = async function (req, res) {
     }
 };
 
-const getProductByFilter = async function (req, res) {
+const getProductByFilterAdmin = async function (req, res) {
     try {
         const filters = req.body;
 
@@ -57,8 +51,6 @@ const getProductByFilter = async function (req, res) {
             filters;
 
         if (!emptyBody(filters)) {
-            filters["isDeleted"] = false;
-
             //validating title
             if (title || title === "") {
                 title = validTrim(title);
@@ -217,6 +209,6 @@ const getProductByFilter = async function (req, res) {
 };
 
 module.exports = {
-    getProductByFilter,
-    getProductById,
+    getProductByFilterAdmin,
+    getProductByIdAdmin,
 };

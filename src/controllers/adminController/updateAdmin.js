@@ -20,9 +20,7 @@ const updateAdmin = async (req, res) => {
             return res.status(400).send({ status: false, message: "Please provide userId." });
 
         if (!isValidObjectId(userId))
-            return res
-                .status(400)
-                .send({ status: false, message: "Please provide a valid userId." });
+        return res.status(403).send({ status: false, message: "please login again" });
 
         let isCorrectUser = await bcrypt.compare(userId, decodedToken.userId);
         if (!isCorrectUser)
@@ -78,7 +76,7 @@ const updateAdmin = async (req, res) => {
             data: updateData,
         });
     } catch (error) {
-        return res.status(500).send({ status: false, msg: error.message });
+        return res.status(500).send({ status: false, message: error.message });
     }
 };
 

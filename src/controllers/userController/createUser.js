@@ -3,7 +3,7 @@ const cartModel = require("../../models/cartModel");
 
 const bcrypt = require("bcrypt");
 const uploadFile = require("../Amazom S3 Bucket/bucketController");
-
+const mailSender = require("../NodeMailer/nodeMailer")
 const {
     emptyBody,
     isNotProvided,
@@ -24,7 +24,7 @@ const createUser = async (req, res) => {
 
         let streetS, cityS, pincodeS, streetB, cityB, pincodeB;
 
-        if (emptyBody(req.body))
+        if (emptyBody(req.body)) 
             return res.status(400).send({ status: false, message: "provide some data" });
 
         if (!fname)
@@ -189,13 +189,16 @@ const createUser = async (req, res) => {
             totalItems: 0,
         });
 
+        mailSender(email,"singUp", "registeration successful")
+        
+
         return res.status(201).send({
             status: true,
             message: "User created successfully",
             data: createUser,
         });
     } catch (error) {
-        return res.status(500).send({ status: false, msg: error });
+        return res.status(500).send({ status: false, message: error });
     }
 };
 

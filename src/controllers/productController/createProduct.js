@@ -24,12 +24,13 @@ const createProduct = async function (req, res) {
       isFreeShipping,
       productImage,
     } = data;
+    let files = req.files;    
 
     if (!title) 
       return res
         .status(400)
         .send({ status: false, message: "title must be present" });
-    if (!isValidString(title))
+    if (!isValidString(title))   
       return res
         .status(400)
         .send({ status: false, message: "title is in incorrect format" });
@@ -51,7 +52,9 @@ const createProduct = async function (req, res) {
         .send({ status: false, message: "description is in incorrect format" });
     description = validTrim(description);
 
-    category = JSON.parse(category)
+   
+    category = category.split(", ")  
+
     if (!category || category.length == 0)
       return res
         .status(400)
@@ -70,8 +73,9 @@ const createProduct = async function (req, res) {
     if (!compatible_models )
     return res
     .status(400)
-    .send({ status: false, message: "compatibale models are requried" });
-    compatible_models = JSON.parse(compatible_models)
+    .send({ status: false, message: "category is requried" });
+   
+    compatible_models = compatible_models.split(", ")
     for (let eachModel of compatible_models) {
       let final = validTrim(eachModel);
       if (final == "")
@@ -125,9 +129,9 @@ const createProduct = async function (req, res) {
         message: "should have at least one product",
       });
 
-    let files = req.files;
+    
 
-    if (files.length == 0)
+    if (files.length == 0)  
       return res
         .status(400)
         .send({ status: false, message: "provide a product image" });
@@ -158,7 +162,7 @@ const createProduct = async function (req, res) {
       .status(201)
       .send({ status: true, message: "Success", data: createdProduct });
   } catch (error) {
-    return res.status(500).send({ status: false, msg: error.message });
+    return res.status(500).send({ status: false, message: error.message });
   }
 }; 
 

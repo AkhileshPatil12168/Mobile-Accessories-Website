@@ -23,9 +23,7 @@ const updateOrder = async (req, res) => {
             return res.status(400).send({ status: false, message: "Please provide userId." });
 
         if (!isValidObjectId(userId))
-            return res
-                .status(400)
-                .send({ status: false, message: "Please provide a valid userId." });
+        return res.status(403).send({ status: false, message: "please login again" });
 
         if (!isValidObjectId(orderId))
             return res
@@ -195,7 +193,7 @@ const updateOrder = async (req, res) => {
         );
         return res.status(200).send({ status: true, message: "order updated", data: updatedOrder });
     } catch (error) {
-        return res.status(500).send({ status: false, msg: error.message });
+        return res.status(500).send({ status: false, message: error.message });
     }
 };
 

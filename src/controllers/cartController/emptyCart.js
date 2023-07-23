@@ -11,9 +11,7 @@ const emptyCart = async (req, res) => {
         if (!userId)
             return res.status(400).send({ status: false, message: "Please provide userId." });
         if (!isValidObjectId(userId))
-            return res
-                .status(400)
-                .send({ status: false, message: "Please provide a valid userId." });
+        return res.status(403).send({ status: false, message: "please login again" });
 
         let isCorrectUser = await bcrypt.compare(userId, decodedToken.userId);
         if (!isCorrectUser)
@@ -27,16 +25,16 @@ const emptyCart = async (req, res) => {
             cartData.totalPrice == 0 &&
             cartData.totalQuantity == 0
         )
-            return res.status(404).send({ status: false, msg: "cart is empty" });
+            return res.status(404).send({ status: false, message: "cart is empty" });
 
         const cartDeleted = await cartModel.findByIdAndUpdate(
             cartData["_id"],
             { items: [], totalPrice: 0, totalItems: 0, totalQuantity: 0 },
             { new: true }
         );
-        return res.status(204).send({ status: true, msg: "cart is empty", data: cartDeleted });
+        return res.status(204).send({ status: true, message: "cart is empty", data: cartDeleted });
     } catch (error) {
-        return res.status(500).send({ status: false, msg: error.message });
+        return res.status(500).send({ status: false, message: error.message });
     }
 };
 

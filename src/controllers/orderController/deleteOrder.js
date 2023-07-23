@@ -14,9 +14,7 @@ const deleteOrder = async (req, res) => {
             return res.status(400).send({ status: false, message: "Please provide userId." });
 
         if (!isValidObjectId(userId))
-            return res
-                .status(400)
-                .send({ status: false, message: "Please provide a valid userId." });
+        return res.status(403).send({ status: false, message: "please login again" });
 
         if (!isValidObjectId(orderId))
             return res
@@ -37,15 +35,20 @@ const deleteOrder = async (req, res) => {
                 .status(400)
                 .send({ status: false, message: "this order can not be deleted" });
 
+                let updateData = {
+                    isDeleted: true 
+                };
+                updateData.deletedAt = Date.now() + 19800000;
+
         let deletedOrder = await orderModel.findByIdAndUpdate(
             orderId,
-            { isDeleted: true },
+            updateData,
             { new: true }
         );
 
-        return res.status(204).send({ status: true, msg: "order is deleted", data: deletedOrder });
+        return res.status(204).send({ status: true, message: "order is deleted", data: deletedOrder });
     } catch (error) {
-        return res.status(500).send({ status: false, msg: error.message });
+        return res.status(500).send({ status: false, message: error.message });
     }
 };
 
