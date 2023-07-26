@@ -78,7 +78,7 @@ const AdminOrders = () => {
 
     const fetchOrders = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/admin/${cAdminId}/orders`);
+            const response = await axios.get(`https://mobileaccbackend.onrender.com/admin/${cAdminId}/orders`);
             const allOrders = response.data.data;
             setOrders(allOrders);
         } catch (error) {

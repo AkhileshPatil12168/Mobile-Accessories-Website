@@ -24,7 +24,7 @@ const Body = () => {
     }, []);
     async function getProducts() {
         try {
-            const response = await axios.get("http://localhost:3000/products");
+            const response = await axios.get("https://mobileaccbackend.onrender.com/products");
             setProducts(response.data.data);
         } catch (error) {
             console.error(error);

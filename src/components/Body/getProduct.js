@@ -15,7 +15,7 @@ const Product = () => {
 
     async function getProduct() {
         try {
-            const response = await axios.get("http://localhost:3000/products/" + `${id}`);
+            const response = await axios.get("https://mobileaccbackend.onrender.com/products/" + `${id}`);
             setProduct(response.data.data);
         } catch (error) {
             console.error(error);
@@ -24,7 +24,7 @@ const Product = () => {
     async function addToCart() {
         if (!cUserId) navigate("/login");
         else {
-            let response = await axios.put(`http://localhost:3000/user/${cUserId}/cart`, {
+            let response = await axios.put(`https://mobileaccbackend.onrender.com/user/${cUserId}/cart`, {
                 productId: id,
                 value: 1,
             });

@@ -15,7 +15,7 @@ const Card = (props) => {
         try {
             if (!cUserId) navigate("/login");
             else {
-                let response = await axios.put(`http://localhost:3000/user/${cUserId}/cart`, {
+                let response = await axios.put(`https://mobileaccbackend.onrender.com/user/${cUserId}/cart`, {
                     productId: _id,
                     value: 1,
                 });

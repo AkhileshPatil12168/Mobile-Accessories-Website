@@ -46,7 +46,7 @@ const AdminProducts = () => {
 
     const fetchProducts = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/products`);
+            const response = await axios.get(`https://mobileaccbackend.onrender.com/products`);
             const allProducts = response.data.data;
             console.log(allProducts);
             setProducts(allProducts);

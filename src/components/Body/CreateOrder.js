@@ -53,7 +53,7 @@ const CreateOrder = () => {
 
     const getSummery = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/user/${cUserId}/order/summery`);
+            const response = await axios.get(`https://mobileaccbackend.onrender.com/user/${cUserId}/order/summery`);
             setSummery(response.data.data);
             console.log(response.data.data);
         } catch (error) {
@@ -63,7 +63,7 @@ const CreateOrder = () => {
 
     const getInfo = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/user/${cUserId}/profile`);
+            const response = await axios.get(`https://mobileaccbackend.onrender.com/user/${cUserId}/profile`);
             //let { fname, lname, email, phone, address } = response.data.data;
             setUserData(response.data.data);
             // setInfo({ ...info, name: fname + " " + lname, email: email, phone: phone });
@@ -107,7 +107,7 @@ const CreateOrder = () => {
                 },
             };
 
-            const response = await axios.post(`http://localhost:3000/user/${cUserId}/order/`, data);
+            const response = await axios.post(`https://mobileaccbackend.onrender.com/user/${cUserId}/order/`, data);
             console.log(response.data.data["_id"]);
             setOrderId(response.data.data["_id"]);
         } catch (error) {

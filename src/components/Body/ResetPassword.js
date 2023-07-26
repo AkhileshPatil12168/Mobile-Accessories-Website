@@ -37,7 +37,7 @@ const ResetPassword = () => {
             }
 
             let response = await axios.put(
-                `http://localhost:3000/${userId}/reset/password/${token}`,
+                `https://mobileaccbackend.onrender.com/${userId}/reset/password/${token}`,
                 formData
             );
 

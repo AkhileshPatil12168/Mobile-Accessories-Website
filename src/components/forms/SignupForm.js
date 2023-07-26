@@ -63,7 +63,7 @@ const Signup = () => {
                 }
             }
 
-            let response = await axios.post(`http://localhost:3000/create/${userType}/`, formData);
+            let response = await axios.post(`https://mobileaccbackend.onrender.com/create/${userType}/`, formData);
             console.log(response, "hello");
             setRes(response.data.message);
             setColor("bg-green-300");

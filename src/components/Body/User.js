@@ -11,7 +11,7 @@ const User = () => {
 
     const getData = async () => {
         try {
-            let response = await axios.get(`http://localhost:3000/user/${cUserId}/profile`);
+            let response = await axios.get(`https://mobileaccbackend.onrender.com/user/${cUserId}/profile`);
 
             console.log(response.data.data);
             setData(response.data.data);

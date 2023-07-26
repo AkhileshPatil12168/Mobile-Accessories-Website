@@ -44,7 +44,7 @@ const Order = () => {
     const orderDetails = async () => {
         try {
             const response = await axios.get(
-                `http://localhost:3000/user/${cUserId}/order/${orderId}`
+                `https://mobileaccbackend.onrender.com/user/${cUserId}/order/${orderId}`
             );
             setOrder(response.data.data);
             console.log(response.data.data);
@@ -56,7 +56,7 @@ const Order = () => {
     const cancelOrder = async () => {
         try {
             const response = await axios.put(
-                `http://localhost:3000/user/${cUserId}/order/cancleorder/${orderId}`,
+                `https://mobileaccbackend.onrender.com/user/${cUserId}/order/cancleorder/${orderId}`,
                 { cancle: true }
             );
 
@@ -72,7 +72,7 @@ const Order = () => {
     const deleteOrder = async () => {
         try {
             const response = await axios.delete(
-                `http://localhost:3000/user/${cUserId}/order/deleteorder/${orderId}`
+                `https://mobileaccbackend.onrender.com/user/${cUserId}/order/deleteorder/${orderId}`
             );
 
             const updatedOrder = response.data.data;

@@ -63,7 +63,7 @@ const CreateProduct = () => {
             }
 
             let response = await axios.post(
-                `http://localhost:3000/admin/${cAdminId}/create/product`,
+                `https://mobileaccbackend.onrender.com/admin/${cAdminId}/create/product`,
                 formData
             );
             console.log(response);

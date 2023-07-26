@@ -24,7 +24,7 @@ const Items = (props) => {
                 setErrMessage("");
                 setIsNotWorking(false);
             }
-            let response = await axios.put(`http://localhost:3000/user/${cUserId}/cart`, data);
+            let response = await axios.put(`https://mobileaccbackend.onrender.com/user/${cUserId}/cart`, data);
             setStatCode(response.status);
         } catch (error) {
             console.log(error.response);
@@ -86,7 +86,7 @@ const Cart = () => {
 
     const getCart = async () => {
         try {
-            let response = await axios.get(`http://localhost:3000/user/${cUserId}/cart`);
+            let response = await axios.get(`https://mobileaccbackend.onrender.com/user/${cUserId}/cart`);
 
             console.log(response.data.data);
 
@@ -97,7 +97,7 @@ const Cart = () => {
     };
     const emptyCart = async () => {
         try {
-            const response = await axios.delete(`http://localhost:3000/user/${cUserId}/cart`);
+            const response = await axios.delete(`https://mobileaccbackend.onrender.com/user/${cUserId}/cart`);
 
             setStatCode(response.status);
 
