@@ -1,5 +1,4 @@
 import axios from "axios";
-axios.defaults.withCredentials = true;
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShimmerBody from "./ShimmerCard";
