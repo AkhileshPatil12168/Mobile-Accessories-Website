@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, redirect, useNavigate } from "react-router-dom";
 import axios from "axios";
-import LoginContext from "../../util/loginContext";
 
 const Login = (props) => {
     const navigate = useNavigate();

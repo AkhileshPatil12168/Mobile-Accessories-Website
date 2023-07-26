@@ -1,46 +1,38 @@
 import { useState, useEffect } from "react";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
-const ForgotPassword = ()=>{
+const ForgotPassword = () => {
     const navigate = useNavigate();
     const [data, setData] = useState({
-        email:"",
+        email: "",
         userType: "",
     });
 
-    
     const [res, setRes] = useState("");
     const [color, setColor] = useState("bg-white");
     const [statCode, setStatCode] = useState(null);
-    const [text, setText]= useState("")
-    let[timex, setTimex]= useState(5)
-    const [btnNotWork, setbtnNotWork]= useState(false)
-    const [btnLoginC,setBtnLoginC]=useState({bg:"bg-indigo-600",hoverBg:"bg-indigo-500"})
-    
+    const [text, setText] = useState("");
+    let [timex, setTimex] = useState(5);
+    const [btnNotWork, setbtnNotWork] = useState(false);
+    const [btnLoginC, setBtnLoginC] = useState({ bg: "bg-indigo-600", hoverBg: "bg-indigo-500" });
 
     let name, value;
-    
+
     const handleSubmit = (e) => {
         name = e.target.name;
         value = e.target.value;
         setData({ ...data, [name]: value });
-        
     };
     const postData = async (e) => {
         try {
             e.preventDefault();
 
-            const response = await axios.post(
-                "http://localhost:3000/request/resetpassword/",
-                data
-            );
+            const response = await axios.post("http://localhost:3000/request/resetpassword/", data);
             setRes(response.data.message);
             setColor("bg-green-300");
             setStatCode(response?.status);
-            console.log(response)
-           
+            console.log(response);
         } catch (error) {
             setRes(error?.response?.data.message);
             setColor("bg-red-300");
@@ -48,37 +40,34 @@ const ForgotPassword = ()=>{
         }
     };
 
-
-
-    function decrement(){
-        if(timex==0){
-            setTimex(5)
-            setbtnNotWork(false)
-            setBtnLoginC({bg:"bg-indigo-600",hoverBg:"bg-indigo-500"})
+    function decrement() {
+        if (timex == 0) {
+            setTimex(5);
+            setbtnNotWork(false);
+            setBtnLoginC({ bg: "bg-indigo-600", hoverBg: "bg-indigo-500" });
         }
-        if(timex>0){
-            setTimex(timex--)
-            setTimeout(()=>decrement(),1000)
-            setText("resend email in "+timex)
+        if (timex > 0) {
+            setTimex(timex--);
+            setTimeout(() => decrement(), 1000);
+            setText("resend email in " + timex);
         }
     }
 
-    
     useEffect(() => {
         setColor("bg-white");
         setRes("");
     }, [data]);
     useEffect(() => {
-        if(statCode==200){
-            setBtnLoginC({bg:"bg-gray-500",hoverBg:"bg-gray-500"})
-            
-            setbtnNotWork(true)
-            setStatCode(null)
-            decrement()
+        if (statCode == 200) {
+            setBtnLoginC({ bg: "bg-gray-500", hoverBg: "bg-gray-500" });
+
+            setbtnNotWork(true);
+            setStatCode(null);
+            decrement();
         }
     }, [statCode]);
-    return(<>
-       
+    return (
+        <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -104,9 +93,8 @@ const ForgotPassword = ()=>{
                             </div>
                         </div>
 
-                        
                         <div onClick={handleSubmit} className="space-x-3">
-                            <input type="radio" value="user" name="userType"  />
+                            <input type="radio" value="user" name="userType" />
                             user
                             <input type="radio" value="admin" name="userType" className="ml-2 " />
                             admin
@@ -119,7 +107,6 @@ const ForgotPassword = ()=>{
                                 className={`flex w-full  justify-center rounded-md ${btnLoginC.bg} px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:${btnLoginC.hoverBg} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 -mt-4`}
                                 onClick={postData}
                                 disabled={btnNotWork}
-
                             >
                                 send email
                             </button>
@@ -127,23 +114,21 @@ const ForgotPassword = ()=>{
                         <Link to="/login">
                             <div className="text-sm">
                                 <p className="font-semibold text-indigo-600 hover:text-indigo-500 p-2 text-right">
-                                Login
+                                    Login
                                 </p>
                             </div>
                         </Link>
-                        
-                          <div className="">
-                                
-                                <p className="font-semibold text-indigo-600 hover:text-indigo-500  text-center -mt-4">
+
+                        <div className="">
+                            <p className="font-semibold text-indigo-600 hover:text-indigo-500  text-center -mt-4">
                                 {text}
-                                </p>
-                            </div>
-                        
+                            </p>
+                        </div>
                     </form>
                     <div className={`${color} h-14 mt-2 rounded-lg text-center pt-4`}>{res}</div>
                 </div>
             </div>
-        
-        </>)
-}
-export default ForgotPassword
+        </>
+    );
+};
+export default ForgotPassword;

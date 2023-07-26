@@ -1,7 +1,6 @@
 import axios from "axios";
-import { useState,useEffect } from "react";
-import { redirect, Link , useNavigate} from "react-router-dom";
-
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -22,7 +21,7 @@ const Signup = () => {
 
     let [userType, setUserType] = useState("user");
 
-    const [img, setImg] = useState('');
+    const [img, setImg] = useState("");
     const [signupData, setSignupData] = useState(null);
     const [color, setColor] = useState("bg-white");
     const [res, setRes] = useState("");
@@ -64,11 +63,8 @@ const Signup = () => {
                 }
             }
 
-            let response = await axios.post(
-                `http://localhost:3000/create/${userType}/`,
-                formData
-            );
-            console.log(response,"hello");
+            let response = await axios.post(`http://localhost:3000/create/${userType}/`, formData);
+            console.log(response, "hello");
             setRes(response.data.message);
             setColor("bg-green-300");
             setStatCode(response?.status);
@@ -78,16 +74,14 @@ const Signup = () => {
             setRes(error?.response?.data.message);
             setColor("bg-red-300");
             setStatCode(error?.response?.status);
-            console.log(error)
-            
+            console.log(error);
         }
     };
 
     useEffect(() => {
         setColor("bg-white");
         setRes("");
-    }, [user,admin]);
-    
+    }, [user, admin]);
 
     return signupData ? (
         navigate("/login")
@@ -317,7 +311,6 @@ const Signup = () => {
                         >
                             login
                         </Link>
-
                     </div>
                     <div className={`${color} h-14 mt-2 rounded-lg text-center pt-4`}>{res}</div>
                 </div>
