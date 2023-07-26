@@ -5,16 +5,20 @@ const TestCss = () => {
     const [isHovered, setIsHovered] = useState(false);
     useEffect(() => {
         console.log(isHovered);
-    }, []);
+    }, [isHovered]);
 
     return (
-        <div>
-            <div className="h-20 w-1/2 bg-green-500">
+        <div className="p-10 ">
+            <div
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                //onMouseOut={() => setIsHovered(false)}
+                className="h-20 w-1/2 bg-black   pr-4 py-4 border-gray-300 rounded-e-full "
+            >
                 <div
-                    onMouseEnter={() => setIsHovered(true)}
-                     onMouseLeave={() => setIsHovered(false)}
-                    onMouseOut={() => setIsHovered(false)}
-                    className={`h-full  ${isHovered?"bg-white scale-x-0 ":"w-full scale-x-100"}   origin-right  duration-500`}
+                    className={`h-full    ${
+                        isHovered ? "scale-x-100 duration-1000 " : "scale-x-0 duration-500"
+                    } rounded-e-full   origin-left  bg-green-500`}
                 ></div>
             </div>
         </div>

@@ -1,8 +1,6 @@
-import { useState, useEffect, useContext } from "react";
 import Title from "./Title";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
-import LoginContext from "../../util/loginContext";
 
 const Header = () => {
     const cookies = new Cookies();
@@ -27,16 +25,28 @@ const Header = () => {
                     <Link className="hover:text-2xl duration-300 hover:font-bold" to="/">
                         <li className="px-2">Home</li>
                     </Link>
-                    <Link className="hover:text-2xl duration-300 hover:font-bold" to={cToken && cAdminId ? "/admin/users" : "/login"}>
+                    <Link
+                        className="hover:text-2xl duration-300 hover:font-bold"
+                        to={cToken && cAdminId ? "/admin/users" : "/login"}
+                    >
                         <li className="px-2">Users</li>
                     </Link>
-                    <Link className="hover:text-2xl duration-300 hover:font-bold" to={cToken && cAdminId ? "/admin/orders" : "/login"}>
+                    <Link
+                        className="hover:text-2xl duration-300 hover:font-bold"
+                        to={cToken && cAdminId ? "/admin/orders" : "/login"}
+                    >
                         <li className="px-2">Orders</li>
                     </Link>
-                    <Link className="hover:text-2xl duration-300 hover:font-bold" to={cToken && cAdminId ? "/admin/products/summery" : "/login"}>
+                    <Link
+                        className="hover:text-2xl duration-300 hover:font-bold"
+                        to={cToken && cAdminId ? "/admin/products/summery" : "/login"}
+                    >
                         <li className="px-2">Products</li>
                     </Link>
-                    <Link className="hover:text-2xl duration-300 hover:font-bold" to={cToken && cAdminId ? "/user/account" : "/login"}>
+                    <Link
+                        className="hover:text-2xl duration-300 hover:font-bold"
+                        to={cToken && cAdminId ? "/user/account" : "/login"}
+                    >
                         <li className="px-2">Your Account</li>
                     </Link>
                 </ul>
@@ -47,16 +57,28 @@ const Header = () => {
                             Home
                         </Link>
                     </li>
-                    <Link className="hover:text-2xl duration-300 hover:font-bold" to={cToken && cUserId ? "/orders" : "/login"}>
+                    <Link
+                        className="hover:text-2xl duration-300 hover:font-bold"
+                        to={cToken && cUserId ? "/orders" : "/login"}
+                    >
                         <li className="px-2">Orders</li>
                     </Link>
-                    <Link className="hover:text-2xl duration-300 hover:font-bold" to={cToken && cUserId ? "/cart" : "/login"}>
+                    <Link
+                        className="hover:text-2xl duration-300 hover:font-bold"
+                        to={cToken && cUserId ? "/cart" : "/login"}
+                    >
                         <li className="px-2">Cart</li>
                     </Link>
-                    <Link className="hover:text-2xl duration-300 hover:font-bold" to={cToken && cUserId ? "/contactus" : "/login"}>
+                    <Link
+                        className="hover:text-2xl duration-300 hover:font-bold"
+                        to={cToken && cUserId ? "/contactus" : "/login"}
+                    >
                         <li className="px-2">Contact Us</li>
                     </Link>
-                    <Link className="hover:text-2xl duration-300 hover:font-bold" to={cToken && cUserId ? "/user/account" : "/login"}>
+                    <Link
+                        className="hover:text-2xl duration-300 hover:font-bold"
+                        to={cToken && cUserId ? "/user/account" : "/login"}
+                    >
                         <li className="px-2">Your Account</li>
                     </Link>
                 </ul>

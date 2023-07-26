@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
@@ -129,8 +129,7 @@ const AdminOrders = () => {
                             new Date(order.orderdedDate) <= new Date(toDate)
                     )
                 );
-            }
-            else if (fromDate) {
+            } else if (fromDate) {
                 setFilteredPendingOrders(
                     pendingOrders.filter(
                         (order) => new Date(order.orderdedDate) >= new Date(fromDate)
@@ -146,8 +145,7 @@ const AdminOrders = () => {
                         (order) => new Date(order.orderdedDate) >= new Date(fromDate)
                     )
                 );
-            }
-            else if (toDate) {
+            } else if (toDate) {
                 setFilteredPendingOrders(
                     pendingOrders.filter(
                         (order) => new Date(order.orderdedDate) <= new Date(toDate)
@@ -164,7 +162,6 @@ const AdminOrders = () => {
                     )
                 );
             }
-             
         }
     }, [orders, fromDate, toDate]);
 
@@ -173,7 +170,9 @@ const AdminOrders = () => {
         console.log("api call");
     }, []);
 
-    return !cAdminId ?(navigate("/login")):(
+    return !cAdminId ? (
+        navigate("/login")
+    ) : (
         <div className="mx-20 ">
             <div className="flex  py-4">
                 <div className=" p-4  bg-white  h-[500px] ">

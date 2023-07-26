@@ -5,7 +5,6 @@ import Cookies from "universal-cookie";
 
 const ConnectUs = () => {
     const cookies = new Cookies();
-    const navigate = useNavigate();
     const cUserId = cookies.get("user");
 
     const [userName, setUserName] = useState("");
@@ -28,7 +27,7 @@ const ConnectUs = () => {
 
     const sendMessage = async (e) => {
         try {
-            e.preventDefault(); 
+            e.preventDefault();
             const response = await axios.post(`http://localhost:3000/user/${cUserId}/contactus`, {
                 name: userName,
                 email: userEmail,
@@ -39,7 +38,7 @@ const ConnectUs = () => {
             if (response.status == 200) setIsMessageSent(true);
         } catch (error) {
             console.log(error);
-            setErrorResponse(error.response.data.message)
+            setErrorResponse(error.response.data.message);
             setColor("bg-red-300");
         }
     };
@@ -50,7 +49,7 @@ const ConnectUs = () => {
 
     useEffect(() => {
         setErrorResponse("");
-        setColor("bg-gray-100")
+        setColor("bg-gray-100");
     }, [userName, userEmail, message]);
 
     return (
@@ -70,7 +69,7 @@ const ConnectUs = () => {
                 <div className="bg-gray-100 p-4 rounded">
                     <h3 className="text-lg font-bold mb-2">Send us a Message</h3>
                     {!isMessageSent ? (
-                        <form    className="space-y-6" >
+                        <form className="space-y-6">
                             <div className="mb-4">
                                 <label className="block font-bold mb-2">Your Name</label>
                                 <input

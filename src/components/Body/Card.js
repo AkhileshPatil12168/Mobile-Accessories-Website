@@ -4,7 +4,7 @@ import axios from "axios";
 
 const Card = (props) => {
     const navigate = useNavigate();
-    const { _id, productImage, title, price, cUserId  } = props;
+    const { _id, productImage, title, price, cUserId } = props;
     const [text, setText] = useState("Add to cart");
     const [color, setColor] = useState("bg-blue-500");
     const [hcolor, setHColor] = useState("bg-blue-700");
@@ -19,7 +19,7 @@ const Card = (props) => {
                     productId: _id,
                     value: 1,
                 });
-                setRes(response.status)
+                setRes(response.status);
             }
         } catch (error) {
             console.log(error);
@@ -38,7 +38,6 @@ const Card = (props) => {
                 setRes();
             }, 1000 / 2);
         }
-      
     }, [res]);
 
     return (

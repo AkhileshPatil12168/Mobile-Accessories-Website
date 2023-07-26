@@ -8,11 +8,11 @@ const Footer = () => {
             <div className="container mx-auto flex justify-center items-center">
                 <div className="flex space-x-4">
                     <div>
-                    <Link to="/aboutus" className="hover:text-gray-500">
-                        About Us
-                    </Link></div>
+                        <Link to="/aboutus" className="hover:text-gray-500">
+                            About Us
+                        </Link>
+                    </div>
                     <div className="pl-10 ">
-
                         <Link to="https://www.facebook.com" className="mr-5">
                             <FontAwesomeIcon
                                 icon={faFacebookF}

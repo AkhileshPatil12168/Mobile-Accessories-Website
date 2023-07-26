@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { redirect, useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 
 const Items = (props) => {
@@ -8,11 +8,10 @@ const Items = (props) => {
 
     const [errMessage, setErrMessage] = useState("");
     const [isNotWorking, setIsNotWorking] = useState(false);
-    const [bgColor, setBgColor]=useState("")
-    useEffect(()=>{
-        if(index % 2 ==0 )
-        setBgColor("bg-gray-200")
-    })
+    const [bgColor, setBgColor] = useState("");
+    useEffect(() => {
+        if (index % 2 == 0) setBgColor("bg-gray-200");
+    });
 
     const addOrRemove = async (parameter) => {
         try {
@@ -37,15 +36,16 @@ const Items = (props) => {
     };
 
     return (
-        <div className={`cart-item flex flex-col md:flex-row items-center mb-4 p-4 ${bgColor} border border-gray-300 rounded`}>
-               <img
-                        src={productImage[0]}
-                        alt="Product Image"
-                        className="w-20 h-20 mr-0 md:mr-4 rounded mb-4 md:mb-0 "
-                    />
-                    
+        <div
+            className={`cart-item flex flex-col md:flex-row items-center mb-4 p-4 ${bgColor} border border-gray-300 rounded`}
+        >
+            <img
+                src={productImage[0]}
+                alt="Product Image"
+                className="w-20 h-20 mr-0 md:mr-4 rounded mb-4 md:mb-0 "
+            />
+
             <Link to={"/products/" + productId}>
-                
                 <div className="cart-item-details ">
                     <h3 className="text-xl font-bold mb-2">{title}</h3>
                     <p className="text-gray-600 mb-1">Quantity: {quantity}</p>
@@ -117,17 +117,22 @@ const Cart = () => {
         getCart();
     }, [statCode]);
 
-    return !cUserId ?(navigate("/login")):(
+    return !cUserId ? (
+        navigate("/login")
+    ) : (
         <div className="container mx-auto p-4 bg-white rounded-lg shadow">
             <h1 className="text-center text-2xl font-bold mb-4">Cart</h1>
-        <div className="max-h-[420]	 overflow-auto">
-
-            {cart?.items.map((i, index) => {
-                return (
-                     <Items {...{ ...i, cUserId: cUserId , index : index}} setStatCode={setStatCode} key={i.productId} />
-                );
-            })}
-        </div>
+            <div className="max-h-[420]	 overflow-auto">
+                {cart?.items.map((i, index) => {
+                    return (
+                        <Items
+                            {...{ ...i, cUserId: cUserId, index: index }}
+                            setStatCode={setStatCode}
+                            key={i.productId}
+                        />
+                    );
+                })}
+            </div>
             <div className=" flex  justify-between  total-price  mt-4">
                 <div>
                     <div>total Items: {cart?.totalItems}</div>

@@ -1,16 +1,16 @@
 import axios from "axios";
 axios.defaults.withCredentials = true;
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ShimmerBody from "./ShimmerCard";
 import Cookies from "universal-cookie";
 import Card from "./Card";
 
-const Body = (props) => {
+const Body = () => {
     const cookies = new Cookies();
     const navigate = useNavigate();
     const cAdminId = cookies.get("admin");
-    const cUserId = cookies.get("user")
+    const cUserId = cookies.get("user");
 
     useEffect(() => {
         if (cAdminId) {
@@ -30,19 +30,15 @@ const Body = (props) => {
             console.error(error);
         }
     }
-    useEffect(()=>{},[products])
+    useEffect(() => {}, [products]);
 
-    return products.length==0 ? (
+    return products.length == 0 ? (
         <ShimmerBody />
     ) : (
         <div className="flex flex-wrap w-fit p-3   ">
             {products.map((p) => {
                 const productId = p._id;
-                return (
-                    
-                        <Card {...p} cUserId={cUserId} key={productId}/>
-                   
-                );
+                return <Card {...p} cUserId={cUserId} key={productId} />;
             })}
         </div>
     );

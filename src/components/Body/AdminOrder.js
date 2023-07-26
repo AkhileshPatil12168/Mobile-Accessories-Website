@@ -78,7 +78,9 @@ const AdminOrder = () => {
     }, []);
     console.log(order.cancellable);
 
-    return !cAdminId ?(navigate("/login")):(
+    return !cAdminId ? (
+        navigate("/login")
+    ) : (
         <div className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">Order Details</h1>
 

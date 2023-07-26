@@ -92,13 +92,15 @@ const Order = () => {
             setOrderResponse(null);
             orderDetails();
         }
-    }, [ orderResponse]);
+    }, [orderResponse]);
 
     useEffect(() => {
         orderDetails();
     }, []);
 
-    return!cUserId ?(navigate("/login")): (
+    return !cUserId ? (
+        navigate("/login")
+    ) : (
         <div className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">Order Details</h1>
 
@@ -192,7 +194,7 @@ const Order = () => {
                 {order?.status != "pending" ? (
                     <div className="pr-2">
                         <button
-                            onClick={()=>deleteOrder()}
+                            onClick={() => deleteOrder()}
                             className="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-red-500"
                         >
                             Delete Order
@@ -205,7 +207,7 @@ const Order = () => {
                 {order?.cancellable && order?.status == "pending" ? (
                     <div>
                         <button
-                            onClick={()=>cancelOrder()}
+                            onClick={() => cancelOrder()}
                             className="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-red-500"
                         >
                             Cancel Order

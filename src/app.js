@@ -54,8 +54,6 @@ const appRouter = createBrowserRouter([
             { path: "/contactus", element: <ConnectUs /> },
             { path: "/aboutus", element: <AboutUs /> },
 
-
-
             { path: "/reset/:usertype/:userId/resetpassword/:token", element: <ResetPassword /> },
             { path: "/request/resetpassword", element: <ForgotPassword /> },
 
@@ -69,11 +67,10 @@ const appRouter = createBrowserRouter([
             { path: "/admin/create/product", element: <CreateProduct /> },
 
             { path: "/admin/products/summery", element: <AdminProducts /> },
-            
+
             { path: "/admin/product/:productId", element: <ProductDetails /> },
 
-            { path: "/testcss", element: <TestCss /> }
-
+            { path: "/testcss", element: <TestCss /> },
         ],
     },
 ]);

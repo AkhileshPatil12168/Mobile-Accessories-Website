@@ -4,25 +4,21 @@ import { redirect, useNavigate, Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 
 const Items = (props) => {
- const  {title,quantity,productImage,price}= props
+    const { title, quantity, productImage, price } = props;
     return (
         <>
             <div className="flex ">
                 <div className="border border-gray-300 rounded p-4 mr-4 flex-shrink-0 w-48">
-                <img
-                src={productImage[0]}
-                alt="Product Image"
-                className="w-16 h-16 mb-2"
-            />
-            <p className="mb-2">
-                <strong>Title:</strong> {title}
-            </p>
-            <p className="mb-2">
-                <strong>Quantity:</strong> {quantity}
-            </p>
-            <p className="mb-2">
-                <strong>Price:</strong> ₹{price}
-            </p>
+                    <img src={productImage[0]} alt="Product Image" className="w-16 h-16 mb-2" />
+                    <p className="mb-2">
+                        <strong>Title:</strong> {title}
+                    </p>
+                    <p className="mb-2">
+                        <strong>Quantity:</strong> {quantity}
+                    </p>
+                    <p className="mb-2">
+                        <strong>Price:</strong> ₹{price}
+                    </p>
                 </div>
             </div>
         </>
@@ -30,12 +26,12 @@ const Items = (props) => {
 };
 const OrderDetails = (props) => {
     const { status, orderdedDate, totalPrice } = props;
-    const [color, setColor]=useState("")
-    useEffect(()=>{
-        if(status=="pending")setColor("text-blue-500")
-        else if(status=="completed")setColor("text-green-500")
-        else if(status=="cancelled")setColor("text-red-500")
-    },[props])
+    const [color, setColor] = useState("");
+    useEffect(() => {
+        if (status == "pending") setColor("text-blue-500");
+        else if (status == "completed") setColor("text-green-500");
+        else if (status == "cancelled") setColor("text-red-500");
+    }, [props]);
     return (
         <>
             <div className="bg-blue-200 p-2 rounded-t-lg">
@@ -43,7 +39,7 @@ const OrderDetails = (props) => {
             </div>
             <div className="p-4">
                 <p className="mb-2 flex ">
-                    <strong >Status:</strong> <p className={`${color} pl-1`}> {status}</p>
+                    <strong>Status:</strong> <p className={`${color} pl-1`}> {status}</p>
                 </p>
                 <p className="mb-2">
                     <strong>Total Price:</strong> ₹{totalPrice}
@@ -75,7 +71,7 @@ const Order = (props) => {
                     <div className="p-2  ">
                         <div className="flex  w-full overflow-x-auto">
                             {items.map((item) => {
-                                return <Items {...item} key={item.productId} />
+                                return <Items {...item} key={item.productId} />;
                             })}
                         </div>
                     </div>
@@ -100,15 +96,21 @@ const Orders = () => {
             console.log(error);
         }
     };
-    
+
     useEffect(() => {
         getOrders();
     }, []);
-    return !cUserId ?(navigate("/login")):(
+    return !cUserId ? (
+        navigate("/login")
+    ) : (
         <div>
             <p className="text-center text-lg font-bold">orders</p>
             {orders.map((order, index) => {
-                return <Link to={"/user/order/"+order._id}><Order {...order} key={order._id} /></Link>
+                return (
+                    <Link to={"/user/order/" + order._id}>
+                        <Order {...order} key={order._id} />
+                    </Link>
+                );
             })}
         </div>
     );

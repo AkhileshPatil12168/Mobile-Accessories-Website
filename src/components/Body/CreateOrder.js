@@ -134,7 +134,6 @@ const CreateOrder = () => {
             billingAddressCity: userData?.address?.billing?.city,
             billingAddressPincode: userData?.address?.billing?.pincode,
         });
-  
     }, [userData]);
 
     useEffect(() => {}, [info, checked]);

@@ -13,7 +13,7 @@ const Admin = () => {
                     <h2 className="text-lg font-bold text-center">Users</h2>
                 </div>
             </Link>
-            
+
             <Link to={cToken && cAdminId ? "/admin/orders/" : "/login"}>
                 <div className="bg-blue-200 p-4 m-2 rounded-lg w-64">
                     <h2 className="text-lg font-bold text-center">Orders</h2>

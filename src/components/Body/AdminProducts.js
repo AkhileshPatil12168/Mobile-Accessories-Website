@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import Cookies from "universal-cookie";
@@ -41,13 +40,9 @@ const AdminProducts = () => {
 
     const [products, setProducts] = useState([]);
 
-
     const [recentProducts, setRecentProducts] = useState([]);
     const [outOfStock, setOutOfstock] = useState([]);
     const [nearToOutOfStock, setNearToOutOfStock] = useState([]);
-
-
-
 
     const fetchProducts = async () => {
         try {
@@ -74,7 +69,9 @@ const AdminProducts = () => {
         fetchProducts();
     }, []);
 
-    return !cAdminId ?(navigate("/login")): (
+    return !cAdminId ? (
+        navigate("/login")
+    ) : (
         <div className="mx-20 ">
             <div className="flex  py-4">
                 <div className=" p-4  bg-white  h-[500px] ">

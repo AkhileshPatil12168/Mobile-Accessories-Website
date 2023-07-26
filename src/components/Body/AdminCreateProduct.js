@@ -1,7 +1,8 @@
 import Cookies from "universal-cookie";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+
 const CreateProduct = () => {
     const navigate = useNavigate();
     const cookies = new Cookies();
@@ -18,7 +19,7 @@ const CreateProduct = () => {
     });
 
     const [uploadedImage, setUploadedImage] = useState(null);
-    const [renderImage, setRenderImage]= useState(null)
+    const [renderImage, setRenderImage] = useState(null);
     const [res, setRes] = useState("");
     const [statCode, setStatCode] = useState(null);
 
@@ -31,9 +32,8 @@ const CreateProduct = () => {
             };
             reader.readAsDataURL(file);
         }
-        setUploadedImage(e.target.files)
+        setUploadedImage(e.target.files);
     };
-  
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -62,32 +62,35 @@ const CreateProduct = () => {
                 formData.append(key, details[key]);
             }
 
-            let response = await axios.post(`http://localhost:3000/admin/${cAdminId}/create/product`, formData);
-            console.log(response,);
+            let response = await axios.post(
+                `http://localhost:3000/admin/${cAdminId}/create/product`,
+                formData
+            );
+            console.log(response);
             setRes(response.data.message);
             setStatCode(response?.status);
 
             if (response) setSignupData(response?.data?.data);
         } catch (error) {
             setRes(error?.response?.data.message);
-           
-            
+
             console.log(error?.response?.data.message);
         }
     };
 
-    useEffect(()=>{
-        if(statCode==201){
-
+    useEffect(() => {
+        if (statCode == 201) {
         }
-    },[statCode])
+    }, [statCode]);
 
-    return !cAdminId ?(navigate("/login")): (
+    return !cAdminId ? (
+        navigate("/login")
+    ) : (
         <div className="container mx-auto px-4 py-8  ">
             <h2 className="text-2xl font-bold mb-4 text-center">Create Product</h2>
             <div className="flex justify-center">
                 <div className="h-auto w-3/4 bg-gray-200 ">
-                    <form  className="max-w-4xl mx-auto m-4">
+                    <form className="max-w-4xl mx-auto m-4">
                         <div className="flex p-4">
                             <div className="w-1/2 pr-4">
                                 <label
@@ -179,10 +182,7 @@ const CreateProduct = () => {
                                     />
                                 </div>
                                 <div className="mb-4">
-                                    <label
-                                       
-                                        className="block text-gray-700 font-medium mb-2"
-                                    >
+                                    <label className="block text-gray-700 font-medium mb-2">
                                         Compatible Models
                                     </label>
                                     <input
