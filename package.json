@@ -11,8 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@fortawesome/free-brands-svg-icons": "^6.4.0",
-    "@fortawesome/react-fontawesome": "^0.2.0",
     "axios": "^1.4.0",
     "react": "^18.2.0",
     "react-datepicker": "^4.16.0",
