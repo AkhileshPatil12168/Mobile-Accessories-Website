@@ -27,7 +27,7 @@ const Body = () => {
             const response = await axios.get("https://mobileaccbackend.onrender.com/products");
             setProducts(response.data.data);
         } catch (error) {
-            console.error(error);
+            console.log(error);
         }
     }
     useEffect(() => {}, [products]);
