@@ -14,7 +14,7 @@ app.use(cookieParser());
 //     origin:true,
 //     credentials:true
 // }))
-
+app.set("trust proxy",1)
 app.use(
     cors({
         // origin: process.env.iphoneHotspot+':'+process.env.forntEndPort ,    //iphone hotspot
