@@ -21,7 +21,7 @@ app.use(
         // origin: 'http://'+process.env.laptopHostspot+':'+process.env.forntEndPort,    //laptop hotspot
         // origin: process.env.homeRouter+':'+process.env.forntEndPort,        //home router
         //origin: "http://localhost:3001",
-        origin: "https://mobileacc.onrender.com",
+        origin: "https://mobileacc.netlify.app",
        credentials: true,
 
         // origin:'http://192.168.1.11:3001'
