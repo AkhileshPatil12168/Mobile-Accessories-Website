@@ -47,11 +47,11 @@ const login = async (req, res) => {
         });
         // res.setHeader("Authorization", `Bearer ${token}`);
         // res.setHeader("Content-Type", "application/json");
-        res.cookie("token", `${token}`, {httpOnly: false,
+        res.cookie("token", `${token}`, {
             expires: new Date(Date.now() + 60 * 60 * 24 * 1000),
         });
         res.cookie(userType == "admin" ? "admin" : "user", `${user._id}`, {
-            httpOnly: false,
+            
             expires: new Date(Date.now() + 60 * 60 * 24 * 1000),
         });
 
