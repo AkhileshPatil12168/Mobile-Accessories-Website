@@ -23,7 +23,7 @@ const Body = () => {
     }, []);
     async function getProducts() {
         try {
-            const response = await axios.get("https://mobileaccbackend.onrender.com/products");
+            const response = await axios.get("https://mobileaccbackend.onrender.com/products",{withCredentials:true});
             setProducts(response.data.data);
         } catch (error) {
             console.log(error);

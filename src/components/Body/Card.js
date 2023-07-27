@@ -18,7 +18,7 @@ const Card = (props) => {
                 let response = await axios.put(`https://mobileaccbackend.onrender.com/user/${cUserId}/cart`, {
                     productId: _id,
                     value: 1,
-                });
+                },{withCredentials:true});
                 setRes(response.status);
             }
         } catch (error) {

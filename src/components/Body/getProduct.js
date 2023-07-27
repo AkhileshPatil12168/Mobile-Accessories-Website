@@ -15,7 +15,7 @@ const Product = () => {
 
     async function getProduct() {
         try {
-            const response = await axios.get("https://mobileaccbackend.onrender.com/products/" + `${id}`);
+            const response = await axios.get("https://mobileaccbackend.onrender.com/products/" + `${id}`,{withCredentials:true});
             setProduct(response.data.data);
         } catch (error) {
             console.error(error);
