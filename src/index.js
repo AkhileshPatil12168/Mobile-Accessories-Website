@@ -10,10 +10,17 @@ require("dotenv").config();
 app.use(multer().any());
 app.use(cookieParser());
 
-app.use("*",cors({
-    origin: "https://mobileacc.onrender.com",
-    credentials:true
-}))
+app.use(
+    "*",
+    cors({
+        origin: "https://mobileacc.onrender.com",
+        credentials: true,
+    })
+);
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+});
 
 // app.use(
 //     cors({
