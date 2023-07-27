@@ -49,10 +49,17 @@ const login = async (req, res) => {
         // res.setHeader("Content-Type", "application/json");
         res.cookie("token", `${token}`, {
             expires: new Date(Date.now() + 60 * 60 * 24 * 1000),
+
+            domain: "https://mobileaccbackend.onrender.com",
+            path: "/",
+            secure: true,
         });
         res.cookie(userType == "admin" ? "admin" : "user", `${user._id}`, {
-            
             expires: new Date(Date.now() + 60 * 60 * 24 * 1000),
+
+            domain: "https://mobileaccbackend.onrender.com",
+            path: "/",
+            secure: true,
         });
 
         mailSender(email, "login", "login successfully");
