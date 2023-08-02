@@ -66,7 +66,7 @@ const CreateOrder = () => {
 
     const getInfo = async () => {
         try {
-            const response = await axios.get(`https://api.camas.website/user/${cUserId}/profile`);
+            const response = await axios.get(`https://api.camas.website/user/${cUserId}/profile`,{ withCredentials: true });
             //let { fname, lname, email, phone, address } = response.data.data;
             setUserData(response.data.data);
             // setInfo({ ...info, name: fname + " " + lname, email: email, phone: phone });
