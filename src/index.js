@@ -13,7 +13,7 @@ app.use(cookieParser());
 app.use(
     "*",
     cors({
-        origin: "https://mobileacc.onrender.com",
+        origin: "https://camas.website",
         credentials: true,
     })
 );
