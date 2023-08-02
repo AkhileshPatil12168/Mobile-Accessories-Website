@@ -38,7 +38,8 @@ const ResetPassword = () => {
 
             let response = await axios.put(
                 `https://api.camas.website/${userId}/reset/password/${token}`,
-                formData
+                formData,
+                { withCredentials: true }
             );
 
             setRes(response.data.message);

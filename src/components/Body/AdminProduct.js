@@ -64,7 +64,8 @@ const ProductAdmin = () => {
 
             let response = await axios.post(
                 `https://api.camas.website/admin/${cAdminId}/create/product`,
-                formData
+                formData,
+                { withCredentials: true }
             );
             console.log(response);
             setRes(response.data.message);

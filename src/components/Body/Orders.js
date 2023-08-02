@@ -90,7 +90,9 @@ const Orders = () => {
 
     const getOrders = async () => {
         try {
-            const response = await axios.get(`https://api.camas.website/user/${cUserId}/orders`);
+            const response = await axios.get(`https://api.camas.website/user/${cUserId}/orders`, {
+                withCredentials: true,
+            });
             setOrders(response.data.data);
         } catch (error) {
             console.log(error);

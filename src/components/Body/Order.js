@@ -44,7 +44,8 @@ const Order = () => {
     const orderDetails = async () => {
         try {
             const response = await axios.get(
-                `https://api.camas.website/user/${cUserId}/order/${orderId}`
+                `https://api.camas.website/user/${cUserId}/order/${orderId}`,
+                { withCredentials: true }
             );
             setOrder(response.data.data);
             console.log(response.data.data);
@@ -57,7 +58,8 @@ const Order = () => {
         try {
             const response = await axios.put(
                 `https://api.camas.website/user/${cUserId}/order/cancleorder/${orderId}`,
-                { cancle: true }
+                { cancle: true },
+                { withCredentials: true }
             );
 
             const updatedOrder = response.data.data;
@@ -72,7 +74,8 @@ const Order = () => {
     const deleteOrder = async () => {
         try {
             const response = await axios.delete(
-                `https://api.camas.website/user/${cUserId}/order/deleteorder/${orderId}`
+                `https://api.camas.website/user/${cUserId}/order/deleteorder/${orderId}`,
+                { withCredentials: true }
             );
 
             const updatedOrder = response.data.data;

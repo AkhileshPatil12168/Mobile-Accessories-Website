@@ -63,7 +63,11 @@ const Signup = () => {
                 }
             }
 
-            let response = await axios.post(`https://api.camas.website/create/${userType}/`, formData);
+            let response = await axios.post(
+                `https://api.camas.website/create/${userType}/`,
+                formData,
+                { withCredentials: true }
+            );
             console.log(response, "hello");
             setRes(response.data.message);
             setColor("bg-green-300");

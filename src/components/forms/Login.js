@@ -12,7 +12,7 @@ const Login = (props) => {
     });
 
     const [userData, setUserData] = useState("");
-    
+
     const [color, setColor] = useState("bg-white");
     const [res, setRes] = useState("");
     const [statCode, setStatCode] = useState(null);
@@ -28,16 +28,14 @@ const Login = (props) => {
         try {
             e.preventDefault();
 
-            let response = await axios.post(
-                "https://api.camas.website/login/user/",
-                data,{withCredentials:true}
-            );
+            let response = await axios.post("https://api.camas.website/login/user/", data, {
+                withCredentials: true,
+            });
             setUserData(response.data.data);
             setRes(response.data.message);
             setColor("bg-green-300");
             setStatCode(response?.status);
         } catch (error) {
-          
             setRes(error?.response?.data.message);
             setColor("bg-red-300");
             setStatCode(error?.response?.status);
@@ -45,7 +43,7 @@ const Login = (props) => {
     };
 
     useEffect(() => {
-        if(data.userType=="admin" && userData)navigate("/admin")
+        if (data.userType == "admin" && userData) navigate("/admin");
         else if (userData) navigate(-1);
     }, [userData]);
 
@@ -56,7 +54,6 @@ const Login = (props) => {
 
     return (
         <>
-        
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -120,7 +117,7 @@ const Login = (props) => {
                         <Link to="/request/resetpassword">
                             <div className="text-sm">
                                 <p className="font-semibold text-indigo-600 hover:text-indigo-500 p-2 text-right">
-                                Forgot Password
+                                    Forgot Password
                                 </p>
                             </div>
                         </Link>
@@ -128,7 +125,6 @@ const Login = (props) => {
                     <div className={`${color} h-14 mt-2 `}>{res}</div>
                 </div>
             </div>
-          
         </>
     );
 };

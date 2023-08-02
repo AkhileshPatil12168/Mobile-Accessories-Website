@@ -16,7 +16,9 @@ const ConnectUs = () => {
 
     const getUserDetails = async () => {
         try {
-            const response = await axios.get(`https://api.camas.website/user/${cUserId}/profile`);
+            const response = await axios.get(`https://api.camas.website/user/${cUserId}/profile`, {
+                withCredentials: true,
+            });
             const userData = response.data.data;
             setUserName(userData.fname + " " + userData.lname);
             setUserEmail(userData.email);
@@ -28,11 +30,15 @@ const ConnectUs = () => {
     const sendMessage = async (e) => {
         try {
             e.preventDefault();
-            const response = await axios.post(`https://api.camas.website/user/${cUserId}/contactus`, {
-                name: userName,
-                email: userEmail,
-                message: message,
-            });
+            const response = await axios.post(
+                `https://api.camas.website/user/${cUserId}/contactus`,
+                {
+                    name: userName,
+                    email: userEmail,
+                    message: message,
+                },
+                { withCredentials: true }
+            );
             console.log(response.data.data.message);
 
             if (response.status == 200) setIsMessageSent(true);

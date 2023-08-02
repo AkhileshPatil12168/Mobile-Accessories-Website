@@ -15,7 +15,9 @@ const Product = () => {
 
     async function getProduct() {
         try {
-            const response = await axios.get("https://api.camas.website/products/" + `${id}`,{withCredentials:true});
+            const response = await axios.get("https://api.camas.website/products/" + `${id}`, {
+                withCredentials: true,
+            });
             setProduct(response.data.data);
         } catch (error) {
             console.error(error);
@@ -24,10 +26,14 @@ const Product = () => {
     async function addToCart() {
         if (!cUserId) navigate("/login");
         else {
-            let response = await axios.put(`https://api.camas.website/user/${cUserId}/cart`, {
-                productId: id,
-                value: 1,
-            });
+            let response = await axios.put(
+                `https://api.camas.website/user/${cUserId}/cart`,
+                {
+                    productId: id,
+                    value: 1,
+                },
+                { withCredentials: true }
+            );
             function message() {
                 setText("add into cart");
             }

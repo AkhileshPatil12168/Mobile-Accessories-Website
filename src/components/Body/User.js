@@ -11,7 +11,9 @@ const User = () => {
 
     const getData = async () => {
         try {
-            let response = await axios.get(`https://api.camas.website/user/${cUserId}/profile`);
+            let response = await axios.get(`https://api.camas.website/user/${cUserId}/profile`, {
+                withCredentials: true,
+            });
 
             console.log(response.data.data);
             setData(response.data.data);

@@ -28,7 +28,11 @@ const ForgotPassword = () => {
         try {
             e.preventDefault();
 
-            const response = await axios.post("https://api.camas.website/request/resetpassword/", data);
+            const response = await axios.post(
+                "https://api.camas.website/request/resetpassword/",
+                data,
+                { withCredentials: true }
+            );
             setRes(response.data.message);
             setColor("bg-green-300");
             setStatCode(response?.status);

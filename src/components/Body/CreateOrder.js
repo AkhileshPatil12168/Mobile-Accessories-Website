@@ -53,7 +53,10 @@ const CreateOrder = () => {
 
     const getSummery = async () => {
         try {
-            const response = await axios.get(`https://api.camas.website/user/${cUserId}/order/summery`);
+            const response = await axios.get(
+                `https://api.camas.website/user/${cUserId}/order/summery`,
+                { withCredentials: true }
+            );
             setSummery(response.data.data);
             console.log(response.data.data);
         } catch (error) {
@@ -107,7 +110,11 @@ const CreateOrder = () => {
                 },
             };
 
-            const response = await axios.post(`https://api.camas.website/user/${cUserId}/order/`, data);
+            const response = await axios.post(
+                `https://api.camas.website/user/${cUserId}/order/`,
+                data,
+                { withCredentials: true }
+            );
             console.log(response.data.data["_id"]);
             setOrderId(response.data.data["_id"]);
         } catch (error) {

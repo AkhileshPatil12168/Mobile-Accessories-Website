@@ -44,7 +44,8 @@ const AdminOrder = () => {
     const orderDetails = async () => {
         try {
             const response = await axios.get(
-                `https://api.camas.website/admin/${cAdminId}/order/${orderId}`
+                `https://api.camas.website/admin/${cAdminId}/order/${orderId}`,
+                { withCredentials: true }
             );
             const order = response.data.data;
             setOrder(order);
@@ -57,7 +58,8 @@ const AdminOrder = () => {
         try {
             const response = await axios.put(
                 `https://api.camas.website/admin/${cAdminId}/order/${orderId}`,
-                { status: status }
+                { status: status },
+                { withCredentials: true }
             );
 
             const updatedOrder = response.data.data;
