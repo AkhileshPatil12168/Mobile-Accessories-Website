@@ -46,7 +46,7 @@ const AdminProducts = () => {
 
     const fetchProducts = async () => {
         try {
-            const response = await axios.get(`https://mobileaccbackend.onrender.com/products`);
+            const response = await axios.get(`https://api.camas.website/products`);
             const allProducts = response.data.data;
             console.log(allProducts);
             setProducts(allProducts);

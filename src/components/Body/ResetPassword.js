@@ -37,7 +37,7 @@ const ResetPassword = () => {
             }
 
             let response = await axios.put(
-                `https://mobileaccbackend.onrender.com/${userId}/reset/password/${token}`,
+                `https://api.camas.website/${userId}/reset/password/${token}`,
                 formData
             );
 

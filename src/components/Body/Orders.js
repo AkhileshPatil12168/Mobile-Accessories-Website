@@ -90,7 +90,7 @@ const Orders = () => {
 
     const getOrders = async () => {
         try {
-            const response = await axios.get(`https://mobileaccbackend.onrender.com/user/${cUserId}/orders`);
+            const response = await axios.get(`https://api.camas.website/user/${cUserId}/orders`);
             setOrders(response.data.data);
         } catch (error) {
             console.log(error);

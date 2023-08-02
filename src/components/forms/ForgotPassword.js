@@ -28,7 +28,7 @@ const ForgotPassword = () => {
         try {
             e.preventDefault();
 
-            const response = await axios.post("https://mobileaccbackend.onrender.com/request/resetpassword/", data);
+            const response = await axios.post("https://api.camas.website/request/resetpassword/", data);
             setRes(response.data.message);
             setColor("bg-green-300");
             setStatCode(response?.status);

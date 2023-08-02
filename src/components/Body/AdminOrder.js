@@ -44,7 +44,7 @@ const AdminOrder = () => {
     const orderDetails = async () => {
         try {
             const response = await axios.get(
-                `https://mobileaccbackend.onrender.com/admin/${cAdminId}/order/${orderId}`
+                `https://api.camas.website/admin/${cAdminId}/order/${orderId}`
             );
             const order = response.data.data;
             setOrder(order);
@@ -56,7 +56,7 @@ const AdminOrder = () => {
     const updateOrder = async (status) => {
         try {
             const response = await axios.put(
-                `https://mobileaccbackend.onrender.com/admin/${cAdminId}/order/${orderId}`,
+                `https://api.camas.website/admin/${cAdminId}/order/${orderId}`,
                 { status: status }
             );
 
