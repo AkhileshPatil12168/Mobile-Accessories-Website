@@ -11,9 +11,9 @@ const Header = () => {
     const cAdminId = cookies.get("admin");
     console.log(cUserId);
     const handleLogout = () => {
-        cookies.remove("token", { path: "/" });
-        cookies.remove("user", { path: "/" });
-        cookies.remove("admin", { path: "/" });
+        cookies.remove("token", { path: "/", domain: ".camas.website" });
+        cookies.remove("user", { path: "/", domain: ".camas.website" });
+        cookies.remove("admin", { path: "/", domain: ".camas.website" });
         navigate("/");
     };
 
