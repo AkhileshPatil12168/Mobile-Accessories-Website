@@ -13,7 +13,7 @@ app.use(cookieParser());
 app.use(
     "*",
     cors({
-        origin: "https://camas.website",
+        origin: ["https://camas.website", "http://localhost:3001"],
         credentials: true,
     })
 );
