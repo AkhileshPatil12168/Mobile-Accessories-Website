@@ -15,7 +15,7 @@ const Product = () => {
 
     async function getProduct() {
         try {
-            const response = await axios.get("https://api.camas.website/products/" + `${id}`, {
+            const response = await axios.get(process.env.backendapi+"/products/" + `${id}`, {
                 withCredentials: true,
             });
             setProduct(response.data.data);
