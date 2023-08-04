@@ -51,13 +51,13 @@ const login = async (req, res) => {
             expires: new Date(Date.now() + 60 * 60 * 24 * 1000),
             sameSite: "none",
             secure: true,
-            domain: ".camas.website",
+            domain: process.env.domain,
         });
         res.cookie(userType == "admin" ? "admin" : "user", `${user._id}`, {
             expires: new Date(Date.now() + 60 * 60 * 24 * 1000),
             sameSite: "none",
             secure: true,
-            domain: ".camas.website",
+            domain: process.env.domain,
         });
 
         mailSender(email, "login", "login successfully");
