@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loading from "../../animation/loading";
 
 const Card = (props) => {
     const navigate = useNavigate();
     const { _id, productImage, title, price, cUserId } = props;
     const [text, setText] = useState("Add to cart");
     const [color, setColor] = useState("bg-blue-500");
-    const [hcolor, setHColor] = useState("bg-blue-700");
+    const [cursor, setCursor] = useState("");
+    const [lineThrough, setLineThrough] = useState("");
     const [res, setRes] = useState();
     console.log(_id);
 
@@ -15,6 +17,7 @@ const Card = (props) => {
         try {
             if (!cUserId) navigate("/login");
             else {
+                setText(<div className=" flex justify-center h-full w-full pt-1">{Loading()}</div>)
                 let response = await axios.put(
                     process.env.backendapi+`/user/${cUserId}/cart`,
                     {
@@ -24,6 +27,7 @@ const Card = (props) => {
                     { withCredentials: true }
                 );
                 setRes(response.status);
+
             }
         } catch (error) {
             console.log(error);
@@ -32,15 +36,21 @@ const Card = (props) => {
     }
     useEffect(() => {
         if (res == 201) {
-            setText("Added");
+            setText("added");
             setColor("bg-green-500");
-            setHColor("bg-green-500");
+            
             setTimeout(() => {
                 setText("Add to cart");
                 setColor("bg-blue-500");
-                setHColor("bg-blue-700");
+             
                 setRes();
-            }, 1000 / 2);
+            }, 1000 -300);
+        }else if (res == 400) {
+            setText("Add to cart");
+            setLineThrough("line-through");
+            setCursor("cursor-not-allowed");
+            setColor("bg-gray-500");
+            
         }
     }, [res]);
 
@@ -58,12 +68,13 @@ const Card = (props) => {
                 <div className="flex ">
                     <p className="w-32 pt-2">price : {price + " ₹"}</p>
                     {cUserId ? (
-                        <div
+                        <button
                             onClick={addToCart}
-                            className={`cursor-pointer h-10 w-28 ${color}  text-white hover:${hcolor} ml-20  text-center pt-2`}
+                            disabled={res==400?true:false}
+                            className={`cursor-pointer h-10 w-28 ${color}  text-white ml-20  text-center ${lineThrough} ${cursor}`}
                         >
                             {text}
-                        </div>
+                        </button>
                     ) : (
                         <></>
                     )}
