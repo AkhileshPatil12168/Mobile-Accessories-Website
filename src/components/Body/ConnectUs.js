@@ -16,7 +16,7 @@ const ConnectUs = () => {
 
     const getUserDetails = async () => {
         try {
-            const response = await axios.get(`https://api.camas.website/user/${cUserId}/profile`, {
+            const response = await axios.get(process.env.backendapi+`/user/${cUserId}/profile`, {
                 withCredentials: true,
             });
             const userData = response.data.data;
@@ -31,7 +31,7 @@ const ConnectUs = () => {
         try {
             e.preventDefault();
             const response = await axios.post(
-                `https://api.camas.website/user/${cUserId}/contactus`,
+                process.env.backendapi+`/user/${cUserId}/contactus`,
                 {
                     name: userName,
                     email: userEmail,

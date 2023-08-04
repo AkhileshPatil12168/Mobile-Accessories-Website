@@ -46,7 +46,7 @@ const AdminProducts = () => {
 
     const fetchProducts = async () => {
         try {
-            const response = await axios.get(`https://api.camas.website/products`, {
+            const response = await axios.get(process.env.backendapi+`/products`, {
                 withCredentials: true,
             });
             const allProducts = response.data.data;

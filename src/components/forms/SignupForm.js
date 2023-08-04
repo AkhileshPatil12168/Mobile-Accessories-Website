@@ -64,7 +64,7 @@ const Signup = () => {
             }
 
             let response = await axios.post(
-                `https://api.camas.website/create/${userType}/`,
+                process.env.backendapi+`/create/${userType}/`,
                 formData,
                 { withCredentials: true }
             );

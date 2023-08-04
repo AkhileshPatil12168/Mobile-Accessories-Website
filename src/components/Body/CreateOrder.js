@@ -54,7 +54,7 @@ const CreateOrder = () => {
     const getSummery = async () => {
         try {
             const response = await axios.get(
-                `https://api.camas.website/user/${cUserId}/order/summery`,
+                process.env.backendapi+`/user/${cUserId}/order/summery`,
                 { withCredentials: true }
             );
             setSummery(response.data.data);
@@ -66,7 +66,7 @@ const CreateOrder = () => {
 
     const getInfo = async () => {
         try {
-            const response = await axios.get(`https://api.camas.website/user/${cUserId}/profile`,{ withCredentials: true });
+            const response = await axios.get(process.env.backendapi+`/user/${cUserId}/profile`,{ withCredentials: true });
             //let { fname, lname, email, phone, address } = response.data.data;
             setUserData(response.data.data);
             // setInfo({ ...info, name: fname + " " + lname, email: email, phone: phone });
@@ -111,7 +111,7 @@ const CreateOrder = () => {
             };
 
             const response = await axios.post(
-                `https://api.camas.website/user/${cUserId}/order/`,
+                process.env.backendapi+`/user/${cUserId}/order/`,
                 data,
                 { withCredentials: true }
             );

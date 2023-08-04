@@ -78,7 +78,7 @@ const AdminOrders = () => {
 
     const fetchOrders = async () => {
         try {
-            const response = await axios.get(`https://api.camas.website/admin/${cAdminId}/orders`, {
+            const response = await axios.get(process.env.backendapi+`/admin/${cAdminId}/orders`, {
                 withCredentials: true,
             });
             const allOrders = response.data.data;

@@ -11,7 +11,7 @@ const User = () => {
 
     const getData = async () => {
         try {
-            let response = await axios.get(`https://api.camas.website/user/${cUserId}/profile`, {
+            let response = await axios.get(process.env.backendapi+`/user/${cUserId}/profile`, {
                 withCredentials: true,
             });
 

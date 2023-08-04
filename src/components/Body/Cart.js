@@ -24,7 +24,7 @@ const Items = (props) => {
                 setErrMessage("");
                 setIsNotWorking(false);
             }
-            let response = await axios.put(`https://api.camas.website/user/${cUserId}/cart`, data, {
+            let response = await axios.put(process.env.backendapi+`/user/${cUserId}/cart`, data, {
                 withCredentials: true,
             });
             setStatCode(response.status);
@@ -88,7 +88,7 @@ const Cart = () => {
 
     const getCart = async () => {
         try {
-            let response = await axios.get(`https://api.camas.website/user/${cUserId}/cart`, {
+            let response = await axios.get(process.env.backendapi+`/user/${cUserId}/cart`, {
                 withCredentials: true,
             });
 
@@ -101,7 +101,7 @@ const Cart = () => {
     };
     const emptyCart = async () => {
         try {
-            const response = await axios.delete(`https://api.camas.website/user/${cUserId}/cart`, {
+            const response = await axios.delete(process.env.backendapi+`/user/${cUserId}/cart`, {
                 withCredentials: true,
             });
 

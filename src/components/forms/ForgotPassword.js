@@ -29,7 +29,7 @@ const ForgotPassword = () => {
             e.preventDefault();
 
             const response = await axios.post(
-                "https://api.camas.website/request/resetpassword/",
+                process.env.backendapi+"/request/resetpassword/",
                 data,
                 { withCredentials: true }
             );

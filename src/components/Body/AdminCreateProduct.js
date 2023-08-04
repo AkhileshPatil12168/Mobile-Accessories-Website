@@ -63,7 +63,7 @@ const CreateProduct = () => {
             }
 
             let response = await axios.post(
-                `https://api.camas.website/admin/${cAdminId}/create/product`,
+                process.env.backendapi+`/admin/${cAdminId}/create/product`,
                 formData,{withCredentials:true}
             );
             console.log(response);

@@ -10,6 +10,7 @@ const Body = () => {
     const navigate = useNavigate();
     const cAdminId = cookies.get("admin");
     const cUserId = cookies.get("user");
+    console.log(process.env.backendapi)
 
     useEffect(() => {
         if (cAdminId) {
@@ -23,7 +24,7 @@ const Body = () => {
     }, []);
     async function getProducts() {
         try {
-            const response = await axios.get("https://api.camas.website/products", {
+            const response = await axios.get(process.env.backendapi+"/products", {
                 withCredentials: true,
             });
             setProducts(response.data.data);
@@ -33,12 +34,12 @@ const Body = () => {
     }
     useEffect(() => {}, [products]);
 
-    return products.length == 0 ? (
+    return products?.length == 0 || !products ? (
         <ShimmerBody />
     ) : (
         <div className="flex flex-wrap w-fit p-3   ">
-            {products.map((p) => {
-                const productId = p._id;
+            {products?.map((p) => {
+                const productId = p?._id;
                 return <Card {...p} cUserId={cUserId} key={productId} />;
             })}
         </div>

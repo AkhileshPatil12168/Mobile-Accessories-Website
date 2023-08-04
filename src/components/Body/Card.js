@@ -16,7 +16,7 @@ const Card = (props) => {
             if (!cUserId) navigate("/login");
             else {
                 let response = await axios.put(
-                    `https://api.camas.website/user/${cUserId}/cart`,
+                    process.env.backendapi+`/user/${cUserId}/cart`,
                     {
                         productId: _id,
                         value: 1,
