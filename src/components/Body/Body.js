@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ShimmerBody from "./ShimmerCard";
+import ShimmerBody from "../Shimmer/ShimmerCard";
 import Cookies from "universal-cookie";
 import Card from "./Card";
 
