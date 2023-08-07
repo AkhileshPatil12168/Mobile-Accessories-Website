@@ -2,6 +2,7 @@ import Cookies from "universal-cookie";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import timeConverter from "../../util/timeConverter";
 
 const Items = (props) => {
     const { productImage, title, quantity, price, index } = props;
@@ -104,8 +105,8 @@ const Order = () => {
     return !cUserId ? (
         navigate("/login")
     ) : (
-        <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Order Details</h1>
+        <div className="container  py-4 px-20">
+            <p className="text-2xl font-bold mb-4">Order Details</p>
 
             <div className="flex flex-wrap -mx-2">
                 <div className="w-full px-2 mb-4">
@@ -113,7 +114,7 @@ const Order = () => {
                         <h2 className="text-lg font-bold mb-4">Items</h2>
                         <div className="border max-h-52	 border-gray-300 rounded p-4 overflow-auto">
                             {order?.items?.map((item, index) => (
-                                <Link to={"/products/" + item.productId}>
+                                <Link to={"/product/" + item.productId}>
                                     <Items {...{ ...item, index: index }} key={index} />
                                 </Link>
                             ))}
@@ -137,7 +138,10 @@ const Order = () => {
                             <strong>Free Shipping:</strong> {order?.isFreeShipping ? "Yes" : "No"}
                         </p>
                         <p className="mb-2">
-                            <strong>Ordered Date:</strong> {order?.orderdedDate}
+                            <strong>Ordered Date:</strong> {order?.orderdedDate?order?.orderdedDate?.slice(0, 10):""}
+                        </p>
+                        <p className="mb-2">
+                            <strong>Ordered time:</strong> {order?.orderdedDate?timeConverter(order?.orderdedDate?.slice(11, 16)):""}
                         </p>
                         <p className="mb-2">
                             <strong>Cancellable:</strong> {order?.cancellable ? "Yes" : "No"}
