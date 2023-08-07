@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import Cookies from "universal-cookie";
+import Loading from "../../animation/loading";
 
 const Items = (props) => {
     const { title, quantity, price, productImage, productId, cUserId, setStatCode, index } = props;
@@ -47,7 +48,7 @@ const Items = (props) => {
                 className="w-20 h-20 mr-0 md:mr-4 rounded mb-4 md:mb-0 "
             />
 
-            <Link to={"/products/" + productId}>
+            <Link to={"/product/" + productId}>
                 <div className="cart-item-details ">
                     <h3 className="text-xl font-bold mb-2">{title}</h3>
                     <p className="text-gray-600 mb-1">Quantity: {quantity}</p>
@@ -59,6 +60,7 @@ const Items = (props) => {
             </div>
 
             <div className="item-actions flex items-center ml-auto mt-4 md:mt-0">
+                <div className=" flex mx-20">{Loading()}</div>
                 <button
                     onClick={() => addOrRemove("-")}
                     className="quantity-btn bg-gray-300 text-gray-600 hover:bg-slate-900 hover:text-white rounded-full w-8 h-8 flex items-center justify-center mr-2"
@@ -126,9 +128,13 @@ const Cart = () => {
     return !cUserId ? (
         navigate("/login")
     ) : (
-        <div className="container mx-auto p-4 bg-white rounded-lg shadow">
-            <h1 className="text-center text-2xl font-bold mb-4">Cart</h1>
-            <div className="max-h-[420]	 overflow-auto">
+        <div className="container py-4  px-[5vh] md:px-[15vh] min-h-[78.5vh] ">
+            <div className="p-4    border border-gray-500 bg-white">
+
+
+            
+            <p className="text-center text-2xl font-bold mb-4">Cart</p>
+            <div className="max-h-[420px] 	 overflow-auto ">
                 {cart?.items.map((i, index) => {
                     return (
                         <Items
@@ -161,6 +167,7 @@ const Cart = () => {
                     Empty Cart
                 </button>
             </div>
+        </div>
         </div>
     );
 };
