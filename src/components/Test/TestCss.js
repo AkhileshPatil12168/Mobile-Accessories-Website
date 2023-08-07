@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useState } from "react";
 
+import Loading from "../../animation/loading";
+
 const TestCss = () => {
     const [isHovered, setIsHovered] = useState(false);
     useEffect(() => {
@@ -20,6 +22,12 @@ const TestCss = () => {
                         isHovered ? "scale-x-100 duration-1000 " : "scale-x-0 duration-500"
                     } rounded-e-full   origin-left  bg-green-500`}
                 ></div>
+            </div>
+
+            <div className="mt-10">
+                <div className="bg-red-200 h-[400px] w-[400px] ">
+                    {Loading()}
+                </div>
             </div>
         </div>
     );
