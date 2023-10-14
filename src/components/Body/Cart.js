@@ -60,7 +60,7 @@ const Items = (props) => {
             </div>
 
             <div className="item-actions flex items-center ml-auto mt-4 md:mt-0">
-                <div className=" flex mx-20">{Loading()}</div>
+                {/* <div className=" flex mx-20">{Loading()}</div> */}
                 <button
                     onClick={() => addOrRemove("-")}
                     className="quantity-btn bg-gray-300 text-gray-600 hover:bg-slate-900 hover:text-white rounded-full w-8 h-8 flex items-center justify-center mr-2"

@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-// import dotenv from "dotenv"
-// require("dotenv").config();
+import dotenv from "dotenv"
+require("dotenv").config();
 
 import Header from "./components/Header/Header";
 

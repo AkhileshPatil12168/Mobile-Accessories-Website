@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "home-router": "parcel index.html --host  192.168.1.11  --port 3001",
-    "start": "parcel index.html --port 3001",
+    "home-router": "parcel index.html --host  192.168.1.19  --port 3001",
+    "start": "parcel index.html  --port 3001",
     "build": "parcel build index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +13,8 @@
   "dependencies": {
     "axios": "^1.4.0",
     "dotenv": "^16.3.1",
+    "flowbite": "^1.8.1",
+    "flowbite-react": "^0.6.4",
     "react": "^18.2.0",
     "react-datepicker": "^4.16.0",
     "react-dom": "^18.2.0",

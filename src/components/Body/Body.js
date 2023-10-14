@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ShimmerBody from "../Shimmer/ShimmerCard";
 import Cookies from "universal-cookie";
 import Card from "./Card";
+// import Vcard from "./vcard";
 
 const Body = () => {
     const cookies = new Cookies();
@@ -37,12 +38,15 @@ const Body = () => {
     return products?.length == 0 || !products ? (
         <ShimmerBody />
     ) : (
-        <div className="flex flex-wrap w-fit p-3   ">
+        <>
+        {/* <Vcard/> */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 bg-slate-50">
             {products?.map((p) => {
                 const productId = p?._id;
                 return <Card {...p} cUserId={cUserId} key={productId} />;
             })}
         </div>
+        </>
     );
 };
 
