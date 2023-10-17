@@ -40,7 +40,7 @@ const Body = () => {
     ) : (
         <>
         {/* <Vcard/> */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 bg-slate-50">
+        <div className="flex flex-wrap w-full justify-center p-3  bg-slate-50">
             {products?.map((p) => {
                 const productId = p?._id;
                 return <Card {...p} cUserId={cUserId} key={productId} />;

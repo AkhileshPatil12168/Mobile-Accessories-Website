@@ -74,7 +74,7 @@ const Login = (props) => {
                                     value={data.email}
                                     onChange={handleSubmit}
                                     required
-                                    className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
@@ -93,7 +93,7 @@ const Login = (props) => {
                                     value={data.password}
                                     onChange={handleSubmit}
                                     required
-                                    className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
@@ -108,7 +108,7 @@ const Login = (props) => {
                             <button
                                 type="submit"
                                 name="login"
-                                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                className="flex w-full justify-center  px-3 py-1.5 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm  text-center mb-2"
                                 onClick={postData}
                             >
                                 login
@@ -116,7 +116,7 @@ const Login = (props) => {
                         </div>
                         <Link to="/request/resetpassword">
                             <div className="text-sm">
-                                <p className="font-semibold text-indigo-600 hover:text-indigo-500 p-2 text-right">
+                                <p className="font-semibold text-blue-600 hover:text-blue-500 p-2 text-right">
                                     Forgot Password
                                 </p>
                             </div>

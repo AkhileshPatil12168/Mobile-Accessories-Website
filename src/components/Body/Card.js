@@ -70,15 +70,15 @@ const Card = (props) => {
             {title.length >= 70 ? title.slice(0, 70) + "..." : title}
           </h5>
         </Link>
-        <div className="mt-4 mb-2 flex items-center justify-between pt-3 border-t-2">
-          <p className="text-3xl font-bold text-slate-900">₹{price}</p>
+        <div className="mt-4 mb-2 flex flex-wrap items-center justify-between pt-3 border-t-2 sm:justify-items-center">
+          <p className="text-xl font-bold text-slate-900">₹{price}</p>
           {cUserId ? (
             <button
               onClick={addToCart}
               disabled={res == 400 ? true : false}
               // className={`flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300${color} ${lineThrough} ${cursor}`}
 
-              className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
+              className="flex items-center justify-center text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-1"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
