@@ -14,9 +14,9 @@ const orderSchema = new mongoose.Schema(
             trim: true,
         },
         phone: {
-          type: String,
-          required: true,
-          trim: true,
+            type: String,
+            required: true,
+            trim: true,
         },
         email: {
             type: String,
@@ -80,23 +80,42 @@ const orderSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
-        orderdedDate : {
-            type : Date
+        orderdedDate: {
+            type: Date,
         },
-        deliveredDate :{
-            type:Date
+        deliveredDate: {
+            type: Date,
         },
-        cancelledDate :{
-            type:Date
+        cancelledDate: {
+            type: Date,
         },
         cancellable: {
             type: Boolean,
             default: true,
         },
-        status: {
+        OrderStatus: {
             type: String,
             default: "pending",
             enum: ["pending", "completed", "cancelled"],
+        },
+        paymentMethod: {
+            type: String,
+            enum: ["cash on delivery", "razorpay"],
+        },
+        paymentStatus: {
+            type: String,
+            enum: ["pending", "completed"],
+        },
+        razorpayId: {
+            razorpay_payment_id: {
+                type: String,
+            },
+            razorpay_order_id: {
+                type: String,
+            },
+            razorpay_signature: {
+                type: String,
+            },
         },
 
         deletedAt: {
