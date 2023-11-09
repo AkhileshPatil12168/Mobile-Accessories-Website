@@ -7,6 +7,10 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    mname: {
+      type: String,
+      trim: true,
+    },
     lname: {
       type: String,
       required: true,
