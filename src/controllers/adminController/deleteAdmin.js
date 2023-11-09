@@ -1,4 +1,6 @@
 const adminModel = require("../../models/adminModel");
+const roleModel = require("../../models/roleModel");
+
 const bcrypt = require("bcrypt");
 
 const { isValidObjectId, emptyBody } = require("../../utils/validators");
@@ -40,6 +42,11 @@ const deleteAdmin = async (req, res) => {
 
         let updateData = await adminModel.findByIdAndUpdate(
             userId,
+            { isDeleted: true },
+            { new: true }
+        );
+        let updateRoleData = await roleModel.findOneAndUpdate(
+            {originalId:userId},
             { isDeleted: true },
             { new: true }
         );
