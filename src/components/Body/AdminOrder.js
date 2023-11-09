@@ -34,7 +34,7 @@ const Items = (props) => {
 const AdminOrder = () => {
     const navigate = useNavigate();
     const cookies = new Cookies();
-    const cAdminId = cookies.get("admin");
+    const cAdminId = cookies.get("Admin");
     const { orderId } = useParams();
 
     console.log(orderId);

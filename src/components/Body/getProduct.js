@@ -7,7 +7,7 @@ import Loading from "../../animation/loading";
 const Product = () => {
     const navigate = useNavigate();
     const cookies = new Cookies();
-    const cUserId = cookies.get("user");
+    const cUserId = cookies.get("User");
     const { id } = useParams();
     console.log(id);
 

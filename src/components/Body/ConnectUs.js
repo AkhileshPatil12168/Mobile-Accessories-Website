@@ -5,7 +5,7 @@ import Cookies from "universal-cookie";
 
 const ConnectUs = () => {
     const cookies = new Cookies();
-    const cUserId = cookies.get("user");
+    const cUserId = cookies.get("User");
 
     const [userName, setUserName] = useState("");
     const [userEmail, setUserEmail] = useState("");

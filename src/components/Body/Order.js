@@ -34,7 +34,7 @@ const Items = (props) => {
 const Order = () => {
     const navigate = useNavigate();
     const cookies = new Cookies();
-    const cUserId = cookies.get("user");
+    const cUserId = cookies.get("User");
     const { orderId } = useParams();
 
     console.log(orderId);

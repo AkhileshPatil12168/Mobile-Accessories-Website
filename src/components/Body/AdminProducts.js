@@ -36,7 +36,7 @@ const Product = (props) => {
 const AdminProducts = () => {
     const cookies = new Cookies();
     const navigate = useNavigate();
-    const cAdminId = cookies.get("admin");
+    const cAdminId = cookies.get("Admin");
 
     const [products, setProducts] = useState([]);
 

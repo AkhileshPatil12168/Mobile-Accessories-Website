@@ -11,13 +11,13 @@ const Header = () => {
   const [active, SetActive] = useState();
 
   const cToken = cookies.get("token");
-  const cUserId = cookies.get("user");
-  const cAdminId = cookies.get("admin");
+  const cUserId = cookies.get("User");
+  const cAdminId = cookies.get("Admin");
   console.log(cUserId);
   const handleLogout = () => {
     cookies.remove("token", { path: "/", domain: process.env.domain });
-    cookies.remove("user", { path: "/", domain: process.env.domain });
-    cookies.remove("admin", { path: "/", domain: process.env.domain });
+    cookies.remove("User", { path: "/", domain: process.env.domain });
+    cookies.remove("Admin", { path: "/", domain: process.env.domain });
     navigate("/");
   };
 

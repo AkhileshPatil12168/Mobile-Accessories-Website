@@ -93,7 +93,7 @@ const Order = (props) => {
 const Orders = () => {
     const cookies = new Cookies();
     const navigate = useNavigate();
-    const cUserId = cookies.get("user");
+    const cUserId = cookies.get("User");
 
     const [orders, setOrders] = useState([]);
 

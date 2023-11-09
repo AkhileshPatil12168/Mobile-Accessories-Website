@@ -9,8 +9,8 @@ import Card from "./Card";
 const Body = () => {
     const cookies = new Cookies();
     const navigate = useNavigate();
-    const cAdminId = cookies.get("admin");
-    const cUserId = cookies.get("user");
+    const cAdminId = cookies.get("Admin");
+    const cUserId = cookies.get("User");
     console.log(process.env.backendapi)
 
     useEffect(() => {

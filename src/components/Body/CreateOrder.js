@@ -6,7 +6,7 @@ import Cookies from "universal-cookie";
 const CreateOrder = () => {
     const cookies = new Cookies();
     const navigate = useNavigate();
-    const cUserId = cookies.get("user");
+    const cUserId = cookies.get("User");
 
     const [summery, setSummery] = useState({});
     const [userData, setUserData] = useState({});

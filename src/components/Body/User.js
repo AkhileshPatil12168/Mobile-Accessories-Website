@@ -5,7 +5,7 @@ import noProfile from "../../images/noProfile.png";
 
 const User = () => {
     const cookies = new Cookies();
-    const cUserId = cookies.get("user");
+    const cUserId = cookies.get("User");
 
     const [data, setData] = useState(null);
 

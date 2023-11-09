@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 const ProductAdmin = () => {
     const navigate = useNavigate();
     const cookies = new Cookies();
-    const cAdminId = cookies.get("admin");
+    const cAdminId = cookies.get("Admin");
 
     const [details, setDetails] = useState({
         title: "",

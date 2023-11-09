@@ -4,7 +4,7 @@ import Cookies from "universal-cookie";
 const Admin = () => {
     const cookies = new Cookies();
     const cToken = cookies.get("token");
-    const cAdminId = cookies.get("admin");
+    const cAdminId = cookies.get("Admin");
 
     return (
         <div className="flex flex-wrap justify-center">

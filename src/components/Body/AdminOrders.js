@@ -61,7 +61,7 @@ const Order = (props) => {
 const AdminOrders = () => {
     const cookies = new Cookies();
     const navigate = useNavigate();
-    const cAdminId = cookies.get("admin");
+    const cAdminId = cookies.get("Admin");
 
     const [orders, setOrders] = useState([]);
     const [fromDate, setFromDate] = useState(null);

@@ -8,7 +8,6 @@ const Login = (props) => {
     const [data, setData] = useState({
         email: email || "",
         password: "",
-        userType: "",
     });
 
     const [userData, setUserData] = useState("");
@@ -35,6 +34,7 @@ const Login = (props) => {
             setRes(response.data.message);
             setColor("bg-green-300");
             setStatCode(response?.status);
+            console.log(data.userType)
         } catch (error) {
             setRes(error?.response?.data.message);
             setColor("bg-red-300");
@@ -43,7 +43,8 @@ const Login = (props) => {
     };
 
     useEffect(() => {
-        if (data.userType == "admin" && userData) navigate("/admin");
+        
+        if (userData.userType == "Admin" && userData) navigate("/admin");
         else if (userData) navigate("/");
     }, [userData]);
 
@@ -97,12 +98,12 @@ const Login = (props) => {
                                 />
                             </div>
                         </div>
-                        <div onClick={handleSubmit} className="space-x-3">
+                        {/* <div onClick={handleSubmit} className="space-x-3">
                             <input type="radio" value="user" name="userType" />
                             user
                             <input type="radio" value="admin" name="userType" />
                             admin
-                        </div>
+                        </div> */}
 
                         <div>
                             <button

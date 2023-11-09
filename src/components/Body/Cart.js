@@ -83,7 +83,7 @@ const Items = (props) => {
 const Cart = () => {
     const cookies = new Cookies();
     const navigate = useNavigate();
-    const cUserId = cookies.get("user");
+    const cUserId = cookies.get("User");
 
     const [cart, setCart] = useState(null);
     const [statCode, setStatCode] = useState(null);
