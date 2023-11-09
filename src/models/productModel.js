@@ -1,54 +1,62 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const productSchema = new mongoose.Schema({
-
+const productSchema = new mongoose.Schema(
+  {
+    vendorId: {
+      type: ObjectId,
+      ref: "Vendor",
+      required: true,
+      unique: true,
+      trim: true,
+    },
     title: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
     },
     description: {
-        type: String,
-        required: true,
-        trim: true
-        
+      type: String,
+      required: true,
+      trim: true,
     },
     price: {
-        type: Number,
-        required: true
-    },
-  
-    category:{
-        type : [String],
-        required: true,
-        trim: true
+      type: Number,
+      required: true,
     },
 
-    compatible_models:{
-        type : [String]
+    category: {
+      type: [String],
+      required: true,
+      trim: true,
     },
- 
+
+    compatible_models: {
+      type: [String],
+    },
+
     isFreeShipping: {
-        type: Boolean,
-        default: false
+      type: Boolean,
+      default: false,
     },
     productImage: {
-        type: [String]
+      type: [String],
     },
-    available_Quantity:{
-        type :Number,
-        required: true,
+    available_Quantity: {
+      type: Number,
+      required: true,
     },
 
     deletedAt: {
-        type: Date
+      type: Date,
     },
     isDeleted: {
-        type: Boolean,
-        default: false
+      type: Boolean,
+      default: false,
     },
-},
-    { timestamps: true });
+  },
+  { timestamps: true }
+);
 
-module.exports = mongoose.model("product", productSchema)
+module.exports = mongoose.model("product", productSchema);
