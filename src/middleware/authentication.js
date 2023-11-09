@@ -9,7 +9,7 @@ const authentication = async (req, res, next) => {
         
 
         if (!token) {
-            return res.status(400).send({ status: false, message: "provide token in the cookie" });
+            return res.status(401).send({ status: false, message: "token is not present" });
         }
 
         jwt.verify(token, process.env.TOKEN_KEY, function (err, decodedToken) { 

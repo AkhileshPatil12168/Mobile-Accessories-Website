@@ -28,7 +28,7 @@ const getProductById = async function (req, res) {
                 _id: productId,
                 isDeleted: false,
             })
-            .select({ deletedAt: 0, isDeleted: 0, updatedAt: 0, createdAt: 0 })
+            .select({ deletedAt: 0, isDeleted: 0, updatedAt: 0, createdAt: 0 ,__v:0})
             .lean();
         if (!productsDetails)
             return res.status(404).send({
