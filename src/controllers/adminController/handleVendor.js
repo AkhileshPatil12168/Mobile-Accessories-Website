@@ -1,5 +1,9 @@
+const bcrypt = require("bcrypt");
+
 const vendorModel = require("../../models/vendorModel");
 const adminModel = require("../../models/adminModel");
+
+const { isValidObjectId } = require("../../utils/validators");
 
 const approveVender = async (req, res) => {
   try {
@@ -8,7 +12,7 @@ const approveVender = async (req, res) => {
 
     if (!userId) return res.status(400).send({ status: false, message: "Please provide userId." });
 
-    if (!isValidObjectId(userId))
+    if (!isValidObjectId(userId) || !isValidObjectId(vendorId)) 
       return res.status(403).send({ status: false, message: "please login again" });
 
     const isCorrectUser = await bcrypt.compare(userId, decodedToken.userId);
@@ -23,7 +27,8 @@ const approveVender = async (req, res) => {
     if (!vendorId)
       return res.status(400).send({ status: false, message: "please provide vendorId" });
 
-    const { isApproved } = req.body;
+    let { isApproved } = req.body;
+    if (!isApproved) isApproved = false;
 
     const updateData = await vendorModel.findByIdAndUpdate(vendorId, { isApproved }, { new: true });
     return res.status(200).send({
@@ -58,7 +63,8 @@ const suspendVendor = async (req, res) => {
     if (!vendorId)
       return res.status(400).send({ status: false, message: "please provide vendorId" });
 
-    const { isSuspended } = req.body;
+    let { isSuspended } = req.body;
+    if (!isSuspended) isSuspended = false;
 
     const updateData = await vendorModel.findByIdAndUpdate(
       vendorId,

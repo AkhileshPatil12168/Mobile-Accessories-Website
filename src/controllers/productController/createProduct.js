@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt");
+
 const productModel = require("../../models/productModel");
 const vendorModel = require("../../models/vendorModel");
 
@@ -7,6 +9,7 @@ const {
   isValidString,
   validTrim,
   isValidImage,
+  isValidObjectId,
 } = require("../../utils/validators");
 
 const createProduct = async function (req, res) {
