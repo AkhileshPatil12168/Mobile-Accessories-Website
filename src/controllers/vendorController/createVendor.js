@@ -14,6 +14,7 @@ const {
   isValidPwd,
   isValidPincode,
   isValidImage,
+  isValidString
 } = require("../../utils/validators");
 
 const createVendor = async (req, res) => {
@@ -23,7 +24,7 @@ const createVendor = async (req, res) => {
     let { storeName,fname, mname, lname, email, phone, password, address, image } =
       req.body;
 
-    // let street, city,state, pincode;
+     let street, city,state, pincode;
 
     if (emptyBody(req.body))
       return res
@@ -77,11 +78,12 @@ const createVendor = async (req, res) => {
         .status(400)
         .send({ status: false, message: "enter a valid email" });
 
-    let checkEmail = await vendorModel.findOne({ email: email });
+    let checkEmail = await roleModel.findOne({ email: email });
     if (checkEmail)
       return res
         .status(400)
         .send({ status: false, message: "Email already exist" });
+
 
     if (!phone)
       return res
@@ -93,7 +95,7 @@ const createVendor = async (req, res) => {
         .status(400)
         .send({ status: false, message: "enter a valid phone" });
 
-    let checkPhone = await vendorModel.findOne({ phone: phone });
+    let checkPhone = await roleModel.findOne({ phone: phone });
     if (checkPhone)
       return res
         .status(400)
@@ -111,26 +113,26 @@ const createVendor = async (req, res) => {
     password = await bcrypt.hash(password, Number(process.env.SALT));
 
     if (address) {
-      let { street, city, state, pincode } = JSON.parse(address);
+      address= JSON.parse(address);
 
-      if (!isNotProvided(street))
+      if (!isNotProvided(address.street))
         return res.status(400).send({
           status: false,
           message: "street address is required",
         });
-      street = validTrim(street);
+        street = validTrim(address.street);
       if (!street)
         return res.status(400).send({
           status: false,
           message: "street address is required",
         });
 
-      if (!isNotProvided(city))
+      if (!isNotProvided(address.city))
         return res.status(400).send({
           status: false,
           message: "city address is required",
         });
-      city = validTrim(city);
+        city = validTrim(address.city);
       if (!city)
         return res.status(400).send({
           status: false,
@@ -138,23 +140,23 @@ const createVendor = async (req, res) => {
         });
 
      
-      if (!isNotProvided(state))
+      if (!isNotProvided(address.state))
         return res.status(400).send({
           status: false,
           message: "state is required",
         });
-      state = validTrim(state);
+        state = validTrim(address.state);
       if (!state)
         return res.status(400).send({
           status: false,
           message: "state is required",
         });
 
-      if (!isNotProvided(pincode))
+      if (!isNotProvided(address.pincode))
         return res
           .status(400)
           .send({ status: false, message: "pincode is required" });
-      pincode = pincode.trim();
+          pincode = address.pincode.trim();
       if (!pincode)
         return res
           .status(400)
@@ -171,7 +173,7 @@ const createVendor = async (req, res) => {
           .status(400)
           .send({ status: false, message: "provide a valid image" });
 
-      profileImage = await uploadFile(files[0], "vendor/");
+          image = await uploadFile(files[0], "vendor/");
     }
 
     let vendorInfo = {
@@ -205,7 +207,7 @@ const createVendor = async (req, res) => {
     return res.status(201).send({
       status: true,
       message: "account created successfully",
-      data: vendorInfo,
+      data: vendor,
     });
   } catch (error) {
     return res.status(500).send({ status: false, message: error });
