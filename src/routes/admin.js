@@ -28,7 +28,7 @@ Router.put("/admin/:userId/order/:orderId", authentication, updateOrderByAdmin);
 Router.get("/admin/:userId/products", authentication, getProductByFilterAdmin);
 Router.get("/admin/:userId/products/:productId", authentication, getProductByIdAdmin);
 
-Router.put("/admin/:userId/vendor/:vendorId", authentication, approveVender);
-Router.put("/admin/:userId/vendor/:vendorId", authentication, suspendVendor);
+Router.put("/admin/:userId/vendor/:vendorId/approve", authentication, approveVender);
+Router.put("/admin/:userId/vendor/:vendorId/suspend", authentication, suspendVendor);
 
 module.exports = Router;
