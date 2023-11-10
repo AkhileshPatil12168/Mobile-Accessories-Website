@@ -53,10 +53,25 @@ const updateAdmin = async (req, res) => {
                 return res.status(400).send({ status: false, message: "enter a valid email" });
         }
 
-        let checkEmail = await adminModel.findOne({ email: data.email });
+        let checkEmail = await rolemodel.findOne({ email: data.email });
         if (checkEmail)
             return res.status(400).send({ status: false, message: "Email already exist" });
 
+
+            if (phone) {
+                if (!isNotProvided(phone))
+                    return res.status(400).send({ status: false, message: "provide the phone" });
+    
+                data.phone = validTrim(phone);
+                if (!isValidPhone(data.phone))
+                    return res.status(400).send({ status: false, message: "enter a valid phone" });
+            }
+    
+            let checkPhone = await vendorModel.findOne({ phone: data.phone });
+            if (checkPhone)
+                return res.status(400).send({ status: false, message: "Phone number already exist" });
+
+                
         if (password) {
             if (!isNotProvided(password))
                 return res.status(400).send({ status: false, message: "provide the password" });
@@ -70,6 +85,13 @@ const updateAdmin = async (req, res) => {
         let updateData = await adminModel.findByIdAndUpdate(userId, data, {
             new: true,
         });
+        if (data.email || data.password || data.phone) {
+            await roleModel.findOneAndUpdate(
+              { originalId: userId },
+              { email: data.email, password: data.password, phone: data.phone },
+              { new: true }
+            );
+          }
         res.status(200).send({
             status: true,
             message: "Update admin is successful",
