@@ -20,7 +20,7 @@ const createVendor = async (req, res) => {
   try {
     let files = req.files;
 
-    let { fname, mname, lname, email, phone, password, address, image } =
+    let { storeName,fname, mname, lname, email, phone, password, address, image } =
       req.body;
 
     // let street, city,state, pincode;
@@ -29,6 +29,13 @@ const createVendor = async (req, res) => {
       return res
         .status(400)
         .send({ status: false, message: "provide some data" });
+
+
+        if (!storeName)
+          return res.status(400).send({ status: false, message: "store name is required" });
+        storeName = validTrim(storeName);
+        if (!isValidString(storeName))
+          return res.status(400).send({ status: false, message: "enter a valid store name" });
 
     if (!fname)
       return res
@@ -168,6 +175,7 @@ const createVendor = async (req, res) => {
     }
 
     let vendorInfo = {
+      storeName,
       fname,
       mname,
       lname,

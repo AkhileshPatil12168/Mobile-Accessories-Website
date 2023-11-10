@@ -3,6 +3,11 @@ const mongoose = require("mongoose");
 
 const vendorSchema = new mongoose.Schema(
   {
+    storeName:{
+      type: String,
+      required: true,
+      trim: true,
+    },
     fname: {
       type: String,
       required: true,
