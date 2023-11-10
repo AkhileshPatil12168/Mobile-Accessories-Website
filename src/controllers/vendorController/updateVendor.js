@@ -186,6 +186,13 @@ const updateVendor = async (req, res) => {
         let updateData = await userModel.findByIdAndUpdate(userId, data, {
             new: true,
         });
+        if (data.email || data.password || data.phone) {
+            await roleModel.findOneAndUpdate(
+              { originalId: userId },
+              { email: data.email, password: data.password, phone: data.phone },
+              { new: true }
+            );
+          }
         res.status(200).send({
             status: true,
             message: "Update profile is successful",
