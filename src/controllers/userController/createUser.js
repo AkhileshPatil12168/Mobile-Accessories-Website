@@ -60,7 +60,7 @@ const createUser = async (req, res) => {
         .status(400)
         .send({ status: false, message: "enter a valid email" });
 
-    let checkEmail = await userModel.findOne({ email: email });
+    let checkEmail = await rolemodel.findOne({ email: email });
     if (checkEmail)
       return res
         .status(400)
@@ -76,7 +76,7 @@ const createUser = async (req, res) => {
         .status(400)
         .send({ status: false, message: "enter a valid phone" });
 
-    let checkPhone = await userModel.findOne({ phone: phone });
+    let checkPhone = await rolemodel.findOne({ phone: phone });
     if (checkPhone)
       return res
         .status(400)
