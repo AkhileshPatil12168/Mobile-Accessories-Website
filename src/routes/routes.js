@@ -9,6 +9,7 @@ const productRoute = require("./product");
 const cartRoute = require("./cart");
 const orderRoute = require("./order");
 const testRoute = require("./test");
+const reviewRoute = require("./review")
 
 Router.use(commonRoute);
 Router.use(adminRoute);
@@ -18,6 +19,7 @@ Router.use(productRoute);
 Router.use(cartRoute);
 Router.use(orderRoute);
 Router.use(testRoute);
+Router.use(reviewRoute);
 
 //_____FOR NOT VALID APIs_____
 Router.all("/*", (req, res) => {
