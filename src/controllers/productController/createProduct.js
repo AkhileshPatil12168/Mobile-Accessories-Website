@@ -2,6 +2,9 @@ const bcrypt = require("bcrypt");
 
 const productModel = require("../../models/productModel");
 const vendorModel = require("../../models/vendorModel");
+const ratingModel = require("../../models/productRatingModel");
+
+
 
 const uploadFile = require("../Amazom S3 Bucket/bucketController");
 const {
@@ -91,36 +94,25 @@ const createProduct = async function (req, res) {
         .send({ status: false, message: "description is in incorrect format" });
     description = validTrim(description);
 
-    category = category.split(", ");
+    category = category.split(","); 
 
     if (!category || category.length == 0)
       return res
         .status(400)
         .send({ status: false, message: "categorys are requried" });
-    for (let eachCategory of category) {
-      let final = validTrim(eachCategory);
-      if (final == "")
-        return res.status(400).send({
-          status: false,
-          message: "empty category cannot be provided",
-        });
-    }
+
+         category = category.map(value => value.trim()).filter(value =>value)
+   
 
     if (!compatible_models)
       return res
         .status(400)
         .send({ status: false, message: "category is requried" });
 
-    compatible_models = compatible_models.split(", ");
-    for (let eachModel of compatible_models) {
-      let final = validTrim(eachModel);
-      if (final == "")
-        return res.status(400).send({
-          status: false,
-          message: "empty model name cannot be provided",
-        });
-    }
+    compatible_models = compatible_models.split(","); 
 
+    compatible_models = compatible_models.map(value => value.trim()).filter(value =>value)
+  
     if (!price || price == 0)
       return res
         .status(400)
@@ -192,6 +184,12 @@ const createProduct = async function (req, res) {
     };
 
     const createdProduct = await productModel.create(product);
+
+    const productRating= await ratingModel.create({productId:createdProduct["_id"]})
+    
+    await productModel.updateOne({_id:createdProduct["_id"]},{$set:{
+      ratingId:productRating["_id"]
+    }})
 
     return res
       .status(201)
