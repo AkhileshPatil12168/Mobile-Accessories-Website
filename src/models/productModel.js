@@ -7,7 +7,6 @@ const productSchema = new mongoose.Schema(
       type: ObjectId,
       ref: "Vendor",
       required: true,
-      unique: true,
       trim: true,
     },
     title: {
@@ -46,6 +45,10 @@ const productSchema = new mongoose.Schema(
     available_Quantity: {
       type: Number,
       required: true,
+    },
+    ratings:{
+      type: ObjectId,
+      ref: "Product_ratings",
     },
 
     deletedAt: {
