@@ -1,4 +1,5 @@
 const productModel = require("../../models/productModel");
+const productReviewModel = require("../../models/productReviewModel");
 const {
     emptyBody,
     isValidString,
@@ -27,7 +28,7 @@ const getProductById = async function (req, res) {
             .findOne({
                 _id: productId,
                 isDeleted: false,
-            })
+            }).populate("ratings","averageRating totalRating totalUsersRated")
             .select({ deletedAt: 0, isDeleted: 0, updatedAt: 0, createdAt: 0 ,__v:0})
             .lean();
         if (!productsDetails)
@@ -36,11 +37,20 @@ const getProductById = async function (req, res) {
                 message: "Product Not Found",
             });
 
-        return res.status(200).send({
-            status: true,
-            message: "Success",
-            data: productsDetails,
-        });
+            let productReviews = await productReviewModel
+              .find({ productId, isDeleted: false })
+              .populate("userId", "fname lname")
+              .select({ rating: 1, review: 1, images: 1, reviewDate: 1, edited: 1 })
+              .limit(5)
+              .lean();
+
+
+            return res.status(200).send({
+              status: true,
+              message: "Success",
+              data: { productsDetails, productReviews },
+            });
+            
     } catch (err) {
         return res.status(500).send({
             status: false,
@@ -51,7 +61,7 @@ const getProductById = async function (req, res) {
 
 const getProductByFilter = async function (req, res) {
     try {
-        const filters = req.body;
+        const filters = req.query;
 
         let { title, price, category, compatible_models, priceLessThan, priceGreaterThan } =
             filters;
@@ -148,7 +158,7 @@ const getProductByFilter = async function (req, res) {
                 };
             }
 
-            //validating availableSizes
+           
             if (priceLessThan || priceLessThan === "") {
                 priceLessThan = validTrim(priceLessThan);
                 if (!isNotProvided(priceLessThan))
@@ -173,39 +183,34 @@ const getProductByFilter = async function (req, res) {
                     $lte: priceLessThan,
                 };
             }
+           
+             const productData = await productModel
+               .find(filters)
+               .populate("ratings", "averageRating totalUsersRated")
+               .select({ title: 1, price: 1, productImage: 1, available_Quantity: 1, ratings: 1 })
+               .lean();
 
-            const productData = await productModel
-                .find(filters)
-                .select({ title: 1, price: 1, productImage: 1, available_Quantity: 1 })
-                .lean();
-            if (productData.length == 0)
-                return res.status(404).send({
-                    status: false,
-                    message: "no product found",
-                });
-            if (priceLessThan) {
-                const sortedData = productData.sort((a, b) => b.price - a.price);
-                return res.status(200).send({
-                    status: true,
-                    data: sortedData,
-                });
-            } else {
-                const sortedData = productData.sort((a, b) => a.price - b.price);
-                return res.status(200).send({
-                    status: true,
-                    data: sortedData,
-                });
-            }
+             if (productData.length == 0)
+               return res.status(404).send({
+                 status: false,
+                 message: "no product found",
+               });
+             return res.status(200).send({
+               status: true,
+               data: productData,
+             });
         } else {
             const productData = await productModel
-                .find({
-                    isDeleted: false,
-                })
-                .select({ title: 1, price: 1, productImage: 1, available_Quantity: 1 })
-                .lean();
+              .find({
+                isDeleted: false,
+              })
+              .populate("ratings", "averageRating totalUsersRated")
+              .select({ title: 1, price: 1, productImage: 1, available_Quantity: 1, ratings: 1 })
+              .lean();
+
             return res.status(200).send({
-                status: true,
-                data: productData,
+              status: true,
+              data: productData,
             });
         }
     } catch (err) {
