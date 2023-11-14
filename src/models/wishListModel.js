@@ -17,7 +17,6 @@ let wishListSchema = new mongoose.Schema(
         },
         addedDate: {
           type: Date,
-          default: Date.now,
         },
         
       },
