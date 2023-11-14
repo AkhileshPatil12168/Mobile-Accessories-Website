@@ -10,7 +10,7 @@ const cartRoute = require("./cart");
 const orderRoute = require("./order");
 const testRoute = require("./test");
 const reviewRoute = require("./review")
-
+const wishListRoute = require("./wishList")
 Router.use(commonRoute);
 Router.use(adminRoute);
 Router.use(userRoute);
@@ -20,6 +20,7 @@ Router.use(cartRoute);
 Router.use(orderRoute);
 Router.use(testRoute);
 Router.use(reviewRoute);
+Router.use(wishListRoute)
 
 //_____FOR NOT VALID APIs_____
 Router.all("/*", (req, res) => {
