@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 
 const wishListModel = require("../../models/wishListModel");
+const { isValidObjectId } = require("../../utils/validators");
 
 const addToWishList = async (req, res) => {
   try {
