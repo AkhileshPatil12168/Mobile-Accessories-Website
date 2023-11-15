@@ -23,7 +23,8 @@ const Product = () => {
             const response = await axios.get(process.env.backendapi + "/products/" + `${id}`, {
                 withCredentials: true,
             });
-            setProduct(response.data.data);
+            setProduct(response.data.data.productsDetails);
+            // console.log(response.data.data.productsDetails)
         } catch (error) {
             console.error(error);
         }
