@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { Profiler, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "../../animation/loading";
 
 const Card = (props) => {
   const navigate = useNavigate();
-  const { _id, productImage, title, price, cUserId } = props;
+  const { _id, productImage, title, price, cUserId, ratings } = props;
   const [text, setText] = useState("Add to cart");
   const [color, setColor] = useState("bg-blue-500");
   const [cursor, setCursor] = useState("");
@@ -72,6 +72,7 @@ const Card = (props) => {
         </Link>
         <div className="mt-4 mb-2 flex flex-wrap items-center justify-between pt-3 border-t-2 sm:justify-items-center">
           <p className="text-xl font-bold text-slate-900">₹{price}</p>
+          <p>{ratings.averageRating}⭐</p>
           {cUserId ? (
             <button
               onClick={addToCart}
