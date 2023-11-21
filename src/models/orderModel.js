@@ -54,18 +54,10 @@ const orderSchema = new mongoose.Schema(
             },
         },
         items: [
-            {
-                productId: {
-                    type: ObjectId,
-                    ref: "product",
-                },
-                quantity: {
-                    type: Number,
-                },
-                title: { type: String },
-                price: { type: Number },
-                productImage: [],
-            },
+            {orderedProductId:{
+                type:ObjectId,
+                ref:"Ordered_products"
+            }}
         ],
         totalPrice: {
             type: Number,
@@ -83,27 +75,14 @@ const orderSchema = new mongoose.Schema(
         orderdedDate: {
             type: Date,
         },
-        deliveredDate: {
-            type: Date,
-        },
-        cancelledDate: {
-            type: Date,
-        },
-        cancellable: {
-            type: Boolean,
-            default: true,
-        },
-        OrderStatus: {
-            type: String,
-            default: "pending",
-            enum: ["pending", "completed", "cancelled"],
-        },
+        
         paymentMethod: {
             type: String,
             enum: ["cash on delivery", "razorpay"],
         },
         paymentStatus: {
             type: String,
+            default:"pending",
             enum: ["pending", "completed"],
         },
         razorpayId: {
