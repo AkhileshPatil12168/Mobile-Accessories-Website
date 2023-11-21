@@ -21,6 +21,10 @@ let cartSchema = new mongoose.Schema(
                 title: { type: String },
                 price: { type: Number },
                 productImage: [],
+                vendorId:{
+                    type: objectId,
+                    ref: "Vendor",
+                },
             },
         ],
         totalPrice: {
