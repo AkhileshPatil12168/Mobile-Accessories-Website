@@ -62,6 +62,7 @@ const updatCart = async (req, res) => {
                             price: productData.price,
                             productImage: productData.productImage,
                             quantity: 1,
+                            vendorId:productData.vendorId
                         });
                         userCart.totalPrice += productData.price;
                         userCart.totalQuantity = userCart.totalQuantity + 1;
@@ -120,6 +121,7 @@ const updatCart = async (req, res) => {
                             price: productData.price,
                             productImage: productData.productImage,
                             quantity: 1,
+                            vendorId:productData.vendorId
                         },
                     ],
                     totalPrice: productData.price,
