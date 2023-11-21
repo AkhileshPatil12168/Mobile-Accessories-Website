@@ -36,7 +36,10 @@ const getOrders = async (req, res) => {
 
         let orderData = await orderModel
             .find(data)
-            .sort({ orderdedDate: -1 })
+            .sort({ orderdedDate: -1 }).populate({
+                path: "items.orderedProductId",
+                select: "productId vendorId orderId quantity title price totalPrice productImage OrderStatus",
+              })
             .select({ deliveredDate: 1, items: 1, totalPrice: 1, status: 1, orderdedDate: 1, })
             .lean();
         if (orderData.length == 0)
@@ -50,9 +53,8 @@ const getOrders = async (req, res) => {
 
 const getOrderById = async (req, res) => {
     try {
-        let userId = req.params.userId;
+        const { userId, orderId } = req.params;
         const decodedToken = req.verifyed;
-        const orderId = req.params.orderId;
 
         if (!userId)
             return res.status(400).send({ status: false, message: "Please provide userId." });
@@ -70,9 +72,15 @@ const getOrderById = async (req, res) => {
             return res.status(403).send({ status: false, message: "please login again" });
 
         let orderData = await orderModel
-            .findOne({ _id: orderId, isDeleted: false })
-            .select({ deletedAt: 0, isDeleted: 0 })
-            .lean();
+          .findOne({ _id: orderId, isDeleted: false })
+          .populate({
+            path: "items.orderedProductId",
+            select: "productId vendorId orderId quantity title price totalPrice productImage OrderStatus",
+          })
+          .lean()
+          .select({ deletedAt: 0, isDeleted: 0 })
+          .lean();
+
         if (!orderData) return res.status(404).send({ status: false, message: "order Not Found" });
 
         return res.status(200).send({ status: true, message: "success", data: orderData });

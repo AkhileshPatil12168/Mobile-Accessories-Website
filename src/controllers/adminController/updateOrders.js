@@ -2,14 +2,15 @@ const bcrypt = require("bcrypt");
 
 const orderModel = require("../../models/orderModel");
 const adminModel = require("../../models/adminModel");
+const orderedProductModel = require("../../models/orderedProductsModel")
+
 
 const { emptyBody, isValidObjectId } = require("../../utils/validators");
 
 const updateOrderByAdmin = async (req, res) => {
     try {
-        const userId = req.params.userId;
+        const { userId,  orderedProductId } = req.params;
         const decodedToken = req.verifyed;
-        const orderId = req.params.orderId;
 
         if (!userId)
             return res.status(400).send({ status: false, message: "Please provide userId." });
@@ -32,12 +33,13 @@ const updateOrderByAdmin = async (req, res) => {
         if (!checkAdmin)
             return res.status(403).send({ status: false, message: "please login again" });
 
-        const orderStatus = await orderModel.findById(orderId).select({ status: 1 }).lean();
+        const orderData = await orderedProductModel
+          .findById(orderedProductId)
+          .select({ OrderStatus: 1 })
+          .lean();
 
-        if (orderStatus.status == "cancelled" || orderStatus.status == "completed")
-            return res
-                .status(400)
-                .send({ status: false, message: "this order can not be updated" });
+        if (orderData.OrderStatus == "cancelled" || orderData.OrderStatus == "completed")
+          return res.status(400).send({ status: false, message: "this order can not be updated" });
 
         if (emptyBody(req.body))
             return res.status(400).send({ status: false, message: "provide some data" });
@@ -52,17 +54,18 @@ const updateOrderByAdmin = async (req, res) => {
         let updateData = {
             status: status,
         };
-        if (status == "completed" || status == "cancelled") {
+        
 
-            if (status == "completed") updateData.deliveredDate = Date.now() + 19800000;
-            if (status == "cancelled") updateData.cancelledDate = Date.now() + 19800000;
+        if (status == "completed") updateData.deliveredDate = Date.now() + 19800000;
+        if (status == "cancelled") updateData.cancelledDate = Date.now() + 19800000;
+
+        const updatedOrder = await orderModel.findByIdAndUpdate(orderId, updateData, { new: true });
+        if (status == "cancelled") {
+          await productModel.findByIdAndUpdate(updatedOrder.productId, {
+            $inc: { available_Quantity: updatedOrder.quantity },
+          });
         }
-
-        const updatedOrder = await orderModel.findByIdAndUpdate(
-            orderId,
-            updateData,
-            { new: true }
-        );
+        
         return res.status(200).send({ status: true, message: "order updated", data: updatedOrder });
     } catch (error) {
         return res.status(500).send({ status: false, message: error.message });
