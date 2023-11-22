@@ -12,6 +12,7 @@ import Cart from "./components/Body/Cart";
 import Product from "./components/Body/getProduct";
 import Login from "./components/forms/Login";
 import Signup from "./components/forms/SignupForm";
+import VendorSignup from "./components/forms/VendorSignup";
 import User from "./components/Body/User";
 import ResetPassword from "./components/Body/ResetPassword";
 import ForgotPassword from "./components/forms/ForgotPassword";
@@ -52,6 +53,7 @@ const appRouter = createBrowserRouter([
             { path: "/product/:id", element: <Product /> },
             { path: "/login", element: <Login /> },
             { path: "/signup", element: <Signup /> },
+            { path: "/vendorSignup", element: <VendorSignup /> },
             { path: "/user/account", element: <User /> },
             { path: "/contactus", element: <ConnectUs /> },
             { path: "/aboutus", element: <AboutUs /> },
