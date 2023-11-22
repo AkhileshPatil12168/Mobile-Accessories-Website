@@ -119,6 +119,7 @@ const Orders = () => {
         <div className="px-20">
             <p className="text-center text-lg font-bold">orders</p>
             {orders.map((order, index) => {
+                console.log(order)
                 return (
                     <Link to={"/user/order/" + order._id}>
                         <Order {...order} key={index} />
