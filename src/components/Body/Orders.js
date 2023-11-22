@@ -80,7 +80,7 @@ const Order = (props) => {
                     <div className="p-2   bg-gray-200">
                         <div className="flex  w-full overflow-x-auto">
                             {items.map((item) => {
-                                return <Items {...item} key={item.productId} />;
+                                return <Items {...item.orderedProductId} key={item.productId} />;
                             })}
                         </div>
                     </div>
