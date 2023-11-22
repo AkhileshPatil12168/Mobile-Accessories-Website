@@ -4,12 +4,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Loading from "../../animation/loading";
 
-const Product = () => {
+const Product = (props) => {
   const navigate = useNavigate();
   const cookies = new Cookies();
   const cUserId = cookies.get("User");
+  const {ratings} = props;
   const { id } = useParams();
-  console.log(id);
+  
 
   const [product, setProduct] = useState();
   const [text, setText] = useState("Add to cart");
@@ -27,7 +28,7 @@ const Product = () => {
         }
       );
       setProduct(response.data.data.productsDetails);
-      // console.log(response.data.data.productsDetails)
+       console.log(response.data.data.productsDetails)
     } catch (error) {
       console.error(error);
     }
@@ -89,7 +90,7 @@ const Product = () => {
     //     <h1>{product?.title}</h1>
     // </div>
     <div className="m-0 p-0">
-      <div className="w-full max-w-[1200px] bg-white flex mx-auto my-0 p-5">
+      <div className="w-full max-w-[1200px] bg-white flex mx-auto my-5 p-5">
         <div className="flex-[0_0_50%] mr-5">
           <img
             className="max-w-full h-auto"
@@ -105,6 +106,10 @@ const Product = () => {
           {/* PRICE */}
           <h2 className="mt-4 mb-4 text-2xl font-extrabold leading-none tracking-tight text-green-500 md:text-3xl lg:text-4xl dark:text-white">
             Price: ₹{product?.price}
+          </h2>
+
+          <h2 className="mt-4 mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
+            Ratings: {product.ratings?.averageRating}⭐
           </h2>
 
           {/* Other Details */}
@@ -131,7 +136,7 @@ const Product = () => {
                     {product?.compatible_models.join(", ")}
                   </td>
                 </tr>
-                <tr className="bg-white dark:bg-gray-800">
+                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                   <th
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -142,7 +147,7 @@ const Product = () => {
                     {product?.isFreeShipping ? "Yes" : "No"}
                   </td>
                 </tr>
-                <tr className="bg-white dark:bg-gray-800">
+                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                   <th
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
