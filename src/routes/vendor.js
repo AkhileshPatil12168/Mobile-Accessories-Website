@@ -11,6 +11,7 @@ const {
 const updateVendor = require("../controllers/vendorController/updateVendor");
 const deleteVendor = require("../controllers/vendorController/deleteVendor");
 const { getOrdersVendor, getOrderByIdVendor } = require("../controllers/vendorController/getOrdersVendor");
+const updateOrderByVendor = require("../controllers/vendorController/updateOrderVendor");
 
 Router.post("/create/vendor", createVendor);
 Router.get("/vendor/:userId/details", authentication, getVendorDetails);
@@ -21,6 +22,7 @@ Router.delete("/vendor/:userId/delete", authentication, deleteVendor);
 
 Router.get("/vendor/:userId/orders",authentication,getOrdersVendor)
 Router.get("/vendor/:userId/orderedProduct/:orderedProductId",authentication,getOrderByIdVendor)
+Router.put("/vendor/:userId/orderedProduct/:orderedProductId",authentication, updateOrderByVendor)
 
 
 module.exports = Router;
