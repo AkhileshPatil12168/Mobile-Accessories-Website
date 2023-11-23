@@ -56,7 +56,7 @@ const deleteOrder = async (req, res) => {
         }
    
 
-        return res.status(200).send({ status: true, message: "order is deleted", data: deletedOrder });
+        return res.status(204).send({ status: true, message: "order is deleted", data: deletedOrder });
     } catch (error) {
         return res.status(500).send({ status: false, message: error.message });
     }
