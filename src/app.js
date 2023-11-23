@@ -62,7 +62,7 @@ const appRouter = createBrowserRouter([
             { path: "/request/resetpassword", element: <ForgotPassword /> },
 
             { path: "/user/create/order/", element: <CreateOrder /> },
-            { path: "/user/order/:orderId", element: <Order /> },
+            { path: "/user/order/:orderedProductId", element: <Order /> },
 
             { path: "/admin", element: <Admin /> },
             { path: "/admin/orders", element: <AdminOrders /> },
