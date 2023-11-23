@@ -1,6 +1,8 @@
 const bcrypt = require("bcrypt");
 
 const orderModel = require("../../models/orderModel");
+const orderedProductModel = require("../../models/orderedProductsModel")
+
 const { isValidObjectId, isValidStatus } = require("../../utils/validators");
 
 const getOrders = async (req, res) => {
@@ -53,7 +55,7 @@ const getOrders = async (req, res) => {
 
 const getOrderById = async (req, res) => {
     try {
-        const { userId, orderId } = req.params;
+        const { userId, orderedProductId } = req.params;
         const decodedToken = req.verifyed;
 
         if (!userId)
@@ -62,21 +64,17 @@ const getOrderById = async (req, res) => {
         if (!isValidObjectId(userId))
         return res.status(403).send({ status: false, message: "please login again" });
 
-        if (!isValidObjectId(orderId))
+        if (!isValidObjectId(orderedProductId))
             return res
                 .status(400)
-                .send({ status: false, message: "Please provide a valid orderId." });
+                .send({ status: false, message: "Please provide a valid orderedProductId." });
 
         let isCorrectUser = await bcrypt.compare(userId, decodedToken.userId);
         if (!isCorrectUser)
             return res.status(403).send({ status: false, message: "please login again" });
 
-        let orderData = await orderModel
-          .findOne({ _id: orderId, isDeleted: false })
-          .populate({
-            path: "items.orderedProductId",
-            select: "productId vendorId orderId quantity title price totalPrice productImage OrderStatus",
-          })
+        let orderData = await orderedProductModel
+          .findOne({ _id: orderedProductId, isDeleted: false }).populate({path:"orderId",select:"name phone email address orderdedDate isFreeShipping"})
           .lean()
           .select({ deletedAt: 0, isDeleted: 0 })
           .lean();
