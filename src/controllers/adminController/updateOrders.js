@@ -18,7 +18,7 @@ const updateOrderByAdmin = async (req, res) => {
         if (!isValidObjectId(userId))
         return res.status(403).send({ status: false, message: "please login again" });
 
-        if (!isValidObjectId(orderId))
+        if (!isValidObjectId(orderedProductId))
             return res
                 .status(400)
                 .send({ status: false, message: "Please provide a valid orderId." });
@@ -52,14 +52,14 @@ const updateOrderByAdmin = async (req, res) => {
                 .status(400)
                 .send({ status: false, message: "status can be only cancelled or completed" });
         let updateData = {
-            status: status,
+            OrderStatus: status,
         };
         
 
         if (status == "completed") updateData.deliveredDate = Date.now() + 19800000;
         if (status == "cancelled") updateData.cancelledDate = Date.now() + 19800000;
 
-        const updatedOrder = await orderModel.findByIdAndUpdate(orderId, updateData, { new: true });
+        const updatedOrder = await orderedProductModel.findByIdAndUpdate(orderedProductId, updateData, { new: true });
         if (status == "cancelled") {
           await productModel.findByIdAndUpdate(updatedOrder.productId, {
             $inc: { available_Quantity: updatedOrder.quantity },
