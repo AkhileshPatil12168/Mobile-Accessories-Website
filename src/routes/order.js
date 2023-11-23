@@ -11,7 +11,7 @@ const cancleOrder = require("../controllers/orderController/cancleOrder");
 Router.get("/user/:userId/order/summery", authentication, orderSummery);
 Router.post("/user/:userId/order", authentication, createOrder);
 Router.get("/user/:userId/orders", authentication, getOrders);
-Router.get("/user/:userId/order/:orderId", authentication, getOrderById);
+Router.get("/user/:userId/order/:orderedProductId", authentication, getOrderById);
 Router.put("/user/:userId/order/:orderId", authentication, updateOrder);
 Router.put("/user/:userId/order/cancleOrderedProduct/:orderedProductId/", authentication, cancleOrder);
 Router.delete("/user/:userId/order/deleteorder/:orderId", authentication, deleteOrder);
