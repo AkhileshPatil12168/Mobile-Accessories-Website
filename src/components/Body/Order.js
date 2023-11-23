@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import timeConverter from "../../util/timeConverter";
 
 const Items = (props) => {
-    const { productImage, title, quantity, price, index } = props;
+    const { productImage, title, quantity, price, index } = props.orderedProductId;
     const [bgColor, setBgColor] = useState("");
     useEffect(() => {
         if (index % 2 == 0) setBgColor("bg-gray-200");
@@ -35,9 +35,7 @@ const Order = () => {
     const navigate = useNavigate();
     const cookies = new Cookies();
     const cUserId = cookies.get("User");
-    const { orderId } = useParams();
-
-    console.log(orderId);
+    const { orderedProductId } = useParams();
 
     const [order, setOrder] = useState({});
     const [orderResponse, setOrderResponse] = useState();
@@ -45,7 +43,7 @@ const Order = () => {
     const orderDetails = async () => {
         try {
             const response = await axios.get(
-                process.env.backendapi+`/user/${cUserId}/order/${orderId}`,
+                process.env.backendapi+`/user/${cUserId}/order/${orderedProductId}`,
                 { withCredentials: true }
             );
             setOrder(response.data.data);
@@ -58,9 +56,9 @@ const Order = () => {
     const cancelOrder = async () => {
         try {
             const response = await axios.put(
-                process.env.backendapi+`/user/${cUserId}/order/cancleorder/${orderId}`,
+                process.env.backendapi+`/user/${cUserId}/order/cancleOrderedProduct/${orderedProductId}`,
                 { cancle: true },
-                { withCredentials: true }
+                { withCredentials: true }   
             );
 
             const updatedOrder = response.data.data;
@@ -71,22 +69,7 @@ const Order = () => {
             console.log(error);
         }
     };
-
-    const deleteOrder = async () => {
-        try {
-            const response = await axios.delete(
-                process.env.backendapi+`/user/${cUserId}/order/deleteorder/${orderId}`,
-                { withCredentials: true }
-            );
-
-            const updatedOrder = response.data.data;
-            const responseStatus = response.status;
-            setOrder(updatedOrder);
-            setOrderResponse(responseStatus);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+ 
 
     useEffect(() => {
         if (orderResponse == 204) {
@@ -98,18 +81,16 @@ const Order = () => {
         }
     }, [orderResponse]);
 
-    useEffect(() => {
-        orderDetails();
-    }, []);
 
     return !cUserId ? (
-        navigate("/login")
+      navigate("/login")
     ) : (
-        <div className="container  py-4 px-20">
-            <p className="text-2xl font-bold mb-4">Order Details</p>
+      <div className="container  py-4 px-20">
+        <p className="text-2xl font-bold mb-4">Order Details</p>
 
-            <div className="flex flex-wrap -mx-2">
-                <div className="w-full px-2 mb-4">
+        <div className="flex flex-wrap -mx-2">
+          {
+            /* <div className="w-full px-2 mb-4">
                     <div className="border border-gray-300 rounded p-4 overflow-auto">
                         <h2 className="text-lg font-bold mb-4">Items</h2>
                         <div className="border max-h-52	 border-gray-300 rounded p-4 overflow-auto">
@@ -120,111 +101,112 @@ const Order = () => {
                             ))}
                         </div>
                     </div>
-                </div>
+                </div> */
+            // console.log(order?.productImage[0])
+          }
 
-                <div className="w-full  px-2 mb-4">
-                    <div className="border border-gray-300 rounded p-4">
-                        <h2 className="text-lg font-bold mb-4">Order Information</h2>
-                        <p className="mb-2">
-                            <strong>Total Items:</strong> {order?.totalItems}
-                        </p>
-                        <p className="mb-2">
-                            <strong>Total Quantity:</strong> {order?.totalQuantity}
-                        </p>
-                        <p className="mb-2">
-                            <strong>Total Price:</strong> ₹{order?.totalPrice}
-                        </p>
-                        <p className="mb-2">
-                            <strong>Free Shipping:</strong> {order?.isFreeShipping ? "Yes" : "No"}
-                        </p>
-                        <p className="mb-2">
-                            <strong>Ordered Date:</strong> {order?.orderdedDate?order?.orderdedDate?.slice(0, 10):""}
-                        </p>
-                        <p className="mb-2">
-                            <strong>Ordered time:</strong> {order?.orderdedDate?timeConverter(order?.orderdedDate?.slice(11, 16)):""}
-                        </p>
-                        <p className="mb-2">
-                            <strong>Cancellable:</strong> {order?.cancellable ? "Yes" : "No"}
-                        </p>
-                        <p className="mb-2">
-                            <strong>Status:</strong> {order?.status}
-                        </p>
-                    </div>
-                </div>
+          <div className="w-full  px-2 mb-4">
+            <div className="border border-gray-300 rounded p-4">
+              {(order?.productImage)? (
+                <img
+                  src={order?.productImage[0]}
+                  alt={`Product Image ${order?.productImage[0]}`}
+                ></img>
+              ) : (
+                <img></img>
+              )}
+              <h2 className="text-lg font-bold mb-4">Order Information</h2>
 
-                <div className="w-full  px-2 mb-4">
-                    <div className="border border-gray-300 rounded p-4">
-                        <h2 className="text-lg font-bold mb-4">Personal Information</h2>
-                        <p className="mb-2">
-                            <strong>Name:</strong> {order?.name}
-                        </p>
-                        <p className="mb-2">
-                            <strong>Email:</strong> {order?.email}
-                        </p>
-                        <p className="mb-2">
-                            <strong>Phone Number:</strong> {order?.phone}
-                        </p>
-                    </div>
-                </div>
-
-                <div className="w-full md:w-1/2 px-2 mb-4">
-                    <div className="border border-gray-300 rounded p-4">
-                        <h2 className="text-lg font-bold mb-4">Shipping Address</h2>
-                        <p className="mb-2">
-                            <strong>Street:</strong> {order?.address?.shipping?.street}
-                        </p>
-                        <p className="mb-2">
-                            <strong>City:</strong> {order?.address?.shipping?.city}
-                        </p>
-                        <p className="mb-2">
-                            <strong>Pincode:</strong> {order?.address?.shipping?.pincode}
-                        </p>
-                    </div>
-                </div>
-
-                <div className="w-full md:w-1/2 px-2 mb-4">
-                    <div className="border border-gray-300 rounded p-4">
-                        <h2 className="text-lg font-bold mb-4">Billing Address</h2>
-                        <p className="mb-2">
-                            <strong>Street:</strong> {order?.address?.billing?.street}
-                        </p>
-                        <p className="mb-2">
-                            <strong>City:</strong> {order?.address?.billing?.city}
-                        </p>
-                        <p className="mb-2">
-                            <strong>Pincode:</strong> {order?.address?.billing?.pincode}
-                        </p>
-                    </div>
-                </div>
+              <p className="mb-2">
+                <strong>Total Quantity:</strong> {order?.quantity}
+              </p>
+              <p className="mb-2">
+                <strong>Total Price:</strong> ₹{order?.totalPrice}
+              </p>
+              <p className="mb-2">
+                <strong>Free Shipping:</strong> {order?.orderId?.isFreeShipping ? "Yes" : "No"}
+              </p>
+              <p className="mb-2">
+                {console.log(order?.orderId?.orderdedDate)}
+                <strong>Ordered Date:</strong>{" "}
+                {order?.orderId?.orderdedDate ? order?.orderId?.orderdedDate?.slice(0, 10) : ""}
+              </p>
+              <p className="mb-2">
+                <strong>Ordered time:</strong>{" "}
+                {order?.orderId?.orderdedDate
+                  ? timeConverter(order?.orderId?.orderdedDate?.slice(11, 16))
+                  : ""}
+              </p>
+              <p className="mb-2">
+                <strong>Cancellable:</strong> {order?.cancellable ? "Yes" : "No"}
+              </p>
+              <p className="mb-2">
+                <strong>Status:</strong> {order?.OrderStatus}
+              </p>
             </div>
-            <div className="flex justify-end ">
-                {order?.status != "pending" ? (
-                    <div className="pr-2">
-                        <button
-                            onClick={() => deleteOrder()}
-                            className="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-red-500"
-                        >
-                            Delete Order
-                        </button>
-                    </div>
-                ) : (
-                    <></>
-                )}
+          </div>
 
-                {order?.cancellable && order?.status == "pending" ? (
-                    <div>
-                        <button
-                            onClick={() => cancelOrder()}
-                            className="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-red-500"
-                        >
-                            Cancel Order
-                        </button>
-                    </div>
-                ) : (
-                    <></>
-                )}
+          <div className="w-full  px-2 mb-4">
+            <div className="border border-gray-300 rounded p-4">
+              <h2 className="text-lg font-bold mb-4">Personal Information</h2>
+              <p className="mb-2">
+                <strong>Name:</strong> {order?.orderId?.name}
+              </p>
+              <p className="mb-2">
+                <strong>Email:</strong> {order?.orderId?.email}
+              </p>
+              <p className="mb-2">
+                <strong>Phone Number:</strong> {order?.orderId?.phone}
+              </p>
             </div>
+          </div>
+
+          <div className="w-full md:w-1/2 px-2 mb-4">
+            <div className="border border-gray-300 rounded p-4">
+              <h2 className="text-lg font-bold mb-4">Shipping Address</h2>
+              <p className="mb-2">
+                <strong>Street:</strong> {order?.orderId?.address?.shipping?.street}
+              </p>
+              <p className="mb-2">
+                <strong>City:</strong> {order?.orderId?.address?.shipping?.city}
+              </p>
+              <p className="mb-2">
+                <strong>Pincode:</strong> {order?.orderId?.address?.shipping?.pincode}
+              </p>
+            </div>
+          </div>
+
+          <div className="w-full md:w-1/2 px-2 mb-4">
+            <div className="border border-gray-300 rounded p-4">
+              <h2 className="text-lg font-bold mb-4">Billing Address</h2>
+              <p className="mb-2">
+                <strong>Street:</strong> {order?.orderId?.address?.billing?.street}
+              </p>
+              <p className="mb-2">
+                <strong>City:</strong> {order?.orderId?.address?.billing?.city}
+              </p>
+              <p className="mb-2">
+                <strong>Pincode:</strong> {order?.orderId?.address?.billing?.pincode}
+              </p>
+            </div>
+          </div>
         </div>
+        <div className="flex justify-end ">
+
+          {order?.cancellable && order?.OrderStatus == "pending" ? (
+            <div>
+              <button
+                onClick={() => cancelOrder()}
+                className="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-red-500"
+              >
+                Cancel Order
+              </button>
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
+      </div>
     );
 };
 export default Order;

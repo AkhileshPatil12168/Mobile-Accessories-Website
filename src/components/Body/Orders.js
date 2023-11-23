@@ -24,8 +24,9 @@ import ShimmerOrders from "../Shimmer/ShimmerOrders";
 //     );
 // };
 
-const OrderItemCard = ({ title, quantity, productImage, price }) => {
+const OrderItemCard = ({ title, quantity, productImage, price ,_id,OrderStatus}) => {
     return (
+        <Link to={"/user/order/"+_id }>
         <div className="border border-gray-100 bg-white shadow-md  hover:border-blue-500 hover:rounded hover:border-1 hover:duration-300 hover:ease-in-out rounded-md p-4 mb-4">
             <div className="aspect-w-3 aspect-h-4 mb-4">
                 <img
@@ -41,7 +42,9 @@ const OrderItemCard = ({ title, quantity, productImage, price }) => {
             <p>
                 <span className="text-green-700 font-semibold">₹{price}</span>
             </p>
+            <p>Status: {OrderStatus}</p>
         </div>
+        </Link>
     );
 };
 
@@ -64,10 +67,10 @@ const OrderDetails = ({ status, orderdedDate, totalPrice }) => {
         <div className="bg-indigo-50 text-gray-800 p-4 mb-4 border-white border-4">
             <h2 className="text-lg font-medium text-center mb-4 text-blue-700">Order Details</h2>
             <div className="grid grid-cols-2 gap-2">
-                <p className="flex items-center">
+                {/* <p className="flex items-center">
                     <span className="font-medium  text-gray-700">Status:</span>{" "}
                     <span className={`ml-2 font-normal ${getStatusColor()}`}>{status}</span>
-                </p>
+                </p> */}
                 <p className="flex items-center">
                     <span className="font-medium  text-gray-700">Total Price:</span> <span className="ml-2 font-semibold text-green-700">₹{totalPrice}</span>
                 </p>
@@ -84,7 +87,25 @@ const OrderDetails = ({ status, orderdedDate, totalPrice }) => {
     );
 };
 
-const Order = ({ status, orderdedDate, totalPrice, items }) => {
+const Order = ({ status, orderdedDate, totalPrice,userId, items,setOrderResponse,_id}) => {
+   
+    // const [orderResponse, setOrderResponse] = useState();
+    console.log(userId)
+    const deleteOrder = async () => {
+        try {
+            const response = await axios.delete(
+                process.env.backendapi+`/user/${userId}/order/deleteorder/${_id}`,
+                { withCredentials: true }
+            );
+            const responseStatus = response.status;
+            
+            if(responseStatus==204)
+            setOrderResponse(responseStatus);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <div className="max-w-3xl mx-auto my-8">
             <div className="bg-white border-white border-4 rounded-md overflow-hidden shadow-md">
@@ -96,6 +117,18 @@ const Order = ({ status, orderdedDate, totalPrice, items }) => {
                             <OrderItemCard key={index} {...item.orderedProductId} />
                         ))}
                     </div>
+                    <div className="pr-2">
+                        {console.log(items.every((product)=>product.orderedProductId.OrderStatus != "pending"))}
+              {
+                (items.every((product)=>product.orderedProductId.OrderStatus != "pending")? <button
+                onClick={() => deleteOrder()}
+                className="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-red-500"
+              >
+                Delete Order
+              </button>:<></>)
+              }
+              
+            </div>
                 </div>
             </div>
         </div>
@@ -109,6 +142,9 @@ const Orders = () => {
     const cUserId = cookies.get("User");
 
     const [orders, setOrders] = useState([]);
+    const [orderResponse, setOrderResponse] = useState();
+   
+    
 
     const getOrders = async () => {
         try {
@@ -116,14 +152,17 @@ const Orders = () => {
                 withCredentials: true,
             });
             setOrders(response.data.data);
+            console.log(response.data.data)
         } catch (error) {
             console.log(error);
         }
     };
 
+    
+
     useEffect(() => {
         getOrders();
-    }, []);
+    }, [orderResponse]);
 
     return !cUserId ? (
         navigate("/login")
@@ -133,9 +172,11 @@ const Orders = () => {
         <div className="sm:px-8 bg-gray-50 p-4">
             <p className="text-center text-2xl font-bold text-gray-800 mb-8">Your Orders</p>
             {orders.map((order, index) => (
-                <Link to={"/user/order/" + order._id} key={index}>
-                    <Order {...order} />
-                </Link>
+                
+                <>
+                {console.log(order)}
+                    <Order {...order}  userId={cUserId} setOrderResponse={setOrderResponse} key={index}/></>
+                
             ))}
         </div>
     );
