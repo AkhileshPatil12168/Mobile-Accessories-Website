@@ -147,7 +147,7 @@ const CreateOrder = () => {
 
     useEffect(() => {
         if (orderId) {
-            navigate(`/user/order/${orderId}`);
+            navigate(`/user/orders`);
         }
     }, [orderId]);
 
