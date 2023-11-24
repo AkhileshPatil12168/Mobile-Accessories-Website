@@ -188,12 +188,12 @@ const createProduct = async function (req, res) {
     const productRating= await ratingModel.create({productId:createdProduct["_id"]})
     
     await productModel.updateOne({_id:createdProduct["_id"]},{$set:{
-      ratingId:productRating["_id"]
+      ratings:productRating["_id"]
     }})
 
     return res
       .status(201)
-      .send({ status: true, message: "Success", data: createdProduct });
+      .send({ status: true, message: "Product added successfully", data: createdProduct });
   } catch (error) {
     return res.status(500).send({ status: false, message: error.message });
   }
