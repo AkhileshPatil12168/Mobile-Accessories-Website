@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 const CreateProduct = () => {
     const navigate = useNavigate();
     const cookies = new Cookies();
-    const cAdminId = cookies.get("Admin");
+    const cVendorId = cookies.get("Vendor");
 
     const [details, setDetails] = useState({
         title: "",
@@ -63,18 +63,18 @@ const CreateProduct = () => {
             }
 
             let response = await axios.post(
-                process.env.backendapi+`/admin/${cAdminId}/create/product`,
+                process.env.backendapi+`/authorized/${cVendorId}/create/product`,
                 formData,{withCredentials:true}
             );
             console.log(response);
-            setRes(response.data.message);
+            setRes(response.data?.data?.message);
             setStatCode(response?.status);
 
             if (response) setSignupData(response?.data?.data);
         } catch (error) {
             setRes(error?.response?.data.message);
 
-            console.log(error?.response?.data.message);
+            console.log(error?.response);
         }
     };
 
@@ -83,7 +83,7 @@ const CreateProduct = () => {
         }
     }, [statCode]);
 
-    return !cAdminId ? (
+    return !cVendorId ? (
         navigate("/login")
     ) : (
         <div className="container mx-auto px-4 py-8  ">
@@ -225,14 +225,15 @@ const CreateProduct = () => {
                                         onChange={handelFreeShipping}
                                     />
                                 </div>
-                                <div>
+                                <div className="flex">
                                     <button
                                         type="submit"
                                         onClick={postData}
                                         className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded"
-                                    >
+                                        >
                                         Create
                                     </button>
+                                        <p>{res}</p>
                                 </div>
                             </div>
                         </div>

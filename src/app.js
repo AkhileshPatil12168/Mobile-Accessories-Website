@@ -25,10 +25,12 @@ import Admin from "./components/Body/Admin";
 import AdminOrders from "./components/Body/AdminOrders";
 import AdminOrder from "./components/Body/AdminOrder";
 import AdminProducts from "./components/Body/AdminProducts";
-import CreateProduct from "./components/Body/AdminCreateProduct";
+import CreateProduct from "./components/Body/vendor/VendorCreateProduct";
 import ProductDetails from "./components/Body/AdminProduct";
 import AboutUs from "./components/Body/AboutUs";
 import TestCss from "./components/Test/TestCss";
+
+import VendorHomePage from "./components/Body/vendor/VendorHomePage";
 
 const AppLayout = () => {
     return (
@@ -68,11 +70,13 @@ const appRouter = createBrowserRouter([
             { path: "/admin/orders", element: <AdminOrders /> },
             { path: "/admin/order/:orderId", element: <AdminOrder /> },
 
-            { path: "/admin/create/product", element: <CreateProduct /> },
+            { path: "/vendor/create/product", element: <CreateProduct /> },
 
             { path: "/admin/products/summery", element: <AdminProducts /> },
 
             { path: "/admin/product/:productId", element: <ProductDetails /> },
+
+            { path: "/vendor", element: <VendorHomePage /> },
 
             { path: "/testcss", element: <TestCss /> },
         ],
