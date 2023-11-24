@@ -45,7 +45,8 @@ const Login = (props) => {
     useEffect(() => {
         
         if (userData.userType == "Admin" && userData) navigate("/admin");
-        else if (userData) navigate("/");
+        else if (userData.userType=="Vendor" && userData) navigate("/vendor");
+        else if(userData.userType=="User" && userData)navigate("/");
     }, [userData]);
 
     useEffect(() => {

@@ -5,47 +5,45 @@ import { Link, useNavigate } from "react-router-dom";
 const VendorSignup = () => {
   const navigate = useNavigate();
   let [user, setUser] = useState({
+    storeName:"",
+    mname:"",
     fname: "",
     lname: "",
     email: "",
     phone: "",
     password: "",
-    street: "",
-    city:"",
-    state: "",
-    pincode:"",
+   
   });
-
-  let [admin, setAdmin] = useState({
-    userName: "",
-    email: "",
-    password: "",
-    secretKey: "",
-  });
+  let [address, setAddress] = useState({});
 
   let [userType, setUserType] = useState("user");
 
-  const [img, setImg] = useState("");
+  const [img, setImg] = useState(null);
   const [signupData, setSignupData] = useState(null);
   const [color, setColor] = useState("bg-white");
   const [res, setRes] = useState("");
   const [statCode, setStatCode] = useState(null);
 
-  const handleSubmit = (e) => {
-    if (userType == "user") {
+  const handleVendorData = (e) => {
+    
       let name, value;
       name = e.target.name;
       value = e.target.value;
       setUser({ ...user, [name]: value });
       console.log(e.target.value);
-    }
-    if (userType == "admin") {
-      let name, value;
-      name = e.target.name;
-      value = e.target.value;
-      setAdmin({ ...admin, [name]: value });
-    }
+    
+   
   };
+  const handelVendorAddress= (e) => {
+    
+    let name, value;
+    name = e.target.name;
+    value = e.target.value;
+    setAddress({ ...address, [name]: value });
+    console.log(user);
+  
+ 
+};
 
   const handleImg = (e) => {
     setImg(e.target.files);
@@ -55,20 +53,18 @@ const VendorSignup = () => {
     try {
       e.preventDefault();
       const formData = new FormData();
-      if (userType == "user") {
+     if( img )
         formData.append("image", img[0]);
         for (let key in user) {
           formData.append(key, user[key]);
         }
-      }
-      if (userType == "admin") {
-        for (let key in admin) {
-          formData.append(key, admin[key]);
-        }
-      }
+        formData.append('address', JSON.stringify(address));
+
+      
+     
 
       let response = await axios.post(
-        process.env.backendapi + `/create/${userType}/`,
+        process.env.backendapi + `/create/vendor`,
         formData,
         { withCredentials: true }
       );
@@ -89,7 +85,7 @@ const VendorSignup = () => {
   useEffect(() => {
     setColor("bg-white");
     setRes("");
-  }, [user, admin]);
+  }, [user,address]);
 
   return signupData ? (
     navigate("/login")
@@ -104,8 +100,25 @@ const VendorSignup = () => {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
           <form className="space-y-6" method="post">
-            {userType == "user" ? (
+            
               <>
+              <div>
+                  <label className="block text-sm font-medium leading-6 text-gray-900">
+                    Store Name
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="storeName"
+                      name="storeName"
+                      type="text"
+                      autoComplete="given-name"
+                      required
+                      value={user.storeName}
+                      onChange={handleVendorData}
+                      className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
                 <div>
                   <label className="block text-sm font-medium leading-6 text-gray-900">
                     First Name
@@ -118,7 +131,24 @@ const VendorSignup = () => {
                       autoComplete="given-name"
                       required
                       value={user.fname}
-                      onChange={handleSubmit}
+                      onChange={handleVendorData}
+                      className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium leading-6 text-gray-900">
+                    Middle Name
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="mname"
+                      name="mname"
+                      type="text"
+                      autoComplete="given-name"
+                      required
+                      value={user.mname}
+                      onChange={handleVendorData}
                       className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -136,7 +166,7 @@ const VendorSignup = () => {
                       autoComplete="family-name"
                       required
                       value={user.lname}
-                      onChange={handleSubmit}
+                      onChange={handleVendorData}
                       className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -153,8 +183,8 @@ const VendorSignup = () => {
                       type="text"
                       autoComplete="family-name"
                       required
-                      value={user.street}
-                      onChange={handleSubmit}
+                      value={address.street}
+                      onChange={handelVendorAddress}
                       className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -172,8 +202,8 @@ const VendorSignup = () => {
                       type="text"
                       autoComplete="family-name"
                       required
-                      value={user.city}
-                      onChange={handleSubmit}
+                      value={address.city}
+                      onChange={handelVendorAddress}
                       className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -190,8 +220,8 @@ const VendorSignup = () => {
                       type="text"
                       autoComplete="family-name"
                       required
-                      value={user.state}
-                      onChange={handleSubmit}
+                      value={address.state}
+                      onChange={handelVendorAddress}
                       className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -208,8 +238,8 @@ const VendorSignup = () => {
                       type="text"
                       autoComplete="family-name"
                       required
-                      value={user.pincode}
-                      onChange={handleSubmit}
+                      value={address.pincode}
+                      onChange={handelVendorAddress}
                       className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -227,7 +257,7 @@ const VendorSignup = () => {
                       autoComplete="tel"
                       required
                       value={user.phone}
-                      onChange={handleSubmit}
+                      onChange={handleVendorData}
                       className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -245,7 +275,7 @@ const VendorSignup = () => {
                       autoComplete="email"
                       required
                       value={user.email}
-                      onChange={handleSubmit}
+                      onChange={handleVendorData}
                       className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -263,7 +293,7 @@ const VendorSignup = () => {
                       autoComplete="current-password"
                       required
                       value={user.password}
-                      onChange={handleSubmit}
+                      onChange={handleVendorData}
                       className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -271,7 +301,7 @@ const VendorSignup = () => {
 
                 <div>
                   <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Profile Image
+                    Store Image
                   </label>
                   <div className="mt-2">
                     <input
@@ -282,79 +312,6 @@ const VendorSignup = () => {
                   </div>
                 </div>
               </>
-            ) : (
-              <>
-                <div>
-                  <label className="block text-sm font-medium leading-6 text-gray-900">
-                    UserName
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="userName"
-                      name="userName"
-                      type="text"
-                      autoComplete="given-name"
-                      required
-                      value={admin.userName}
-                      onChange={handleSubmit}
-                      className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Email address
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      required
-                      value={admin.email}
-                      onChange={handleSubmit}
-                      className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Password
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="password"
-                      name="password"
-                      type="password"
-                      autoComplete="current-password"
-                      required
-                      value={admin.password}
-                      onChange={handleSubmit}
-                      className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium leading-6 text-gray-900">
-                    secretKey
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="secretKey"
-                      name="secretKey"
-                      type="password"
-                      autoComplete="secretKey"
-                      required
-                      value={admin.secretKey}
-                      onChange={handleSubmit}
-                      className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-              </>
-            )}
 
             <div>
               <button

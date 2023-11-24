@@ -9,20 +9,24 @@ import Card from "./Card";
 const Body = () => {
     const cookies = new Cookies();
     const navigate = useNavigate();
+    const cToken = cookies.get("token")
     const cAdminId = cookies.get("Admin");
     const cUserId = cookies.get("User");
+    const cVendorId = cookies.get("Vendor");
     console.log(process.env.backendapi)
 
     useEffect(() => {
-        if (cAdminId) {
-            navigate("/admin");
-        }
+      if (cAdminId && cToken) {
+        navigate("/admin");
+      } else if (cVendorId && cToken) {
+        navigate("/vendor");
+      } else {
+        getProducts();
+      }
     }, []);
 
     const [products, setProducts] = useState([]);
-    useEffect(() => {
-        getProducts();
-    }, []);
+   
     async function getProducts() {
         try {
             const response = await axios.get(process.env.backendapi+"/products", {
