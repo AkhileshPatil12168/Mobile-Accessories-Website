@@ -12,7 +12,7 @@ const ConnectUs = () => {
   const [message, setMessage] = useState("");
   const [isMessageSent, setIsMessageSent] = useState(false);
   const [errorResponse, setErrorResponse] = useState("");
-  const [color, setColor] = useState("bg-gray-100");
+  const [color, setColor] = useState("bg-white");
 
   const getUserDetails = async () => {
     try {
@@ -58,7 +58,7 @@ const ConnectUs = () => {
 
   useEffect(() => {
     setErrorResponse("");
-    setColor("bg-gray-100");
+    setColor("bg-white");
   }, [userName, userEmail, message]);
 
   return (
