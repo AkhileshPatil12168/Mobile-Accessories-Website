@@ -72,7 +72,7 @@ const Card = (props) => {
         </Link>
         <div className="mt-4 mb-2 flex flex-wrap items-center justify-between pt-3 border-t-2 sm:justify-items-center">
           <p className="text-xl font-bold text-slate-900">₹{price}</p>
-          <p>{ratings.averageRating}⭐</p>
+          <p>{ratings?.averageRating}⭐</p>
           {cUserId ? (
             <button
               onClick={addToCart}
