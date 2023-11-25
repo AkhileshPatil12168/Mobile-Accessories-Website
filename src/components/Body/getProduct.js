@@ -200,7 +200,7 @@ const Product = (props) => {
 
       {/* Review Form */}
 
-      <form class="max-w-sm mx-4">
+      <form class="max-w-sm mx-auto">
         {/* Star Counter */}
         <form className="max-w-xs my-3">
           <label
