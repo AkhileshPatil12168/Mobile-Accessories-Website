@@ -89,8 +89,9 @@ const Product = (props) => {
     //     <h1>{product?.title}</h1>
     // </div>
     <div className="m-0 p-0">
-      <div className="w-full max-w-[1200px] bg-white flex mx-auto my-5 p-5">
-        <div className="flex-[0_0_50%] mr-5">
+      <div className="w-full max-w-screen-xl bg-white flex flex-wrap mx-auto my-5 p-5">
+        {/* Product image */}
+        <div className="flex-1 md:flex-1 mr-5 w-full">
           <img
             className="max-w-full h-auto"
             src={product?.productImage[0]}
@@ -99,21 +100,23 @@ const Product = (props) => {
         </div>
         <div className="flex-1">
           {/* Title */}
-          <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+          <h1 className="mb-4 text-2xl md:text-4xl lg:text-5xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">
             {product?.title}
           </h1>
+
           {/* PRICE */}
-          <h2 className="mt-4 mb-4 text-2xl font-extrabold leading-none tracking-tight text-green-500 md:text-3xl lg:text-4xl dark:text-white">
+          <h2 className="mt-4 mb-4 text-xl md:text-2xl lg:text-3xl font-extrabold leading-none tracking-tight text-green-500 dark:text-white">
             Price: ₹{product?.price}
           </h2>
 
-          <h2 className="mt-4 mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
+          {/* Ratings */}
+          <h2 className="mt-4 mb-4 text-xl md:text-2xl lg:text-3xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">
             Ratings: {product.ratings?.averageRating}⭐
           </h2>
 
           {/* Other Details */}
           <div className="relative overflow-x-auto my-4">
-            <table className="w-full text-lg text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <table className="w-full text-lg text-left  text-gray-500 dark:text-gray-400">
               <tbody>
                 <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                   <th
@@ -159,12 +162,12 @@ const Product = (props) => {
             </table>
           </div>
 
-          {/* Add To wishlist  and  Add to cart */}
-          <div className="flex mb-4">
+          {/* Add To wishlist and Add to cart */}
+          <div className="flex flex-col md:flex-row mb-4">
             <button
-              className={`flex items-center justify-center ${lineThrough} ${cursor} text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-1 w-1/2`}
+              className={`flex items-center justify-center ${lineThrough} ${cursor} text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2 md:w-1/2 md:mr-2`}
             >
-              <svg
+                            <svg
                 className="w-6 h-6 text-white dark:text-white"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
@@ -179,29 +182,25 @@ const Product = (props) => {
             <button
               onClick={addToCart}
               disabled={res == 400 ? true : false}
-              className={`flex items-center justify-center ${lineThrough} ${cursor} text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-1 w-full`}
+              className={`flex items-center justify-center ${lineThrough} ${cursor} text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2 md:w-1/2 md:mr-2`}
             >
               {text}
             </button>
           </div>
 
           {/* Description */}
-          <p class="mb-6 text-lg font-normal text-gray-500 dark:text-gray-400">
+          <p className="mb-6 text-md md:text-lg font-normal text-gray-500 dark:text-gray-400">
             <span class="bg-blue-100 text-blue-800 text-xl font-semibold me-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-2">
               DESCRIPTION:
             </span>
             {product?.description}
           </p>
-
-          {/* <a href="#" className="inline-block bg-[#ff5722] text-white no-underline rounded text-lg transition-[background-color] duration-[0.3s] px-5 py-2.5 hover:bg-[#f44336]">
-                        Add to Cart
-                    </a> */}
         </div>
       </div>
 
       {/* Review Form */}
 
-      <form class="max-w-sm mx-auto">
+      <form class="max-w-sm mx-4">
         {/* Star Counter */}
         <form className="max-w-xs my-3">
           <label
@@ -280,12 +279,6 @@ const Product = (props) => {
               </svg>
             </button>
           </div>
-          <p
-            id="helper-text-explanation"
-            className="mt-2 text-sm text-gray-500 dark:text-gray-400"
-          >
-            Please select the number of Stars.
-          </p>
         </form>
 
         <label

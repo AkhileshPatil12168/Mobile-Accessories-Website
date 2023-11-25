@@ -36,6 +36,7 @@ const AppLayout = () => {
     return (
         <React.Fragment>
             <Header />
+            <div class="h-60 bg-gradient-to-r from-cyan-500 to-blue-500 mx-7 rounded"></div>
             <Outlet />
             <Footer />
         </React.Fragment>

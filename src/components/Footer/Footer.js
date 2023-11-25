@@ -38,7 +38,10 @@ const Footer = () => {
             </Link>
             <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
               <li>
-                <Link to="/VendorSignup" className="mr-4 hover:underline md:mr-6">
+                <Link
+                  to="/VendorSignup"
+                  className="mr-4 hover:underline md:mr-6"
+                >
                   Vendor Signup
                 </Link>
               </li>
