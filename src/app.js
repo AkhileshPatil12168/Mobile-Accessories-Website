@@ -4,6 +4,8 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import dotenv from "dotenv"
 require("dotenv").config();
 
+import TestComp from "./components/Test/TestJsx";
+
 import Header from "./components/Header/Header";
 
 import Body from "./components/Body/Body";
@@ -16,7 +18,8 @@ import VendorSignup from "./components/forms/VendorSignup";
 import User from "./components/Body/User";
 import ResetPassword from "./components/Body/ResetPassword";
 import ForgotPassword from "./components/forms/ForgotPassword";
-import Wishlist from "./components/body/Wishlist";
+import Wishlist from "./components/Body/Wishlist";
+
 
 import Footer from "./components/Footer/Footer";
 import ConnectUs from "./components/Body/ConnectUs";
@@ -61,7 +64,7 @@ const appRouter = createBrowserRouter([
             { path: "/user/account", element: <User /> },
             { path: "/contactus", element: <ConnectUs /> },
             { path: "/aboutus", element: <AboutUs /> },
-            { path: "/wishlist", element: <Wishlist /> },
+            {path: "/wishlist", element: <Wishlist />},
 
             { path: "/reset/:usertype/:userId/resetpassword/:token", element: <ResetPassword /> },
             { path: "/request/resetpassword", element: <ForgotPassword /> },
@@ -82,6 +85,8 @@ const appRouter = createBrowserRouter([
             { path: "/vendor", element: <VendorHomePage /> },
 
             { path: "/testcss", element: <TestCss /> },
+
+            {path: "/testcomp", element: <TestComp />}
         ],
     },
 ]);

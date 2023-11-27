@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "home-router": "parcel index.html --host  192.168.1.19  --port 3001",
-    "start": "parcel index.html  --port 3001",
+    "start": "parcel index.html --port 3001",
     "build": "parcel build index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -31,7 +31,7 @@
     "crypto-browserify": "^3.12.0",
     "events": "^3.3.0",
     "os-browserify": "^0.3.0",
-    "parcel": "^2.9.2",
+    "parcel": "^2.10.3",
     "path-browserify": "^1.0.1",
     "postcss": "^8.4.24",
     "process": "^0.11.10",
