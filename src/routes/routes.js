@@ -11,6 +11,9 @@ const orderRoute = require("./order");
 const testRoute = require("./test");
 const reviewRoute = require("./review")
 const wishListRoute = require("./wishList")
+const advertisementRoute = require("./advertisement")
+
+
 Router.use(commonRoute);
 Router.use(adminRoute);
 Router.use(userRoute);
@@ -21,6 +24,7 @@ Router.use(orderRoute);
 Router.use(testRoute);
 Router.use(reviewRoute);
 Router.use(wishListRoute)
+Router.use(advertisementRoute)
 
 //_____FOR NOT VALID APIs_____
 Router.all("/*", (req, res) => {
