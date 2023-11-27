@@ -153,8 +153,8 @@ const Cart = () => {
     navigate("/login")
   ) : (
     <div className="container py-4  px-[5vh] md:px-[15vh] min-h-[78.5vh] ">
-      <div className="p-4 border border-gray-500 bg-white">
-        <p className="text-center text-2xl font-bold mb-4">Cart</p>
+      <div className="p-4 border-2 border-gray-300 rounded bg-white">
+        <p className="mb-4 text-2xl text-center md:text-4xl lg:text-5xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">Cart</p>
         <div className="max-h-[420px] 	 overflow-auto ">
           {cart?.items.map((i, index) => {
             return (
