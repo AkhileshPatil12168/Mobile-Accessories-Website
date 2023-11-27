@@ -56,6 +56,26 @@ const isValidStatus = (status) => {
     return ["pending", "completed", "cancelled"].indexOf(status) !== -1;
 };
 
+const isValidAdvertisementType = (value) => {
+  return (
+    [
+      "top banner",
+      "left side box",
+      "right side box",
+      "1st priority",
+      "2nd priority",
+      "3rd priority",
+    ].indexOf(value) !== -1
+  );
+};
+
+const isValidDate =(value)=>{
+    if (typeof value !== 'number') return false;
+    const date = new Date()
+      return !isNaN(date.getTime( new Date(value)));
+}
+
+
 module.exports = {
     emptyBody,
     isNotProvided,
@@ -70,4 +90,6 @@ module.exports = {
     isValidString,
     isValidUserName,
     isValidStatus,
+    isValidAdvertisementType,
+    isValidDate
 };
