@@ -35,12 +35,17 @@ import AboutUs from "./components/Body/AboutUs";
 import TestCss from "./components/Test/TestCss";
 
 import VendorHomePage from "./components/Body/vendor/VendorHomePage";
+import VendorProfile from "./components/Body/vendor/vendorProfile";
+import VendorOrdersPage from "./components/Body/vendor/VendorOrders";
+import VendorOrder from "./components/Body/vendor/VendorOrder";
+import VendorProductsPage from "./components/Body/vendor/VendorProducts";
+import VendorProductDetailsPage from "./components/Body/vendor/VendorProduct";
 
 const AppLayout = () => {
     return (
         <React.Fragment>
             <Header />
-            <div class="h-60 bg-gradient-to-r from-cyan-500 to-blue-500 mx-7 rounded"></div>
+            
             <Outlet />
             <Footer />
         </React.Fragment>
@@ -77,6 +82,13 @@ const appRouter = createBrowserRouter([
             { path: "/admin/order/:orderId", element: <AdminOrder /> },
 
             { path: "/vendor/create/product", element: <CreateProduct /> },
+            { path: "/vendor/profile", element: <VendorProfile /> },
+            { path: "/vendor/orders", element: <VendorOrdersPage /> },
+            { path: "/vendor/order/:orderId", element: <VendorOrder /> },
+            { path: "/vendor/products", element: <VendorProductsPage /> },
+            { path: "/vendor/product/:productId", element: <VendorProductDetailsPage /> }, 
+
+
 
             { path: "/admin/products/summery", element: <AdminProducts /> },
 
@@ -86,7 +98,7 @@ const appRouter = createBrowserRouter([
 
             { path: "/testcss", element: <TestCss /> },
 
-            {path: "/testcomp", element: <TestComp />}
+            {path: "/testcomp", element: <TestComp />} 
         ],
     },
 ]);
