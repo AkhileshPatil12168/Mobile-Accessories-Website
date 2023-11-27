@@ -6,29 +6,29 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 
 const Order = (props) => {
-    const { orderdedDate, _id, status, cancelledDate, deliveredDate } = props;
-
+    const { orderId, _id, OrderStatus, cancelledDate, deliveredDate } = props;
+console.log(props.orderId)
     return (
         <>
-            {status == "pending" ? (
+            {OrderStatus == "pending" ? (
                 <div className="order-item mb-4 bg-white border  border-gray-300 rounded p-4">
                     <p className="order-id font-bold">Order ID: {_id}</p>
 
                     <p className="order-date text-blue-500">
                         Order Date:{" "}
-                        {orderdedDate.slice(0, 10) + " time : " + orderdedDate.slice(11, 16)}
+                        {orderId?.orderdedDate.slice(0, 10) + " time : " + orderId?.orderdedDate.slice(11, 16)}
                     </p>
                 </div>
             ) : (
                 <></>
             )}
-            {status == "completed" ? (
+            {OrderStatus == "completed" ? (
                 <div className="order-item mb-4 bg-white border  border-gray-300 rounded p-4">
                     <p className="order-id font-bold">Order ID: {_id}</p>
 
                     <p className="order-date text-gray-500">
                         Order Date:{" "}
-                        {orderdedDate.slice(0, 10) + " time : " + orderdedDate.slice(11, 16)}
+                        {orderId?.orderdedDate.slice(0, 10) + " time : " + orderId?.orderdedDate.slice(11, 16)}
                     </p>
                     <p className="order-date text-green-500">
                         Delivered Date:{" "}
@@ -38,13 +38,13 @@ const Order = (props) => {
             ) : (
                 <></>
             )}
-            {status == "cancelled" ? (
+            {OrderStatus == "cancelled" ? (
                 <div className="order-item mb-4 bg-white border  border-gray-300 rounded p-4">
                     <p className="order-id font-bold">Order ID: {_id}</p>
 
                     <p className="order-date text-gray-500">
                         Order Date:{" "}
-                        {orderdedDate.slice(0, 10) + " time: " + orderdedDate.slice(11, 16)}
+                        {orderId?.orderdedDate.slice(0, 10) + " time: " + orderId?.orderdedDate.slice(11, 16)}
                     </p>
                     <p className="order-date text-red-500">
                         Canceled Date:{" "}
@@ -83,6 +83,7 @@ const AdminOrders = () => {
             });
             const allOrders = response.data.data;
             setOrders(allOrders);
+            console.log(allOrders)
         } catch (error) {
             console.log(error);
         }
@@ -93,16 +94,16 @@ const AdminOrders = () => {
         // console.log(toDate, "todate");
 
         const pendingOrders = orders
-            .filter((order) => order.status === "pending")
+            .filter((order) => order.OrderStatus === "pending")
             .sort((a, b) => new Date(a.orderdedDate) - new Date(b.orderdedDate));
         setPendingOrders(pendingOrders);
         setFilteredPendingOrders(pendingOrders);
 
-        const completedOrders = orders.filter((order) => order.status === "completed");
+        const completedOrders = orders.filter((order) => order.OrderStatus === "completed");
         setCompletedOrders(completedOrders);
         setFilteredCompletedOrders(completedOrders);
 
-        const canceledOrders = orders.filter((order) => order.status === "cancelled");
+        const canceledOrders = orders.filter((order) => order.OrderStatus === "cancelled");
         setCanceledOrders(canceledOrders);
         setFilteredCanceledOrders(canceledOrders);
 
@@ -113,54 +114,54 @@ const AdminOrders = () => {
                 setFilteredPendingOrders(
                     pendingOrders.filter(
                         (order) =>
-                            new Date(order.orderdedDate) >= new Date(fromDate) &&
-                            new Date(order.orderdedDate) <= new Date(toDate)
+                            new Date(order?.orderId?.orderdedDate) >= new Date(fromDate) &&
+                            new Date(order?.orderId?.orderdedDate) <= new Date(toDate)
                     )
                 );
                 setFilteredCompletedOrders(
                     completedOrders.filter(
                         (order) =>
-                            new Date(order.orderdedDate) >= new Date(fromDate) &&
-                            new Date(order.orderdedDate) <= new Date(toDate)
+                            new Date(order?.orderId?.orderdedDate) >= new Date(fromDate) &&
+                            new Date(order?.orderId?.orderdedDate) <= new Date(toDate)
                     )
                 );
                 setFilteredCanceledOrders(
                     canceledOrders.filter(
                         (order) =>
-                            new Date(order.orderdedDate) >= new Date(fromDate) &&
-                            new Date(order.orderdedDate) <= new Date(toDate)
+                            new Date(order?.orderId?.orderdedDate) >= new Date(fromDate) &&
+                            new Date(order?.orderId?.orderdedDate) <= new Date(toDate)
                     )
                 );
             } else if (fromDate) {
                 setFilteredPendingOrders(
                     pendingOrders.filter(
-                        (order) => new Date(order.orderdedDate) >= new Date(fromDate)
+                        (order) => new Date(order?.orderId?.orderdedDate) >= new Date(fromDate)
                     )
                 );
                 setFilteredCompletedOrders(
                     completedOrders.filter(
-                        (order) => new Date(order.orderdedDate) >= new Date(fromDate)
+                        (order) => new Date(order?.orderId?.orderdedDate) >= new Date(fromDate)
                     )
                 );
                 setFilteredCanceledOrders(
                     canceledOrders.filter(
-                        (order) => new Date(order.orderdedDate) >= new Date(fromDate)
+                        (order) => new Date(order?.orderId?.orderdedDate) >= new Date(fromDate)
                     )
                 );
             } else if (toDate) {
                 setFilteredPendingOrders(
                     pendingOrders.filter(
-                        (order) => new Date(order.orderdedDate) <= new Date(toDate)
+                        (order) => new Date(order?.orderId?.orderdedDate) <= new Date(toDate)
                     )
                 );
                 setFilteredCompletedOrders(
                     completedOrders.filter(
-                        (order) => new Date(order.orderdedDate) <= new Date(toDate)
+                        (order) => new Date(order?.orderId?.orderdedDate) <= new Date(toDate)
                     )
                 );
                 setFilteredCanceledOrders(
                     canceledOrders.filter(
-                        (order) => new Date(order.orderdedDate) <= new Date(toDate)
+                        (order) => new Date(order?.orderId?.orderdedDate) <= new Date(toDate)
                     )
                 );
             }

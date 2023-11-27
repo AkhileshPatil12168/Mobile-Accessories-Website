@@ -4,9 +4,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const Items = (props) => {
-    const { productImage, title, quantity, price, index } = props;
+    const { productImage, title, quantity, price, index } = props.orderedProductId;
     const [bgColor, setBgColor] = useState("");
-
     useEffect(() => {
         if (index % 2 == 0) setBgColor("bg-gray-200");
     });
@@ -75,9 +74,9 @@ const AdminOrder = () => {
         orderDetails();
     }, [updateResponse]);
 
-    useEffect(() => {
-        orderDetails();
-    }, []);
+    // useEffect(() => {
+    //     orderDetails();
+    // }, []);
     console.log(order.cancellable);
 
     return !cAdminId ? (
@@ -87,7 +86,7 @@ const AdminOrder = () => {
             <h1 className="text-2xl font-bold mb-4">Order Details</h1>
 
             <div className="flex flex-wrap -mx-2">
-                <div className="w-full px-2 mb-4">
+                {/* <div className="w-full px-2 mb-4">
                     <div className="border border-gray-300 rounded p-4 overflow-auto">
                         <h2 className="text-lg font-bold mb-4">Items</h2>
                         <div className="border max-h-52	 border-gray-300 rounded p-4 overflow-auto">
@@ -98,16 +97,22 @@ const AdminOrder = () => {
                             ))}
                         </div>
                     </div>
-                </div>
+                </div> */}
+                {(order?.productImage)? (
+                <img
+                  src={order?.productImage[0]}
+                  alt={`Product Image ${order?.productImage[0]}`}
+                ></img>
+              ) : (
+                <img></img>
+              )}
 
                 <div className="w-full  px-2 mb-4">
                     <div className="border border-gray-300 rounded p-4">
                         <h2 className="text-lg font-bold mb-4">Order Information</h2>
+                        
                         <p className="mb-2">
-                            <strong>Total Items:</strong> {order?.totalItems}
-                        </p>
-                        <p className="mb-2">
-                            <strong>Total Quantity:</strong> {order?.totalQuantity}
+                            <strong>Total Quantity:</strong> {order?.quantity}
                         </p>
                         <p className="mb-2">
                             <strong>Total Price:</strong> ₹{order?.totalPrice}
@@ -116,13 +121,13 @@ const AdminOrder = () => {
                             <strong>Free Shipping:</strong> {order?.isFreeShipping ? "Yes" : "No"}
                         </p>
                         <p className="mb-2">
-                            <strong>Ordered Date:</strong> {order?.orderdedDate}
+                            <strong>Ordered Date:</strong> {order?.orderId?.orderdedDate}
                         </p>
                         <p className="mb-2">
                             <strong>Cancellable:</strong> {order.cancellable ? "Yes" : "No"}
                         </p>
                         <p className="mb-2">
-                            <strong>Status:</strong> {order?.status}
+                            <strong>Status:</strong> {order?.OrderStatus}
                         </p>
                     </div>
                 </div>
@@ -131,13 +136,13 @@ const AdminOrder = () => {
                     <div className="border border-gray-300 rounded p-4">
                         <h2 className="text-lg font-bold mb-4">Personal Information</h2>
                         <p className="mb-2">
-                            <strong>Name:</strong> {order?.name}
+                            <strong>Name:</strong> {order?.orderId?.name}
                         </p>
                         <p className="mb-2">
-                            <strong>Email:</strong> {order?.email}
+                            <strong>Email:</strong> {order?.orderId?.email}
                         </p>
                         <p className="mb-2">
-                            <strong>Phone Number:</strong> {order?.phone}
+                            <strong>Phone Number:</strong> {order?.orderId?.phone}
                         </p>
                     </div>
                 </div>
@@ -146,13 +151,13 @@ const AdminOrder = () => {
                     <div className="border border-gray-300 rounded p-4">
                         <h2 className="text-lg font-bold mb-4">Shipping Address</h2>
                         <p className="mb-2">
-                            <strong>Street:</strong> {order?.address?.shipping?.street}
+                            <strong>Street:</strong> {order?.orderId?.address?.shipping?.street}
                         </p>
                         <p className="mb-2">
-                            <strong>City:</strong> {order?.address?.shipping?.city}
+                            <strong>City:</strong> {order?.orderId?.address?.shipping?.city}
                         </p>
                         <p className="mb-2">
-                            <strong>Pincode:</strong> {order?.address?.shipping?.pincode}
+                            <strong>Pincode:</strong> {order?.orderId?.address?.shipping?.pincode}
                         </p>
                     </div>
                 </div>
@@ -161,19 +166,19 @@ const AdminOrder = () => {
                     <div className="border border-gray-300 rounded p-4">
                         <h2 className="text-lg font-bold mb-4">Billing Address</h2>
                         <p className="mb-2">
-                            <strong>Street:</strong> {order?.address?.billing?.street}
+                            <strong>Street:</strong> {order?.orderId?.address?.billing?.street}
                         </p>
                         <p className="mb-2">
-                            <strong>City:</strong> {order?.address?.billing?.city}
+                            <strong>City:</strong> {order?.orderId?.address?.billing?.city}
                         </p>
                         <p className="mb-2">
-                            <strong>Pincode:</strong> {order?.address?.billing?.pincode}
+                            <strong>Pincode:</strong> {order?.orderId?.address?.billing?.pincode}
                         </p>
                     </div>
                 </div>
             </div>
             <div className="flex justify-end ">
-                {order.status == "pending" ? (
+                {order.OrderStatus == "pending" ? (
                     <div className="pr-2">
                         <button
                             onClick={() => updateOrder("completed")}
@@ -186,7 +191,7 @@ const AdminOrder = () => {
                     <></>
                 )}
 
-                {order.cancellable && order.status == "pending" ? (
+                {order.cancellable && order.OrderStatus == "pending" ? (
                     <div>
                         <button
                             onClick={() => updateOrder("cancelled")}

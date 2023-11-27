@@ -83,7 +83,7 @@ const AdminProducts = () => {
                         <p>near to out of stock products: {nearToOutOfStock.length}</p>
                         <p>total products: {products.length}</p>
                     </div>
-                    <div className="bg-white border border-gray-300 h-[100px] w-[300px] mt-2 ml-12 flex justify-evenly">
+                    {/* <div className="bg-white border border-gray-300 h-[100px] w-[300px] mt-2 ml-12 flex justify-evenly">
                         <Link to="/admin/create/product">
                             <div className="h-[70px] w-[270px]  mt-4 bg-green-300 hover:bg-green-500">
                                 <p className="text-center pt-6 text-xl font-bold">
@@ -91,16 +91,16 @@ const AdminProducts = () => {
                                 </p>
                             </div>
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="w-full">
                     <div className="border border-gray-300 rounded p-4  bg-white min-h-[50px] max-h-[500px]  ">
                         <p className="text-lg font-bold mb-4 text-center">Recent 5 products</p>
                         <div className="p-4 rounded overflow-y-auto min-h-[50px] max-h-[400px] ">
                             {recentProducts.map((product, index) => (
-                                <Link to={`/admin/product/${product._id}`} key={product._id}>
+                                // <Link to={`/admin/product/${product._id}`} key={product._id}>
                                     <Product {...product} index={index} />
-                                </Link>
+                                /* </Link> */
                             ))}
                         </div>
                     </div>
@@ -116,12 +116,12 @@ const AdminProducts = () => {
                             <div className="flex justify-between mr-2 p-4 ">
                                 <div className="bg-blue-200 p-4 rounded overflow-y-auto min-h-[50px] max-h-[400px] w-[500px]">
                                     {outOfStock.map((product, index) => (
-                                        <Link
-                                            to={`/admin/product/${product._id}`}
-                                            key={product._id}
-                                        >
+                                        // <Link
+                                        //     to={`/admin/product/${product._id}`}
+                                        //     key={product._id}
+                                        // >
                                             <Product {...product} index={index} />
-                                        </Link>
+                                        // </Link>
                                     ))}
                                 </div>
                             </div>
@@ -135,12 +135,12 @@ const AdminProducts = () => {
                             <div className="flex justify-between mr-2 p-4 ">
                                 <div className="bg-blue-200 p-4 rounded overflow-y-auto min-h-[50px] max-h-[400px] w-[500px]">
                                     {nearToOutOfStock.map((product, index) => (
-                                        <Link
-                                            to={`/admin/product/${product._id}`}
-                                            key={product._id}
-                                        >
+                                        // <Link
+                                        //     to={`/admin/product/${product._id}`}
+                                        //     key={product._id}
+                                        // >
                                             <Product {...product} index={index} />
-                                        </Link>
+                                        // </Link>
                                     ))}
                                 </div>
                             </div>
