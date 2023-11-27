@@ -1,8 +1,8 @@
 const bcrypt = require("bcrypt");
-
-const orderModel = require("../../models/orderModel");
 const adminModel = require("../../models/adminModel");
 const orderedProductModel = require("../../models/orderedProductsModel")
+const productModel = require("../../models/productModel");
+
 
 
 const { emptyBody, isValidObjectId } = require("../../utils/validators");

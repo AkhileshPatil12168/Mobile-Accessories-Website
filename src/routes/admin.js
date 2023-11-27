@@ -23,7 +23,7 @@ Router.get("/admin/:userId/getuser/:customerUserId", authentication, getUser);
 
 Router.get("/admin/:userId/orders", authentication, getOrdersAdmin);
 Router.get("/admin/:userId/order/:orderId", authentication, getOrderByIdAdmin);
-Router.put("/admin/:userId/order/:orderId", authentication, updateOrderByAdmin);
+Router.put("/admin/:userId/order/:orderedProductId", authentication, updateOrderByAdmin);
 
 Router.get("/admin/:userId/products", authentication, getProductByFilterAdmin);
 Router.get("/admin/:userId/products/:productId", authentication, getProductByIdAdmin);

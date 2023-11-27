@@ -1,5 +1,5 @@
 const productModel = require("../../models/productModel");
-const vendorModel = require("../../models/vendorModel");
+const bcrypt = require("bcrypt");
 
 const { isValidObjectId } = require("../../utils/validators");
 
@@ -31,6 +31,9 @@ const getProductsByVendor = async (req, res) => {
         status: false,
         message: "Np product Found",
       });
+      return res
+            .status(200)
+            .send({ status: true, message: "all products.", data: products });
   } catch (err) {
     return res.status(500).send({
       status: false,
@@ -69,7 +72,7 @@ const getProductByIdVendor = async (req, res) => {
       });
 
     let productsDetails = await productModel
-      .findOne({ _id: productId, vendorId: userId })
+      .findOne({ _id: productId, vendorId: userId }).populate({path:"ratings", select:"totalUsersRated averageRating totalRating"})
       .lean();
     if (!productsDetails)
       return res.status(404).send({
