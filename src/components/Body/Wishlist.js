@@ -1,9 +1,12 @@
 import React from "react";
 
-const Wishlist = ()=>{
-    return (
-        <p>working</p>
+const Wishlist = () => {
+    return(
+        <>
+        <h1>Hello  Karan</h1>
+        <p>sdfghjkl</p>
+        {console.log("Hello Wishlist")}
+        </>
     )
 }
-
-export default Wishlist
+export default Wishlist;
