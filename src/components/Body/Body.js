@@ -22,10 +22,12 @@ const Body = () => {
         navigate("/vendor");
       } else {
         getProducts();
+        getAdvertisement()
       }
     }, []);
 
     const [products, setProducts] = useState([]);
+    const [advertisementBanner, setAdvertisementBanner]= useState("")
    
     async function getProducts() {
         try {
@@ -37,12 +39,27 @@ const Body = () => {
             console.log(error);
         }
     }
-    useEffect(() => {}, [products]);
+
+    const getAdvertisement = async ()=>{
+        try {
+            const responce =await axios.get(process.env.backendapi+"/advertisements/live?type=top banner", {
+                withCredentials: true,
+            })
+            setAdvertisementBanner(responce.data.advertisementImage)
+            console.log(responce.data)
+
+        } catch (error) {
+            console.log(error)
+            
+        }
+    }
+    useEffect(() => {}, []);
 
     return products?.length == 0 || !products ? (
         <ShimmerBody />
     ) : (
         <>
+        <img class="h-60 bg-gradient-to-r from-cyan-500 to-blue-500 mx-7 rounded" src={advertisementBanner}></img>
         {/* <Vcard/> */}
         <div className="flex flex-wrap w-full justify-center p-3  bg-slate-50">
             {products?.map((p) => {
