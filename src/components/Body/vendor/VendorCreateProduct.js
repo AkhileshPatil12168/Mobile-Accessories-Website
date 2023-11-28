@@ -249,6 +249,7 @@ const CreateProduct = () => {
                   </button>
                   <p>{res}</p>
                 </div>
+
               </div>
             </div>
           </form>

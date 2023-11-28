@@ -65,7 +65,7 @@ console.log(item.productId._id)
 
 
     return(
-        <div  className="flex items-center border p-4 mb-4">
+        <div  className="flex flex-wrap items-center border p-4 mb-4 mx-2">
           <img
             src={item?.productId?.productImage[0]}
             alt={item?.productId?.title}
@@ -73,21 +73,21 @@ console.log(item.productId._id)
           />
           <div className="flex-1">
             <h3 className="text-lg font-semibold">{item?.productId?.title}</h3>
-            <p className="text-gray-700">Price: ₹{item?.productId?.price}</p>
-            <p>Average Rating: {item?.productId?.ratings?.averageRating}</p>
-            <p>Added on: {new Date(item.addedDate).toLocaleDateString()}</p>
+            <p className="text-gray-700 dark:text-gray-400">Price: <span className="text-green-500">₹{item?.productId?.price}</span></p>
+            <p className="text-gray-700 dark:text-gray-400">Average Rating: <span className="text-yellow-300">{item?.productId?.ratings?.averageRating}</span>⭐</p>
+            <p className="text-gray-700 dark:text-gray-400">Added on: {new Date(item.addedDate).toLocaleDateString()}</p>
           </div>
-          <div className="flex flex-col justify-between">
+          <div className="flex flex-col mx-auto justify-between my-2">
           
             <button
               onClick={() => handleAddToCart(item?.productId?._id)}
-              className={`${color} text-white px-2 py-1 rounded hover:bg-blue-600`}
+              className={`${color} text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2`}
             >
               {text}
             </button>
             <button
               onClick={() => handleRemoveFromWishlist(item?._id)}
-              className="bg-red-500 text-white mt-2 px-2 py-1 rounded hover:bg-red-600"
+              className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center  mb-2"
             >
               Remove
             </button>
@@ -124,7 +124,7 @@ console.log(cUserId)
   
   return (
     <div className="max-w-2xl mx-auto my-8">
-      <h2 className="text-2xl font-bold mb-4">Wishlist</h2>
+      <h2 className="text-2xl mx-2 font-bold mb-4">Wishlist</h2>
       {wishlistData?.items?.map((item) => (
         <Item key={item?._id} item={...item} setWishlistData={setWishlistData} cUserId={cUserId} wishlistId={wishlistData?._id}/>
       ))}
