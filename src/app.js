@@ -18,7 +18,7 @@ import VendorSignup from "./components/forms/VendorSignup";
 import User from "./components/Body/User";
 import ResetPassword from "./components/Body/ResetPassword";
 import ForgotPassword from "./components/forms/ForgotPassword";
-import Wishlist from "./components/Body/Wishlist";
+import Wishlist from "./components/Body/user/Wishlist";
 
 
 import Footer from "./components/Footer/Footer";
