@@ -28,7 +28,7 @@ const getLiveAdvertisement = async (req, res) => {
         paymentStatus: "completed",
         isApproved: true,
       })
-      .select({ advertisementImage: 1 })
+      .select({ advertisementImage: 1, productId:1 })
       .lean();
     return res.status(200).send(result);
   } catch (error) {
