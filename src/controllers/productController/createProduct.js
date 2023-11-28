@@ -187,7 +187,7 @@ const createProduct = async function (req, res) {
 
     const productRating= await ratingModel.create({productId:createdProduct["_id"]})
     
-    const UpdatedProduct = await productModel.findOneAndupdateOne({_id:createdProduct["_id"]},{$set:{
+    const UpdatedProduct = await productModel.findByIdAndUpdate(createdProduct["_id"],{$set:{
       ratings:productRating["_id"]
     }},{new:true})
 
