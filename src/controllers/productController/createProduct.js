@@ -187,13 +187,13 @@ const createProduct = async function (req, res) {
 
     const productRating= await ratingModel.create({productId:createdProduct["_id"]})
     
-    await productModel.updateOne({_id:createdProduct["_id"]},{$set:{
+    const UpdatedProduct = await productModel.findOneAndupdateOne({_id:createdProduct["_id"]},{$set:{
       ratings:productRating["_id"]
-    }})
+    }},{new:true})
 
     return res
       .status(201)
-      .send({ status: true, message: "Product added successfully", data: createdProduct });
+      .send({ status: true, message: "Product added successfully", data: UpdatedProduct });
   } catch (error) {
     return res.status(500).send({ status: false, message: error.message });
   }
