@@ -59,7 +59,9 @@ const Body = () => {
         <ShimmerBody />
     ) : (
         <>
-        <img class="h-60 bg-gradient-to-r from-cyan-500 to-blue-500 mx-7 rounded" src={advertisementBanner}></img>
+        <div className="flex justify-center">
+        <img className="h-60 bg-gradient-to-r  from-cyan-500 to-blue-500 mx-7 rounded" src={advertisementBanner}></img>
+        </div>
         {/* <Vcard/> */}
         <div className="flex flex-wrap w-full justify-center p-3  bg-slate-50">
             {products?.map((p) => {

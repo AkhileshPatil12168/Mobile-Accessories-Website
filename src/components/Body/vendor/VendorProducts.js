@@ -28,19 +28,20 @@ const VendorProductsPage = () => {
     getProducts();
   }, []);
   return (
-    <div className="max-w-4xl mx-auto bg-white p-8 my-8 rounded-md shadow-lg">
+    <div className="max-w-7xl mx-auto bg-white p-8 my-8 rounded-md shadow-lg">
       <h2 className="text-3xl font-bold mb-6">My Products</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
         {products.map((product) => (
-          <div key={product._id} className="bg-gray-100 p-4 rounded-md">
+          // Single Product
+          <div key={product._id} className="bg-gray-100 p-4 rounded-md border border-gray-100 hover:border-blue-500 hover:rounded hover:border-1 hover:duration-300 hover:ease-in-out">
             <img
               src={product.productImage[0]}
               alt={product.title}
-              className="w-full h-32 object-cover mb-4 rounded-md"
+              className="w-full h-60 object-cover mb-4 rounded-md"
             />
             <h3 className="text-lg font-bold mb-2">{product.title}</h3>
-            <p className="text-gray-700 mb-2">₹{product.price}</p>
-            <p className="text-gray-700 mb-2">Available Quantity: {product.available_Quantity}</p>
+            <p className="text-green-500 mb-2 font-medium">₹{product.price}</p>
+            <p className="text-gray-700 mb-2 font-medium">Available Quantity: <span className="text-violet-500">{product.available_Quantity}</span></p>
           </div>
         ))}
       </div>
