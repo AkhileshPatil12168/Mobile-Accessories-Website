@@ -114,7 +114,7 @@ const CreateProduct = () => {
                   required
                 />
                 {uploadedImage && (
-                  <div className="w-full bg-white border border-gray-300 rounded overflow-hidden mb-4">
+                  <div className="w-full bg-white border border-gray-300 rounded overflow-hidden my-4">
                     <img
                       src={renderImage}
                       alt="Product"
@@ -251,8 +251,9 @@ const CreateProduct = () => {
                   >
                     Create
                   </button>
-                  <p>{res}</p>
+                  
                 </div>
+                <p className="my-2 text-red-500 text-center">{res}</p>
 
               </div>
             </div>

@@ -40,9 +40,9 @@ import VendorOrdersPage from "./components/Body/vendor/VendorOrders";
 import VendorOrder from "./components/Body/vendor/VendorOrder";
 import VendorProductsPage from "./components/Body/vendor/VendorProducts";
 import VendorProductDetailsPage from "./components/Body/vendor/VendorProduct";
-import AdvertisementForm from "./components/Body/vendor/CreateAdvertisementPage";
 import Advertisements from "./components/Body/vendor/Advertisements";
 import Advertisement from "./components/Body/vendor/Advertisement";
+import Userlist from "./components/Body/Admin/Userlist";
 
 const AppLayout = () => {
     return (
@@ -90,13 +90,13 @@ const appRouter = createBrowserRouter([
             { path: "/vendor/order/:orderId", element: <VendorOrder /> },
             { path: "/vendor/products", element: <VendorProductsPage /> },
             { path: "/vendor/product/:productId", element: <VendorProductDetailsPage /> }, 
-            { path: "/vendor/advertisement/create", element: <AdvertisementForm /> }, 
             { path: "/vendor/advertisements", element: <Advertisements /> }, 
             { path: "/vendor/advertisement", element: <Advertisement /> }, 
 
 
 
             { path: "/admin/products/summery", element: <AdminProducts /> },
+            { path: "/admin/users", element: <Userlist /> },
 
             { path: "/admin/product/:productId", element: <ProductDetails /> },
 
