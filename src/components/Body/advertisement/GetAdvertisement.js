@@ -32,7 +32,7 @@ const Advertisement = () => {
     getAdvertisement();
   }, []);
   return (
-    <div className="flex justify-center" onClick={handleCount}>
+    <div className="flex justify-center cursor-pointer mb-4" onClick={handleCount}>
       <img
         className="h-60 bg-gradient-to-r  from-cyan-500 to-blue-500 mx-7 rounded"
         src={advertisementData.advertisementImage}

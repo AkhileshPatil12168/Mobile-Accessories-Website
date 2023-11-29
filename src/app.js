@@ -8,6 +8,8 @@ import TestComp from "./components/Test/TestJsx";
 
 import Header from "./components/Header/Header";
 
+import Search from "./components/Body/Search";
+
 import Body from "./components/Body/Body";
 import Orders from "./components/Body/Orders";
 import Cart from "./components/Body/Cart";
@@ -49,7 +51,7 @@ const AppLayout = () => {
     return (
         <React.Fragment>
             <Header />
-            
+            <Search/>
             <Outlet />
             <Footer />
         </React.Fragment>
