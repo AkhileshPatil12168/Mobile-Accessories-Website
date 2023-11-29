@@ -43,6 +43,7 @@ import VendorProductDetailsPage from "./components/Body/vendor/VendorProduct";
 import Advertisements from "./components/Body/vendor/Advertisements";
 import Advertisement from "./components/Body/vendor/Advertisement";
 import Userlist from "./components/Body/Admin/Userlist";
+import Sessions from "./components/Body/reports/LoginLogoutSessions";
 
 const AppLayout = () => {
     return (
@@ -102,6 +103,7 @@ const appRouter = createBrowserRouter([
 
             { path: "/vendor", element: <VendorHomePage /> },
 
+            {path:"/loginout",element:<Sessions/>},
             { path: "/testcss", element: <TestCss /> },
 
             {path: "/testcomp", element: <TestComp />} 
