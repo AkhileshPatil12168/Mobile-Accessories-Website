@@ -332,13 +332,13 @@ const AdminOrders = () => {
 
 
         {/* Pending Completed Orders  */}
-        <div className="flex justify-center flex-wrap p-4 ">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-center p-4 ">
           <div className="mb-2 mx-2">
-            <div className="border border-gray-300 rounded p-4  bg-white min-h-[50px] max-h-[500px] ">
+            <div className="border border-gray-300 rounded p-2  bg-white min-h-[50px] max-h-[500px] ">
               <p className="text-lg font-bold mb-4 text-center">
                 Pending Orders ({filteredPendingOrders.length})
               </p>
-              <div className=" p-4 rounded overflow-y-auto min-h-[50px] max-h-[400px] w-[400px]">
+              <div className=" p-4 rounded overflow-y-auto min-h-[50px] max-h-[400px] w-auto">
                 {filteredPendingOrders.map((order) => (
                   <Link to={`/admin/order/${order._id}`} key={order._id}>
                     <Order {...order} key={order._id} />
@@ -349,11 +349,11 @@ const AdminOrders = () => {
           </div>
 
           <div className="mb-2 mx-2">
-            <div className="border border-gray-300 rounded p-4  bg-white min-h-[50px] max-h-[500px] ">
+            <div className="border border-gray-300 rounded p-2  bg-white min-h-[50px] max-h-[500px] ">
               <p className="text-lg font-bold mb-4 text-center">
                 completed Orders ({filteredCompletedOrders.length})
               </p>
-              <div className="p-4 rounded overflow-y-auto min-h-[50px] max-h-[400px] w-[400px]">
+              <div className="p-4 rounded overflow-y-auto min-h-[50px] max-h-[400px] w-auto">
                 {filteredCompletedOrders.map((order) => (
                   <Link to={`/admin/order/${order._id}`} key={order._id}>
                     <Order {...order} key={order._id} />
@@ -364,11 +364,11 @@ const AdminOrders = () => {
           </div>
           
           <div className="mb-2 mx-2">
-            <div className="border border-gray-300 rounded p-4  bg-white min-h-[50px] max-h-[500px] ">
+            <div className="border border-gray-300 rounded p-2  bg-white min-h-[50px] max-h-[500px] ">
               <p className="text-lg font-bold mb-4 text-center">
                 canceled Orders ({filteredCanceledOrders.length})
               </p>
-              <div className="p-4 rounded overflow-y-auto min-h-[50px] max-h-[400px] w-[400px]">
+              <div className="p-4 rounded overflow-y-auto min-h-[50px] max-h-[400px] w-auto">
                 {filteredCanceledOrders.map((order) => (
                   <Link to={`/admin/order/${order._id}`} key={order._id}>
                     <Order {...order} key={order._id} />
