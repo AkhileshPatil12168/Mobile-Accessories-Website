@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import timeConverter from "../../../util/timeConverter";
 
 const SessionTable = ({ sessions }) => {
   const [filterUserType, setFilterUserType] = useState("All");
@@ -53,9 +54,17 @@ const SessionTable = ({ sessions }) => {
                       ? session.adminId
                       : session.vendorId}
                   </td>
-                  <td className="py-2 px-4 border-b border-r text-center">{session.loginTime}</td>
                   <td className="py-2 px-4 border-b border-r text-center">
-                    {session.logOutTime || "N/A"}
+                    {session.loginTime.slice(0, 10) +
+                      " / " +
+                      timeConverter(session.loginTime.slice(11, 16))}
+                  </td>
+                  <td className="py-2 px-4 border-b border-r text-center">
+                    {session?.logOutTime
+                      ? session?.logOutTime?.slice(0, 10) +
+                        " / " +
+                        timeConverter(session.logOutTime.slice(11, 16))
+                      : "N/A"}
                   </td>
                 </tr>
               ))}
@@ -83,7 +92,7 @@ const Sessions = () => {
       console.log(error);
     }
   };
-  
+
   useEffect(() => {
     getLoginLogoutSessions();
   }, []);
