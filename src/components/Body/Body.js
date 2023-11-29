@@ -5,6 +5,7 @@ import ShimmerBody from "../Shimmer/ShimmerCard";
 import Cookies from "universal-cookie";
 import Card from "./Card";
 import Advertisement from "./advertisement/GetAdvertisement";
+import Search from "./Search";
 // import Vcard from "./vcard";
 
 const Body = () => {
@@ -43,6 +44,7 @@ const Body = () => {
     <ShimmerBody />
   ) : (
     <>
+    <Search/>
       <Advertisement/>
       {/* <Vcard/> */}
       <div className="flex flex-wrap w-full justify-center p-3  bg-slate-50">
