@@ -11,7 +11,6 @@ const Card = (props) => {
   const [cursor, setCursor] = useState("");
   const [lineThrough, setLineThrough] = useState("");
   const [res, setRes] = useState();
-  console.log(_id);
 
   async function addToCart() {
     try {
