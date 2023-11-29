@@ -12,6 +12,7 @@ const testRoute = require("./test");
 const reviewRoute = require("./review")
 const wishListRoute = require("./wishList")
 const advertisementRoute = require("./advertisement")
+const reportsRoute = require("./reports")
 
 
 Router.use(commonRoute);
@@ -25,6 +26,7 @@ Router.use(testRoute);
 Router.use(reviewRoute);
 Router.use(wishListRoute)
 Router.use(advertisementRoute)
+Router.use(reportsRoute)
 
 //_____FOR NOT VALID APIs_____
 Router.all("/*", (req, res) => {
