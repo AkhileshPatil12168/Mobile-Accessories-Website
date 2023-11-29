@@ -18,10 +18,12 @@ const CreateProduct = () => {
     isFreeShipping: false,
   });
 
-  const [uploadedImage, setUploadedImage] = useState(null);
+  const [uploadedImage, setUploadedImage] = useState("  ");
   const [renderImage, setRenderImage] = useState(null);
   const [res, setRes] = useState("");
   const [statCode, setStatCode] = useState(null);
+
+  const [newProductData,setNewProductData] =useState({})
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -57,7 +59,7 @@ const CreateProduct = () => {
       e.preventDefault();
       const formData = new FormData();
 
-      formData.append("image", uploadedImage[0]);
+      if(uploadedImage||uploadedImage.length>0)formData.append("image", uploadedImage[0]);
       for (let key in details) {
         formData.append(key, details[key]);
       }
@@ -67,15 +69,17 @@ const CreateProduct = () => {
         formData,
         { withCredentials: true }
       );
-      console.log(response);
+      console.log(response?.data?.data);
       setRes(response.data?.data?.message);
       setStatCode(response?.status);
 
-      if (response) setSignupData(response?.data?.data);
+      if (response) {setNewProductData(response?.data?.data);
+        navigate("/vendor/product/"+response?.data?.data?._id)
+      }
     } catch (error) {
       setRes(error?.response?.data.message);
 
-      console.log(error?.response);
+      console.log(error);
     }
   };
 
