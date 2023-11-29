@@ -40,6 +40,7 @@ import VendorOrdersPage from "./components/Body/vendor/VendorOrders";
 import VendorOrder from "./components/Body/vendor/VendorOrder";
 import VendorProductsPage from "./components/Body/vendor/VendorProducts";
 import VendorProductDetailsPage from "./components/Body/vendor/VendorProduct";
+import AdvertisementForm from "./components/Body/vendor/CreateAdvertisementPage";
 
 const AppLayout = () => {
     return (
@@ -87,6 +88,8 @@ const appRouter = createBrowserRouter([
             { path: "/vendor/order/:orderId", element: <VendorOrder /> },
             { path: "/vendor/products", element: <VendorProductsPage /> },
             { path: "/vendor/product/:productId", element: <VendorProductDetailsPage /> }, 
+
+            {path:"/vendor/advertisement/create", element:<AdvertisementForm/>},
 
 
 
