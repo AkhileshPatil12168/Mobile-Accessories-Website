@@ -2,6 +2,7 @@ import { useState } from "react";
 import Title from "./Title";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
+import axios from "axios";
 
 const UserNavBar = ({ cUserId, cToken }) => {
   return (
@@ -130,14 +131,23 @@ const Header = () => {
   const cAdminId = cookies.get("Admin");
   const cVendorId = cookies.get("Vendor");
 
-  const handleLogout = () => {
-    cookies.remove("token", { path: "/", domain: process.env.domain });
-    cookies.remove("User", { path: "/", domain: process.env.domain });
-    cookies.remove("Admin", { path: "/", domain: process.env.domain });
-    cookies.remove("Vendor", { path: "/", domain: process.env.domain });
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      let data = { token: cToken, logOutTime: Date.now() + 19800000 };
+      await axios.post(process.env.backendapi + "/logout", data, {
+        withCredentials: true,
+      });
+
+      cookies.remove("token", { path: "/", domain: process.env.domain });
+      cookies.remove("User", { path: "/", domain: process.env.domain });
+      cookies.remove("Admin", { path: "/", domain: process.env.domain });
+      cookies.remove("Vendor", { path: "/", domain: process.env.domain });
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
-  let NavBar;
+
 
   return (
     <>
