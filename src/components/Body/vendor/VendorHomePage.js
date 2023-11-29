@@ -31,6 +31,11 @@ const VendorHomePage = ()=>{
                     <h2 className="text-lg font-bold text-center">Add Product</h2>
                 </div>
             </Link>
+            <Link to={cToken && cVendorId ? "/vendor/advertisement/create" : "/login"}>
+                <div className="bg-blue-200 p-4 m-2 rounded-lg w-64">
+                    <h2 className="text-lg font-bold text-center">Create Advertisement</h2>
+                </div>
+            </Link>
         </div>
     )
 }
