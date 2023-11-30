@@ -58,6 +58,7 @@ import VendorOrders from "./components/Body/reports/vendor/ordersVendor";
 import ProductInventory from "./components/Body/reports/vendor/productInvenotory";
 
 import TotalOrders from "./components/Body/reports/order reports/TotalOrders";
+import OrderByStatus from "./components/Body/reports/order reports/OrderStatus";
 
 const AppLayout = () => {
     return (
@@ -129,7 +130,8 @@ const appRouter = createBrowserRouter([
             {path:"/orders/vendor/:vendorId/", element:<VendorOrders/>},
             {path:"/vendor/products/:vendorId",element:<ProductInventory/>},
 
-            {path:"/Orders/total",element:<TotalOrders/> },
+            {path:"/orders/total",element:<TotalOrders/> },
+            {path:"/orders/by/status", element:<OrderByStatus/>},
 
 
 
