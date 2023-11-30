@@ -60,6 +60,10 @@ import ProductInventory from "./components/Body/reports/vendor/productInvenotory
 import TotalOrders from "./components/Body/reports/order reports/TotalOrders";
 import OrderByStatus from "./components/Body/reports/order reports/OrderStatus";
 
+import SellersTotalAds from "./components/Body/reports/advertisemet reports/SellerTotalAds";
+import AdsByApproved from "./components/Body/reports/advertisemet reports/AdsByApproved";
+import ClicksPerAdsByDays from "./components/Body/reports/advertisemet reports/ClicksPerAd";
+
 const AppLayout = () => {
     return (
         <React.Fragment>
@@ -132,6 +136,10 @@ const appRouter = createBrowserRouter([
 
             {path:"/orders/total",element:<TotalOrders/> },
             {path:"/orders/by/status", element:<OrderByStatus/>},
+
+            {path:"/total/advertisements/",element:<SellersTotalAds/>,},
+            {path:"/advertisement/byaprroved/", element:<AdsByApproved/>},
+            {path:"/advertisement/:advertisementId/clicks",element:<ClicksPerAdsByDays/>},
 
 
 
