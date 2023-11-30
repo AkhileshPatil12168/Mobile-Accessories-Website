@@ -9,6 +9,8 @@ const selledProducts = require("../controllers/reports/vendor/selledProducts");
 const productInventory = require("../controllers/reports/vendor/ProductInventory");
 const totalOrders = require("../controllers/reports/Orders/totalOrders");
 const ordersByStatus = require("../controllers/reports/Orders/ordersByStatus");
+const sellersAds = require("../controllers/reports/ads reports/sellerAds");
+const clicksPerAdsByDays = require("../controllers/reports/ads reports/clicksPerAd");
 
 Router.get("/report/users/registered/",registeredUserData)
 Router.get("/report/users/spends/",spendAnalysisUsers)
@@ -20,6 +22,9 @@ Router.get("/reprots/vendor/products/inventory/", productInventory)
 
 Router.get("/reports/orders/total", totalOrders)
 Router.get("/reports/orders/status/",ordersByStatus)
+
+Router.get("/reports/sellers/ads/", sellersAds)
+Router.get("/ads/clicks/",clicksPerAdsByDays)
 
 
 
