@@ -45,7 +45,19 @@ import VendorProductDetailsPage from "./components/Body/vendor/VendorProduct";
 import Advertisements from "./components/Body/vendor/Advertisements";
 import Advertisement from "./components/Body/vendor/Advertisement";
 import Userlist from "./components/Body/Admin/Userlist";
+
 import Sessions from "./components/Body/reports/LoginLogoutSessions";
+import UserSessions from "./components/Body/reports/user reports/userSessions";
+import RegisteredUsers from "./components/Body/reports/user reports/registeredUsers";
+import UsersSpendings from "./components/Body/reports/user reports/usersSpendings";
+import UserOrders from "./components/Body/reports/user reports/userOrders";
+import UserReviews from "./components/Body/reports/user reports/userReviews";
+
+import VendorSessions from "./components/Body/reports/vendor/vendorSessions";
+import VendorOrders from "./components/Body/reports/vendor/ordersVendor";
+import ProductInventory from "./components/Body/reports/vendor/productInvenotory";
+
+import TotalOrders from "./components/Body/reports/order reports/TotalOrders";
 
 const AppLayout = () => {
     return (
@@ -105,7 +117,22 @@ const appRouter = createBrowserRouter([
 
             { path: "/vendor", element: <VendorHomePage /> },
 
-            {path:"/loginout",element:<Sessions/>},
+            {path:"/sessions/every",element:<Sessions/>},
+
+            {path:"/sessions/users",element:<UserSessions/>},
+            {path:"/registered/users",element:<RegisteredUsers/>},
+            {path:"/spendigns/users",element:<UsersSpendings/>},
+            {path:"/spendigns/user/:userId",element:<UserOrders/>},
+            {path:"/reviews/user/:userId",element:<UserReviews/>},
+
+            {path:"/sessions/vendors/",element:<VendorSessions/>},
+            {path:"/orders/vendor/:vendorId/", element:<VendorOrders/>},
+            {path:"/vendor/products/:vendorId",element:<ProductInventory/>},
+
+            {path:"/Orders/total",element:<TotalOrders/> },
+
+
+
             { path: "/testcss", element: <TestCss /> },
 
             {path: "/testcomp", element: <TestComp />} 
