@@ -8,6 +8,7 @@ const getUserReviews = require("../controllers/reports/user/reviewsAndRatings");
 const selledProducts = require("../controllers/reports/vendor/selledProducts");
 const productInventory = require("../controllers/reports/vendor/ProductInventory");
 const totalOrders = require("../controllers/reports/Orders/totalOrders");
+const ordersByStatus = require("../controllers/reports/Orders/ordersByStatus");
 
 Router.get("/report/users/registered/",registeredUserData)
 Router.get("/report/users/spends/",spendAnalysisUsers)
@@ -18,6 +19,7 @@ Router.get("/reports/vendor/products/selled/", selledProducts)
 Router.get("/reprots/vendor/products/inventory/", productInventory)
 
 Router.get("/reports/orders/total", totalOrders)
+Router.get("/reports/orders/status/",ordersByStatus)
 
 
 
