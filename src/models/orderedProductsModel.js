@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-
 const Ordered_productsSchema = new mongoose.Schema(
   {
-    userId:{
+    userId: {
       type: ObjectId,
       ref: "User",
     },
@@ -51,6 +50,28 @@ const Ordered_productsSchema = new mongoose.Schema(
       type: String,
       default: "pending",
       enum: ["pending", "completed", "cancelled"],
+    },
+
+    paymentMethod: {
+      type: String,
+      default: "cash on delivery",
+      enum: ["cash on delivery", "razorpay"],
+    },
+
+    paymentStatus: {
+      type: String,
+      default: "pending",
+      enum: ["pending", "completed"],
+    },
+
+    fromAdvertisement: {
+      type: Boolean,
+      default: false,
+    },
+
+    advertisementId: {
+      type: ObjectId,
+      ref: "Advertisement",
     },
 
     deletedAt: {

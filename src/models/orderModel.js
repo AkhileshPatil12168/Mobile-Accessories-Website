@@ -78,11 +78,12 @@ const orderSchema = new mongoose.Schema(
         
         paymentMethod: {
             type: String,
+            default:"cash on delivery",
             enum: ["cash on delivery", "razorpay"],
         },
+        
         paymentStatus: {
             type: String,
-            default:"pending",
             enum: ["pending", "completed"],
         },
         razorpayId: {
