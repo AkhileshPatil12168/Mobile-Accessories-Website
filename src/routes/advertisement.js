@@ -16,6 +16,6 @@ Router.put("/vendor/:vendorId/advertisement/:advertisementId",authentication,upd
 
 Router.put("/ad/:advertisementId",clickCountIncreser)
 Router.get("/advertisements/live",getLiveAdvertisement)
-Router.get("/test/ad",updateLiveAdvertisement)
+// Router.get("/test/ad",updateLiveAdvertisement)
 
 module.exports = Router;

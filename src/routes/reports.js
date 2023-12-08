@@ -11,11 +11,16 @@ const totalOrders = require("../controllers/reports/Orders/totalOrders");
 const ordersByStatus = require("../controllers/reports/Orders/ordersByStatus");
 const sellersAds = require("../controllers/reports/ads reports/sellerAds");
 const clicksPerAdsByDays = require("../controllers/reports/ads reports/clicksPerAd");
+const {userOrderHistory,userOrderedProductHistory} = require("../controllers/reports/user/ordersHistory");
 
 Router.get("/report/users/registered/",registeredUserData)
 Router.get("/report/users/spends/",spendAnalysisUsers)
 Router.get("/report/user/spends/",spendAnalysisUser)
 Router.get("/report/user/reviews/",getUserReviews)
+Router.get("/report/user/orders/",userOrderHistory)
+Router.get("/report/user/order/products/",userOrderedProductHistory)
+
+
 
 Router.get("/reports/vendor/products/selled/", selledProducts)
 Router.get("/reprots/vendor/products/inventory/", productInventory)
