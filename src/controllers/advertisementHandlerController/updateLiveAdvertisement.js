@@ -1,27 +1,55 @@
 const advertisementModel = require("../../models/advertisementModel");
+const { getTimeStamps } = require("../../utils/utilityFunctions");
 
-const updateLiveAdvertisement = async (req, res) => {
+const makeOnlineAdvertisement = async (req, res) => {
   try {
-    const date = new Date();
-    const fullDate = new Date(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`);
+    console.log("start");
+
+    const fullDate = getTimeStamps();
 
     const result = await advertisementModel
       .findOneAndUpdate(
         {
           startDate: fullDate,
           isLive: false,
-          paymentStatus:"completed",
-          isApproved:true
+          paymentStatus: "completed",
+          isApproved: true,
         },
         { $set: { isLive: true } },
         { new: true }
       )
       .select({ advertisementImage: 1 })
       .lean();
-return res.send(result)
-    console.log(result);
+      console.log(result);
+    console.log("ad is online now");
   } catch (error) {
-    return res.status(500).send({ status: false, message: error.message });
+    console.log({ status: false, message: error.message });
   }
 };
-module.exports = updateLiveAdvertisement;
+
+const makeOfflineAdvertisement = async () => {
+  try {
+    console.log("start");
+
+    const fullDate = getTimeStamps();
+
+    const result = await advertisementModel
+      .findOneAndUpdate(
+        {
+          endDate: fullDate,
+          isLive: true,
+
+        },
+        { $set: { isLive: false } },
+        { new: true }
+      )
+      .select({ advertisementImage: 1 })
+      .lean();
+      console.log(result);
+      console.log("ad is offline now");
+
+  } catch (error) {
+    console.log({ status: false, message: error.message });
+  }
+};
+module.exports = {makeOnlineAdvertisement,makeOfflineAdvertisement};

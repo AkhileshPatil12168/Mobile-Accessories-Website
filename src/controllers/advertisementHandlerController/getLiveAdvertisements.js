@@ -1,34 +1,22 @@
 const advertisementModel = require("../../models/advertisementModel");
-const productModel = require("../../models/productModel");
-const bcrypt = require("bcrypt");
-const {
-  emptyBody,
-  isValidImage,
-  isValidObjectId,
-  isValidAdvertisementType,
-  isValidDate,
-} = require("../../utils/validators");
-const uploadFile = require("../Amazom S3 Bucket/bucketController");
+const { getTimeStamps } = require("../../utils/utilityFunctions");
 
 const getLiveAdvertisement = async (req, res) => {
   try {
     const { type } = req.query;
 
-    // const targetDate = new Date("2023-12-12");
-
-    const date = new Date();
-    const fullDate = new Date(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`);
+    const fullDate = getTimeStamps();
 
     const result = await advertisementModel
       .findOne({
         startDate: { $lte: fullDate },
-        endDate: { $gt: fullDate },
+        endDate: { $gte: fullDate },
         advertisementType: type,
         isLive: true,
         paymentStatus: "completed",
         isApproved: true,
       })
-      .select({ advertisementImage: 1, productId:1 })
+      .select({ advertisementImage: 1, productId: 1 })
       .lean();
     return res.status(200).send(result);
   } catch (error) {

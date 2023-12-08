@@ -5,6 +5,7 @@ const multer = require("multer");
 const cron = require("node-cron");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const {makeOnlineAdvertisement,makeOfflineAdvertisement} = require("./controllers/advertisementHandlerController/updateLiveAdvertisement");
 require("dotenv").config();
 
 app.use(multer().any());
@@ -16,35 +17,38 @@ app.use(
     origin: ["https://camas.website", "http://localhost:3001"],
     credentials: true,
   })
-);
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
+  );
+  app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+  });
+  
+  // app.use(
+    //     cors({
+      //         // origin: process.env.iphoneHotspot+':'+process.env.forntEndPort ,    //iphone hotspot
+      //         // origin: 'http://'+process.env.laptopHostspot+':'+process.env.forntEndPort,    //laptop hotspot
+      //         // origin: process.env.homeRouter+':'+process.env.forntEndPort,        //home router
+      //         //origin: "http://localhost:3001",
+      //         origin: "https://mobileacc.onrender.com",
+      //        credentials: true,
+      
+      //         // origin:'http://192.168.1.11:3001'
+      //     })
+      // );
+      
+      const Router = require("./routes/routes");
+      
+      cron.schedule("0 0 0 * * *",makeOnlineAdvertisement);
 
-// app.use(
-//     cors({
-//         // origin: process.env.iphoneHotspot+':'+process.env.forntEndPort ,    //iphone hotspot
-//         // origin: 'http://'+process.env.laptopHostspot+':'+process.env.forntEndPort,    //laptop hotspot
-//         // origin: process.env.homeRouter+':'+process.env.forntEndPort,        //home router
-//         //origin: "http://localhost:3001",
-//         origin: "https://mobileacc.onrender.com",
-//        credentials: true,
-
-//         // origin:'http://192.168.1.11:3001'
-//     })
-// );
-
-const Router = require("./routes/routes");
-const updateLiveAdvertisement = require("./controllers/advertisementHandlerController/updateLiveAdvertisement");
-// cron.schedule("0 */1 * * * *", updateLiveAdvertisement);
-
+      cron.schedule("56 59 0 * * *",makeOfflineAdvertisement);
+      
+      
 app.use(express.json());
 app.use("/", Router);
 //mongodb+srv://akhileshpatil12168:********@mobileaccessoriesdata.joq9gxm.mongodb.net/
 mongoose
-  .connect(process.env.mongoClust, {
-    useNewUrlParser: true,
+.connect(process.env.mongoClust, {
+  useNewUrlParser: true,
   })
   .then(() => console.log("MongoDb is connected"))
   .catch((err) => console.log(err));
