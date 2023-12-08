@@ -63,6 +63,7 @@ import OrderByStatus from "./components/Body/reports/order reports/OrderStatus";
 import SellersTotalAds from "./components/Body/reports/advertisemet reports/SellerTotalAds";
 import AdsByApproved from "./components/Body/reports/advertisemet reports/AdsByApproved";
 import ClicksPerAdsByDays from "./components/Body/reports/advertisemet reports/ClicksPerAd";
+import OrderedProducts from "./components/Body/reports/user reports/userOrderedProducts";
 
 const AppLayout = () => {
     return (
@@ -127,7 +128,9 @@ const appRouter = createBrowserRouter([
             {path:"/sessions/users",element:<UserSessions/>},
             {path:"/registered/users",element:<RegisteredUsers/>},
             {path:"/spendigns/users",element:<UsersSpendings/>},
-            {path:"/spendigns/user/:userId",element:<UserOrders/>},
+            {path:"/users/orderes/",element:<UserOrders/>},
+            {path:"/users/order/:orderId/products",element:<OrderedProducts/>},
+
             {path:"/reviews/user/:userId",element:<UserReviews/>},
 
             {path:"/sessions/vendors/",element:<VendorSessions/>},

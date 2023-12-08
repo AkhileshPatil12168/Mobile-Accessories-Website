@@ -6,10 +6,10 @@ import timeConverter from "../../../../util/timeConverter";
 const SessionTable = ({ sessions }) => {
   const [filterUserType, setFilterUserType] = useState("All");
 
-  let filteredSessions 
-    filterUserType === "All"
-      ? sessions
-      : sessions.filter((session) => !session.isApproved?"No":"Yes" == filterUserType);
+  let filteredSessions =filterUserType === "All"
+  ? sessions
+  : sessions.filter((session) => !session.isApproved?"No":"Yes" == filterUserType);
+    
 
   const userTypes = ["All","Yes", "No"];
 
@@ -97,7 +97,7 @@ const AdsByApproved = () => {
       const responce = await axios.get(process.env.backendapi + "/reports/sellers/ads/", {
         withCredentials: true,
       });
-      setSessionsData(responce.data.data);
+      setSessionsData(responce?.data?.data);
     } catch (error) {
       console.log(error);
     }
