@@ -56,7 +56,10 @@ const updateOrderByVendor = async (req, res) => {
         };
         
 
-        if (status == "completed") updateData.deliveredDate = Date.now() + 19800000;
+        if (status == "completed") {
+          updateData.deliveredDate = Date.now() + 19800000;
+          updateData.paymentStatus = "completed";
+        }
         if (status == "cancelled") updateData.cancelledDate = Date.now() + 19800000;
         
         const updatedOrder = await orderedProductModel.findByIdAndUpdate(orderedProductId, updateData, { new: true });

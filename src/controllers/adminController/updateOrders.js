@@ -53,10 +53,14 @@ const updateOrderByAdmin = async (req, res) => {
                 .send({ status: false, message: "status can be only cancelled or completed" });
         let updateData = {
             OrderStatus: status,
+
         };
         
 
-        if (status == "completed") updateData.deliveredDate = Date.now() + 19800000;
+        if (status == "completed") {
+          updateData.deliveredDate = Date.now() + 19800000;
+          updateData.paymentStatus = "completed";
+        }
         if (status == "cancelled") updateData.cancelledDate = Date.now() + 19800000;
 
         const updatedOrder = await orderedProductModel.findByIdAndUpdate(orderedProductId, updateData, { new: true });
