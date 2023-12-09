@@ -36,6 +36,17 @@ const Product = (props) => {
       console.error(error);
     }
   }
+  const addToWishlist = async ()=>{
+    try {
+      const response = await axios.put( process.env.backendapi + `/user/${cUserId}/product/${id}/wishlist`,{},
+      { withCredentials: true })
+      console.log(response)
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
   async function addToCart() {
     try {
       if (!cUserId) navigate("/login");
@@ -192,7 +203,7 @@ const getReviews = async ()=>{
 
           {/* Add To wishlist and Add to cart */}
           <div className="flex flex-col md:flex-row mb-4">
-            <button
+            <button onClick={addToWishlist}
               className={`flex items-center justify-center ${lineThrough} ${cursor} text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2 md:w-1/2 md:mr-2`}
             >
                             <svg

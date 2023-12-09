@@ -62,12 +62,14 @@ console.log(item.productId._id)
           setColor("bg-gray-500");
         }
       }, [res]);
+      console.log(item)
+      useEffect(()=>{},[])
 
 
     return(
         <div  className="flex flex-wrap items-center border p-4 mb-4 mx-2">
           <img
-            src={item?.productId?.productImage[0]}
+            src={item?.productId?.productImage?item?.productId?.productImage[0]:null}
             alt={item?.productId?.title}
             className="w-24 h-24 mr-4"
           />
@@ -122,6 +124,7 @@ console.log(cUserId)
   useEffect(() => {
     
   }, [wishlistData]);
+  console.log(wishlistData)
   
   return (
     <div className="max-w-2xl mx-auto my-8">
