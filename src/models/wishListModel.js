@@ -14,6 +14,7 @@ let wishListSchema = new mongoose.Schema(
         productId: {
           type: objectId,
           ref: "product",
+          unique:true,
         },
         addedDate: {
           type: Date,
