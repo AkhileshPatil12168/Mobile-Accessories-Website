@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import noProfile from "../../images/noProfile.svg";
+import noProfile from "../../../images/noProfile.svg";
 
 const User = () => {
     const cookies = new Cookies();

@@ -2,7 +2,7 @@ import Cookies from "universal-cookie";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import timeConverter from "../../util/timeConverter";
+import timeConverter from "../../../util/timeConverter"; 
 
 const Items = (props) => {
     const { productImage, title, quantity, price, index } = props.orderedProductId;

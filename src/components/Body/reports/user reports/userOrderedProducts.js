@@ -19,8 +19,8 @@ const UserTable = ({ data }) => {
       <>
         <div className="container mx-auto p-4">
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Filter by User Id:</label>
-            <select
+            <label className="block text-sm font-medium text-gray-700">User Id: {}</label>
+            {/* <select
               className="mt-1 block w-full p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
               onChange={(e) => setFilterUserType(e.target.value)}
               value={filterUserType}
@@ -30,7 +30,7 @@ const UserTable = ({ data }) => {
                   {type}
                 </option>
               ))}
-            </select>
+            </select> */}
           </div>
         </div>
         <div className="container mx-auto p-4">

@@ -2,6 +2,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import timeConverter from "../../../../util/timeConverter";
 
+import { saveAs } from 'file-saver';
+import { exportToExcel, exportToPDF } from "../../../../util/pdfAndExcelConverterHook"; 
+
 const SessionTable = ({ sessions }) => {
   const [filterUserType, setFilterUserType] = useState("All");
 
@@ -257,9 +260,17 @@ const sessionsData = [
         "createdAt": "2023-11-28T13:11:06.051Z"
     }
 ]
+
+const handleExportPDF = () => {
+  exportToPDF(sessionsData);
+};
+
+const handleExportExcel = () => {
+  exportToExcel(sessionsData);
+};
   const getLoginLogoutSessions = async () => {
     try {
-      const responce = await axios.get(process.env.backendapi + "/report/sessions/?userType=Vendor", {
+      const responce = await axios.get(process.env.backendapi + "", {
         withCredentials: true,
       });
     //   setSessionsData(responce);
@@ -276,6 +287,20 @@ console.log(sessionsData)
   return (
     <div>
       <h1 className="text-center">Products</h1>
+      <div className="mb-4 text-center">
+        <button
+          className="bg-red-500 text-white p-2 px-4 mr-2"
+          onClick={handleExportPDF}
+        >
+          Export to PDF 
+        </button>
+        <button
+          className="bg-emerald-600 text-white p-2 px-4"
+          onClick={handleExportExcel}
+        >
+          Export to Excel
+        </button>
+      </div>
       <SessionTable sessions={sessionsData} />
     </div>
   );

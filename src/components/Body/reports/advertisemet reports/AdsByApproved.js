@@ -1,14 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import timeConverter from "../../../../util/timeConverter";
+import PdfAndExcelConverter from "../../../PDF and Excel converter/PdfAndExcelConverter";
 
 
 const SessionTable = ({ sessions }) => {
   const [filterUserType, setFilterUserType] = useState("All");
-
-  let filteredSessions =filterUserType === "All"
+console.log(filterUserType)
+  let filteredSessions =filterUserType == "All"
   ? sessions
-  : sessions.filter((session) => !session.isApproved?"No":"Yes" == filterUserType);
+  : sessions.filter((session) => !session.isApproved?"No"== filterUserType:"Yes" == filterUserType);
     
 
   const userTypes = ["All","Yes", "No"];
@@ -20,8 +21,7 @@ const SessionTable = ({ sessions }) => {
           <label className="block text-sm font-medium text-gray-700">Filter by vendor:</label>
           <select
             className="mt-1 block w-full p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-            onChange={(e) => {setFilterUserType(e.target.value)
-            console.log(e.target.value)}}
+            onChange={(e) => {setFilterUserType(e.target.value)}}
             value={filterUserType}
           >
             {userTypes.map((type, index) => (
@@ -108,10 +108,11 @@ const AdsByApproved = () => {
   }, []);
 
   return (
-    <div>
+    <>
       <h1>Your Sessions</h1>
+      <PdfAndExcelConverter data = {...sessionsData}/>
       <SessionTable sessions={sessionsData} />
-    </div>
+    </>
   );
 };
 

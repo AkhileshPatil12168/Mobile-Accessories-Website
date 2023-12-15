@@ -11,13 +11,13 @@ import Header from "./components/Header/Header";
 import Search from "./components/Body/Search";
 
 import Body from "./components/Body/Body";
-import Orders from "./components/Body/Orders";
-import Cart from "./components/Body/Cart";
+import Orders from "./components/Body/user/Orders";
+import Cart from "./components/Body/user/Cart";
 import Product from "./components/Body/getProduct";
 import Login from "./components/forms/Login";
 import Signup from "./components/forms/SignupForm";
 import VendorSignup from "./components/forms/VendorSignup";
-import User from "./components/Body/User";
+import User from "./components/Body/user/User";
 import ResetPassword from "./components/Body/ResetPassword";
 import ForgotPassword from "./components/forms/ForgotPassword";
 import Wishlist from "./components/Body/user/Wishlist";
@@ -25,14 +25,14 @@ import Wishlist from "./components/Body/user/Wishlist";
 
 import Footer from "./components/Footer/Footer";
 import ConnectUs from "./components/Body/ConnectUs";
-import CreateOrder from "./components/Body/CreateOrder";
-import Order from "./components/Body/Order";
-import Admin from "./components/Body/Admin";
-import AdminOrders from "./components/Body/AdminOrders";
-import AdminOrder from "./components/Body/AdminOrder";
-import AdminProducts from "./components/Body/AdminProducts";
+import CreateOrder from "./components/Body/user/CreateOrder";
+import Order from "./components/Body/user/Order";
+import Admin from "./components/Body/admin/Admin";
+import AdminOrders from "./components/Body/admin/AdminOrders";
+import AdminOrder from "./components/Body/admin/AdminOrder";
+import AdminProducts from "./components/Body/admin/AdminProducts";
 import CreateProduct from "./components/Body/vendor/VendorCreateProduct";
-import ProductDetails from "./components/Body/AdminProduct";
+import ProductDetails from "./components/Body/admin/AdminProduct";
 import AboutUs from "./components/Body/AboutUs";
 import TestCss from "./components/Test/TestCss";
 
@@ -64,6 +64,7 @@ import SellersTotalAds from "./components/Body/reports/advertisemet reports/Sell
 import AdsByApproved from "./components/Body/reports/advertisemet reports/AdsByApproved";
 import ClicksPerAdsByDays from "./components/Body/reports/advertisemet reports/ClicksPerAd";
 import OrderedProducts from "./components/Body/reports/user reports/userOrderedProducts";
+import ProductTable from "./components/Test/pdfConverter";
 
 const AppLayout = () => {
     return (
@@ -125,30 +126,35 @@ const appRouter = createBrowserRouter([
 
             {path:"/sessions/every",element:<Sessions/>},
 
-            {path:"/sessions/users",element:<UserSessions/>},
-            {path:"/registered/users",element:<RegisteredUsers/>},
-            {path:"/spendigns/users",element:<UsersSpendings/>},
-            {path:"/users/orderes/",element:<UserOrders/>},
-            {path:"/users/order/:orderId/products",element:<OrderedProducts/>},
+            //user
+            {path:"/report/sessions/users",element:<UserSessions/>},
+            {path:"/report/registered/users",element:<RegisteredUsers/>},
+            {path:"/report/spendigns/users",element:<UsersSpendings/>},
+            {path:"/report/users/orderes/",element:<UserOrders/>},
+            {path:"/report/users/order/:orderId/products",element:<OrderedProducts/>},
+            {path:"/report/reviews/user/:userId",element:<UserReviews/>},
 
-            {path:"/reviews/user/:userId",element:<UserReviews/>},
+            //vendor
+            {path:"/report/sessions/vendors/",element:<VendorSessions/>},
+            {path:"/report/orders/vendor/", element:<VendorOrders/>},
+            {path:"/report/vendor/products/:vendorId",element:<ProductInventory/>},
 
-            {path:"/sessions/vendors/",element:<VendorSessions/>},
-            {path:"/orders/vendor/:vendorId/", element:<VendorOrders/>},
-            {path:"/vendor/products/:vendorId",element:<ProductInventory/>},
+            //Orders
+            {path:"/report/orders/total",element:<TotalOrders/> },
+            {path:"/report/orders/by/status", element:<OrderByStatus/>},
 
-            {path:"/orders/total",element:<TotalOrders/> },
-            {path:"/orders/by/status", element:<OrderByStatus/>},
-
-            {path:"/total/advertisements/",element:<SellersTotalAds/>,},
-            {path:"/advertisement/byaprroved/", element:<AdsByApproved/>},
-            {path:"/advertisement/:advertisementId/clicks",element:<ClicksPerAdsByDays/>},
+            //advertisement
+            {path:"/report/total/advertisements/",element:<SellersTotalAds/>,},
+            {path:"/report/advertisement/byaprroved/", element:<AdsByApproved/>},
+            {path:"/report/advertisements/clicks",element:<ClicksPerAdsByDays/>},
 
 
 
             { path: "/testcss", element: <TestCss /> },
 
-            {path: "/testcomp", element: <TestComp />} 
+            {path: "/testcomp", element: <TestComp />},
+            {path: "/testpdf", element: <ProductTable />} 
+
         ],
     },
 ]);

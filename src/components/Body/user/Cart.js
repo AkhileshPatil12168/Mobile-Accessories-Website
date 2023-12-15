@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import Cookies from "universal-cookie";
-import Loading from "../../animation/loading";
+import Loading from "../../../animation/loading";
 
 const Items = (props) => {
   const {

@@ -1,92 +1,93 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import timeConverter from "../../../../util/timeConverter";
 
 const UserTable = ({ data }) => {
-  return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center">OverAll Orders</h1>
-      
-      <div className="container mx-auto p-4">
-       
+  const [filterAdId, setFilterAdId] = useState("All");
+console.log(filterAdId)
+  const filteredData =
+    filterAdId === "All"
+      ? data
+      : data.filter((ad) => ad.advertisementId === filterAdId);
+
+  const AdIds = ["All",...new Set(data.map(ad=>ad.advertisementId))];
+
+  return (<>
+   <div className="container mx-auto p-4">
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Filter by Advertisement:</label>
+          <select
+            className="mt-1 block w-full p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+            onChange={(e) => setFilterAdId(e.target.value)}
+            value={filterAdId}
+          >
+            {AdIds.map((type, index) => (
+              <option key={index} value={type}>
+                {type}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4 text-center">OverAll Advertisement Days</h1>
+
+      <div className="container mx-auto p-4"></div>
 
       <div className="container mx-auto p-4">
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-300">
             <thead className="bg-indigo-500 text-white">
-            <tr>
-              <th className="border p-2">Order ID</th>
-              <th className="border p-2">Advertisement Id</th>
-              <th className="border p-2">Date</th>
-              <th className="border p-2">clicks Per Day</th>
-
-           
-
-            </tr>
+              <tr>
+                <th className="border p-2">Order ID</th>
+                <th className="border p-2">Advertisement Id</th>
+                <th className="border p-2">Date</th>
+                <th className="border p-2">clicks Per Day</th>
+              </tr>
             </thead>
             <tbody>
-            {data.map((user) => (
-              <tr key={user.userId}>
-                <td className="border p-2 text-center">{user._id}</td>
-                <td className="border p-2 text-center">{user.advertisementId}</td>
-              
-                <td className="border p-2 text-center">{user.date.slice(0, 10) +
-                      " / " +
-                      timeConverter(user.date.slice(11, 16))}</td>
-                
+              {filteredData.map((user) => (
+                <tr key={user.userId}>
+                  <td className="border p-2 text-center">{user._id}</td>
+                  <td className="border p-2 text-center">{user.advertisementId}</td>
 
-                <td className="border p-2 text-center">{user.clicks}</td>
-              </tr>
-            ))}
+                  <td className="border p-2 text-center">{user.date.slice(0, 10)}</td>
+
+                  <td className="border p-2 text-center">{user.clicks}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
       </div>
-    
-    
-    </div>
-    
+    </div></>
   );
 };
 
 const ClicksPerAdsByDays = () => {
-  const data =   [
-    {
-        "_id": "656602a540c5ef6a7f2168d2",
-        "advertisementId": "65635ee8c5483535a5facb04",
-        "date": "2023-11-28T00:00:00.000Z",
-        "__v": 0,
-        "clicks": 12,
-        "createdAt": "2023-11-28T15:09:26.498Z",
-        "updatedAt": "2023-11-28T17:03:42.564Z"
-    },
-    {
-        "_id": "6566e7484ca7a3d75156856f",
-        "advertisementId": "65635ee8c5483535a5facb04",
-        "date": "2023-11-29T00:00:00.000Z",
-        "__v": 0,
-        "clicks": 23,
-        "createdAt": "2023-11-29T07:24:58.111Z",
-        "updatedAt": "2023-11-29T15:53:57.425Z"
-    },
-    {
-        "_id": "6567ff184ca7a3d7515b7e16",
-        "advertisementId": "65635ee8c5483535a5facb04",
-        "date": "2023-11-30T00:00:00.000Z",
-        "__v": 0,
-        "clicks": 1,
-        "createdAt": "2023-11-30T03:17:51.900Z",
-        "updatedAt": "2023-11-30T03:17:51.900Z"
-    }
-]
-console.log(data)
+ 
+  const [sessionsData, setSessionsData] = useState([]);
 
+  const getLoginLogoutSessions = async () => {
+    try {
+      const responce = await axios.get(process.env.backendapi + "/ads/clicks/", {
+        withCredentials: true,
+      });
+      setSessionsData(responce?.data?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getLoginLogoutSessions();
+  }, []);
+console.log(sessionsData)
   return (
     <div>
-      <UserTable data={data} />
+      <UserTable data={sessionsData} />
     </div>
   );
 };
 
-
-export default ClicksPerAdsByDays
+export default ClicksPerAdsByDays;
