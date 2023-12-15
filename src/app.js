@@ -46,7 +46,7 @@ import Advertisements from "./components/Body/vendor/Advertisements";
 import Advertisement from "./components/Body/vendor/Advertisement";
 import Userlist from "./components/Body/Admin/Userlist";
 
-import Sessions from "./components/Body/reports/LoginLogoutSessions";
+import Sessions from "./components/Body/reports/admin reports/LoginLogoutSessions";
 import UserSessions from "./components/Body/reports/user reports/userSessions";
 import RegisteredUsers from "./components/Body/reports/user reports/registeredUsers";
 import UsersSpendings from "./components/Body/reports/user reports/usersSpendings";
@@ -116,7 +116,7 @@ const appRouter = createBrowserRouter([
             { path: "/vendor/advertisement", element: <Advertisement /> }, 
 
 
-
+            //admin
             { path: "/admin/products/summery", element: <AdminProducts /> },
             { path: "/admin/users", element: <Userlist /> },
 
@@ -142,6 +142,9 @@ const appRouter = createBrowserRouter([
             //Orders
             {path:"/report/orders/total",element:<TotalOrders/> },
             {path:"/report/orders/by/status", element:<OrderByStatus/>},
+            {path:"/report/orders/:orderId/products",element:<OrderedProducts/>},
+            {path:"/report/orderes/",element:<UserOrders/>},
+
 
             //advertisement
             {path:"/report/total/advertisements/",element:<SellersTotalAds/>,},

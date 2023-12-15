@@ -1,10 +1,11 @@
 import React from "react";
+import PdfAndExcelConverter from "../../../PDF and Excel converter/PdfAndExcelConverter";
 
 const UserTable = ({ data }) => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4 text-center">Users Spendings Information</h1>
-      
+      <PdfAndExcelConverter/>
       <div className="container mx-auto p-4">
        
       </div>

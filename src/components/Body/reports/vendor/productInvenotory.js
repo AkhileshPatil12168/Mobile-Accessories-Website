@@ -286,7 +286,9 @@ const handleExportExcel = () => {
 console.log(sessionsData)
   return (
     <div>
-      <h1 className="text-center">Products</h1>
+      <h1 className="text-2xl font-bold mb-4 text-center">My Products</h1>
+
+      
       <div className="mb-4 text-center">
         <button
           className="bg-red-500 text-white p-2 px-4 mr-2"

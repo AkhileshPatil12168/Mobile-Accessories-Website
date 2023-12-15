@@ -16,7 +16,7 @@ const SessionTable = ({ sessions }) => {
     <>
       <div className="container mx-auto p-4">
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Filter by User Type:</label>
+          <label className="block text-sm font-medium text-gray-700">Filter by Order Status:</label>
           <select
             className="mt-1 block w-full p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
             onChange={(e) => setFilterUserType(e.target.value)}
@@ -99,7 +99,8 @@ const OrderByStatus = () => {
 
   return (
     <div>
-      <h1>Your Sessions</h1>
+            <h1 className="text-2xl font-bold mb-4 text-center">Orders By Status</h1>
+
       <SessionTable sessions={sessionsData} />
     </div>
   );

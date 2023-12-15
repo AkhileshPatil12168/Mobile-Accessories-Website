@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import timeConverter from "../../../../util/timeConverter";
+import PdfAndExcelConverter from "../../../PDF and Excel converter/PdfAndExcelConverter";
 
 const SessionTable = ({ sessions }) => {
   const [filterOption, setFilterOption] = useState("All");
@@ -42,9 +43,11 @@ const SessionTable = ({ sessions }) => {
   return (
     <>
       <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4 text-center">Merchant Orders</h1>
+
         <div className="mb-4 flex">
           <div className="mr-4">
-            <label className="block text-sm font-medium text-gray-700">Filter by vendor ID:</label>
+            <label className="block text-sm font-medium text-gray-700">Filter by merchant ID:</label>
             <select
               className="mt-1 block w-full p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
               onChange={filter}
@@ -104,6 +107,8 @@ const SessionTable = ({ sessions }) => {
             </select>
           </div>
         </div>
+        <PdfAndExcelConverter/>
+
       </div>
       <div className="container mx-auto p-4">
         <div className="overflow-x-auto">
@@ -111,7 +116,7 @@ const SessionTable = ({ sessions }) => {
             <thead className="bg-indigo-500 text-white">
               <tr>
                 <th className="py-2 px-4 border-b border-r text-center">Order ID</th>
-                <th className="py-2 px-4 border-b border-r text-center">Vendor ID</th>
+                <th className="py-2 px-4 border-b border-r text-center">Merchant ID</th>
 
                 <th className="py-2 px-4 border-b border-r text-center">User ID</th>
                 <th className="py-2 px-4 border-b border-r text-center">Product ID</th>
@@ -230,7 +235,7 @@ const VendorOrders = () => {
   console.log(sessionsData);
   return (
     <div>
-      <h1 className="text-center">Orders</h1>
+    
       <SessionTable sessions={sessionsData} />
     </div>
   );

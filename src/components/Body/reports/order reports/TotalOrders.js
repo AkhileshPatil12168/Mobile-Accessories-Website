@@ -1,14 +1,13 @@
 import React from "react";
 import timeConverter from "../../../../util/timeConverter";
+import PdfAndExcelConverter from "../../../PDF and Excel converter/PdfAndExcelConverter";
 
 const UserTable = ({ data }) => {
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center">OverAll Orders</h1>
+      <h1 className="text-2xl font-bold mb-4 text-center">Overall Orders</h1>
       
-      <div className="container mx-auto p-4">
-       
-      </div>
+    <PdfAndExcelConverter/>
 
       <div className="container mx-auto p-4">
         <div className="overflow-x-auto">

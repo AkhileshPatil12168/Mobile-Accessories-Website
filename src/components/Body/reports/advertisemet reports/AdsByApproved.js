@@ -18,7 +18,7 @@ console.log(filterUserType)
     <>
       <div className="container mx-auto p-4">
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Filter by vendor:</label>
+          <label className="block text-sm font-medium text-gray-700">Filter by Approved Status:</label>
           <select
             className="mt-1 block w-full p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
             onChange={(e) => {setFilterUserType(e.target.value)}}
@@ -30,6 +30,8 @@ console.log(filterUserType)
               </option>
             ))}
           </select>
+      <PdfAndExcelConverter />
+
         </div>
       </div>
       <div className="container mx-auto p-4">
@@ -109,8 +111,8 @@ const AdsByApproved = () => {
 
   return (
     <>
-      <h1>Your Sessions</h1>
-      <PdfAndExcelConverter data = {...sessionsData}/>
+                 <h1 className="text-2xl font-bold mb-4 text-center">Advertisement by Status</h1>
+
       <SessionTable sessions={sessionsData} />
     </>
   );

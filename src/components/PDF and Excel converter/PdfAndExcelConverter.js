@@ -2,19 +2,19 @@ import { exportToExcel, exportToPDF } from "../../util/pdfAndExcelConverterHook"
 
 
 
-const PdfAndExcelConverter = ({data}) => {
+const PdfAndExcelConverter = ({data,tableColumn}) => {
   const handleExportPDF = () => {
-    exportToPDF(data);
+    console.log(data)
+    exportToPDF(data,tableColumn);
   };
 
   const handleExportExcel = () => {
-    exportToExcel(data);
+    exportToExcel(data,tableColumn);
   };
   return (
     <>
-      <h1 className="text-center">Products</h1>
-      <div className="mb-4 text-center">
-        <button className="bg-red-500 text-white p-2 px-4 mr-2" onClick={handleExportPDF}>
+      <div className="mb-4 text-center mt-6">
+        <button className="bg-red-500 text-white p-2 px-4 mr-4" onClick={handleExportPDF}>
           Export to PDF
         </button>
         <button className="bg-emerald-600 text-white p-2 px-4" onClick={handleExportExcel}>

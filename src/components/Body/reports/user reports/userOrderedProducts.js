@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import timeConverter from "../../../../util/timeConverter";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import PdfAndExcelConverter from "../../../PDF and Excel converter/PdfAndExcelConverter";
 
 const UserTable = ({ data }) => {
   
@@ -19,7 +20,12 @@ const UserTable = ({ data }) => {
       <>
         <div className="container mx-auto p-4">
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">User Id: {}</label>
+      <h1 className="text-2xl font-bold mb-4 text-center">Order Information</h1>
+
+
+           
+            <label className="block text-center font-medium text-gray-700 text-xl">Order Id: 655a6f907e99e60bb553b3fe</label>
+           <PdfAndExcelConverter/>
             {/* <select
               className="mt-1 block w-full p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
               onChange={(e) => setFilterUserType(e.target.value)}
@@ -86,7 +92,7 @@ const UserTable = ({ data }) => {
   
 };
 
-const OrderedProducts = () => {
+const   OrderedProducts = () => {
     const {orderId} = useParams()
     console.log(orderId)
     const ordersData =[

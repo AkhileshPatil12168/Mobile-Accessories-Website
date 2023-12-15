@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import timeConverter from "../../../util/timeConverter";
+import timeConverter from "../../../../util/timeConverter";
+import PdfAndExcelConverter from "../../../PDF and Excel converter/PdfAndExcelConverter";
 
 const SessionTable = ({ sessions }) => {
   const [filterUserType, setFilterUserType] = useState("All");
@@ -28,6 +29,7 @@ const SessionTable = ({ sessions }) => {
               </option>
             ))}
           </select>
+          <PdfAndExcelConverter/>
         </div>
       </div>
       <div className="container mx-auto p-4">
@@ -99,7 +101,8 @@ const Sessions = () => {
 
   return (
     <div>
-      <h1>Your Sessions</h1>
+                  <h1 className="text-2xl font-bold mb-4 text-center">Sessions</h1>
+
       <SessionTable sessions={sessionsData} />
     </div>
   );

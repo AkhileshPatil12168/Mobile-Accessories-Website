@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import timeConverter from "../../../../util/timeConverter";
+import PdfAndExcelConverter from "../../../PDF and Excel converter/PdfAndExcelConverter";
 
 const SessionTable = ({ sessions }) => {
   const [filterUserType, setFilterUserType] = useState("All");
@@ -15,8 +16,10 @@ const SessionTable = ({ sessions }) => {
   return (
     <>
       <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4 text-center">Merchant Sessions</h1>
+
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Filter by Vendor ID:</label>
+          <label className="block text-sm font-medium text-gray-700">Filter by Merchant ID:</label>
           <select
             className="mt-1 block w-full p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
             onChange={(e) => setFilterUserType(e.target.value)}
@@ -28,6 +31,7 @@ const SessionTable = ({ sessions }) => {
               </option>
             ))}
           </select>
+          <PdfAndExcelConverter/>
         </div>
       </div>
       <div className="container mx-auto p-4">
@@ -37,7 +41,7 @@ const SessionTable = ({ sessions }) => {
               <tr>
                 <th className="py-2 px-4 border-b border-r text-center">Session ID</th>
 
-                <th className="py-2 px-4 border-b border-r text-center">ID</th>
+                <th className="py-2 px-4 border-b border-r text-center">Merchant ID</th>
                 <th className="py-2 px-4 border-b border-r text-center">Login Time</th>
                 <th className="py-2 px-4 border-b border-r text-center">Logout Time</th>
               </tr>
@@ -147,7 +151,6 @@ const VendorSessions = () => {
 
   return (
     <div>
-      <h1>Your Sessions</h1>
       <SessionTable sessions={sessionsData} />
     </div>
   );

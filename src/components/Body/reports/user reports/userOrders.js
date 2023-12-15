@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import timeConverter from "../../../../util/timeConverter";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import PdfAndExcelConverter from "../../../PDF and Excel converter/PdfAndExcelConverter";
 
 const UserTable = ({ data }) => {
   const [filterUserType, setFilterUserType] = useState("All");
@@ -14,8 +15,10 @@ const UserTable = ({ data }) => {
   return (
     <>
       <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4 text-center">Orders</h1>
+
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Filter by Order Id:</label>
+          <label className="block text-sm font-medium text-gray-700">Filter by User Id:</label>
           <select
             className="mt-1 block w-full p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
             onChange={(e) => setFilterUserType(e.target.value)}
@@ -27,6 +30,7 @@ const UserTable = ({ data }) => {
               </option>
             ))}
           </select>
+          <PdfAndExcelConverter/>
         </div>
       </div>
       <div className="container mx-auto p-4">
@@ -50,7 +54,7 @@ const UserTable = ({ data }) => {
                   <td className="py-2 px-4 border-b border-r text-center">{session.userId}</td>
                   <td className="py-2 px-4 border-b border-r text-center">{session.name}</td>
                  
-                    <td className="py-2 px-4 border-b border-r text-center text-purple-500 underline"> <Link to={`/users/order/${session._id}/products`}>{session._id} </Link></td>
+                    <td className="py-2 px-4 border-b border-r text-center text-purple-500 underline"> <Link to={`/report/users/order/${session._id}/products`}>{session._id} </Link></td>
                  
                   <td className="py-2 px-4 border-b border-r text-center">{session.totalPrice}</td>
                   <td className="py-2 px-4 border-b border-r text-center">{session.totalItems}</td>

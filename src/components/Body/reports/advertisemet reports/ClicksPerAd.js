@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import timeConverter from "../../../../util/timeConverter";
+import PdfAndExcelConverter from "../../../PDF and Excel converter/PdfAndExcelConverter";
 
 const UserTable = ({ data }) => {
   const [filterAdId, setFilterAdId] = useState("All");
@@ -14,8 +15,8 @@ console.log(filterAdId)
 
   return (<>
    <div className="container mx-auto p-4">
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Filter by Advertisement:</label>
+          <label className="block text-sm font-medium text-gray-700">Filter by Advertisement ID:</label>
+        <div className="mb-2 ">
           <select
             className="mt-1 block w-full p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
             onChange={(e) => setFilterAdId(e.target.value)}
@@ -28,13 +29,12 @@ console.log(filterAdId)
             ))}
           </select>
         </div>
+          <PdfAndExcelConverter data={...data} />
       </div>
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center">OverAll Advertisement Days</h1>
+  
 
-      <div className="container mx-auto p-4"></div>
-
-      <div className="container mx-auto p-4">
+     
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-300">
             <thead className="bg-indigo-500 text-white">
@@ -58,7 +58,7 @@ console.log(filterAdId)
               ))}
             </tbody>
           </table>
-        </div>
+    
       </div>
     </div></>
   );
@@ -85,6 +85,8 @@ const ClicksPerAdsByDays = () => {
 console.log(sessionsData)
   return (
     <div>
+      <h1 className="text-2xl font-bold mb-4 text-center">Advertisements Clicks</h1>
+
       <UserTable data={sessionsData} />
     </div>
   );

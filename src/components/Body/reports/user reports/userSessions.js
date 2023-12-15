@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import timeConverter from "../../../../util/timeConverter";
+import PdfAndExcelConverter from "../../../PDF and Excel converter/PdfAndExcelConverter";
+
 
 const SessionTable = ({ sessions }) => {
   const [filterUserType, setFilterUserType] = useState("All");
@@ -28,6 +30,8 @@ const SessionTable = ({ sessions }) => {
               </option>
             ))}
           </select>
+      <PdfAndExcelConverter data={...sessions} tableColumn={...['Session ID',"ID",'Login Time','Logout Time']}/>
+
         </div>
       </div>
       <div className="container mx-auto p-4">
@@ -65,7 +69,7 @@ const SessionTable = ({ sessions }) => {
           </table>
         </div>
       </div>
-      );
+      
     </>
   );
 };
@@ -92,7 +96,8 @@ const UserSessions = () => {
 
   return (
     <div>
-      <h1>Your Sessions</h1>
+      <h1 className="text-2xl font-bold mb-4 text-center">User Sessions</h1>
+      
       <SessionTable sessions={sessionsData} />
     </div>
   );

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import timeConverter from "../../../../util/timeConverter";
+import PdfAndExcelConverter from "../../../PDF and Excel converter/PdfAndExcelConverter";
 
 const Table = ({ sessions }) => {
 //   const [filterUserType, setFilterUserType] = useState("All");
@@ -14,7 +15,7 @@ console.log(sessions)
 // return (<></>)
   return (
     <>
-      <div className="container mx-auto p-4">
+      <div >
         <div className="mb-4">
           {/* <label className="block text-sm font-medium text-gray-700">Filter by User user ID:</label> */}
           {/* <select
@@ -30,7 +31,7 @@ console.log(sessions)
           </select> */}
         </div>
       </div>
-
+<PdfAndExcelConverter/>
       <div className="container mx-auto p-4">
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-300">
@@ -94,7 +95,8 @@ const RegisteredUsers = () => {
 
   return (
     <div>
-      <h1 className="text-center">Registered Users</h1>
+            <h1 className="text-2xl font-bold mb-4 text-center">Registered User</h1>
+
       <Table sessions={sessionsData} />
     </div>
   );

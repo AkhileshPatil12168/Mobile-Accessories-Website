@@ -3,10 +3,11 @@ import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
 
-export const exportToPDF = (data) => {
+export const exportToPDF = (data,tableColumn) => {
   const pdf = new jsPDF();
-  const tableColumn = ['product Id','title','price','category', 'free shipping','available quantity','created date']
-  const tableRows = data.map((item)=> Object.values({...item,createdAt:item.createdAt.slice(0,10)}));
+  console.log(data)
+  //  tableColumn = ['product Id','title','price','category', 'free shipping','available quantity','created date']
+  const tableRows = data.map((item)=> Object.values(item));
 // console.log(data.map((item)=> Object.values({...item,createdAt:item.createdAt.slice(0,10)})))
   pdf.autoTable({
     head: [tableColumn],
@@ -34,7 +35,7 @@ export const exportToPDF = (data) => {
   pdf.save('products.pdf');
 };
 
-export const exportToExcel = (data) => {
+export const exportToExcel = (data,tableColumn) => {
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Products');
