@@ -7,6 +7,13 @@ const clickCountIncreser = async (req, res) => {
     let date = new Date();
     const fullDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
+    // res.cookie(user.roleRef, `${user.originalId}`, {
+    //   expires: new Date(Date.now() + 60 * 60 * 24 * 1000),
+    //   sameSite: "none",
+    //   secure: true,
+    //   domain: process.env.domain,
+    // });
+    
     const increaseClicks = await advertisementClicksByDaysModel
       .findOneAndUpdate(
         { advertisementId, date: new Date(fullDate) },

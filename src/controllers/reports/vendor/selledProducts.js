@@ -6,7 +6,7 @@
 
         const data = await orderedProductModel
         .find(type)
-        .select({userId:1, prductId:1, quantity:1, totalPrice:1, OrderStatus:1,deliveredDate:1}).sort({loginTime:-1}).lean();
+        .select({userId:1,OrderStatus:1,vendorId:1, productId:1, quantity:1, totalPrice:1, OrderStatus:1,deliveredDate:1}).sort({createdAt:-1}).lean();
         return res.status(200).send({ status: false, message: "successfull", data: data });
     } catch (error) {
         return res.status(500).send({ status: false, data: error.message });

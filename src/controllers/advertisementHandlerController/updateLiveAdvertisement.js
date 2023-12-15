@@ -32,6 +32,7 @@ const makeOfflineAdvertisement = async () => {
     console.log("start");
 
     const fullDate = getTimeStamps();
+    console.log(fullDate)
 
     const result = await advertisementModel
       .findOneAndUpdate(

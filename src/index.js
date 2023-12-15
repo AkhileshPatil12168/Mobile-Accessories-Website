@@ -38,9 +38,9 @@ app.use(
       
       const Router = require("./routes/routes");
       
-      cron.schedule("0 0 0 * * *",makeOnlineAdvertisement);
+      cron.schedule("0 0 0 * * *",()=>makeOnlineAdvertisement());
 
-      cron.schedule("56 59 0 * * *",makeOfflineAdvertisement);
+      cron.schedule("56 59 23 * * *",()=>makeOfflineAdvertisement());
       
       
 app.use(express.json());
