@@ -65,6 +65,9 @@ import AdsByApproved from "./components/Body/reports/advertisemet reports/AdsByA
 import ClicksPerAdsByDays from "./components/Body/reports/advertisemet reports/ClicksPerAd";
 import OrderedProducts from "./components/Body/reports/user reports/userOrderedProducts";
 import ProductTable from "./components/Test/pdfConverter";
+import DeletedAccounts from "./components/Body/reports/admin reports/DeletedAccounts";
+import LastProfileUpdate from "./components/Body/reports/admin reports/LastProfileUpdate";
+import AdvertisementForm from "./components/Body/advertisement/CreateAdvertisement";
 
 const AppLayout = () => {
     return (
@@ -114,17 +117,19 @@ const appRouter = createBrowserRouter([
             { path: "/vendor/product/:productId", element: <VendorProductDetailsPage /> }, 
             { path: "/vendor/advertisements", element: <Advertisements /> }, 
             { path: "/vendor/advertisement", element: <Advertisement /> }, 
+            { path: "/vendor/create/advertisement", element: <AdvertisementForm /> }, 
+
 
 
             //admin
             { path: "/admin/products/summery", element: <AdminProducts /> },
             { path: "/admin/users", element: <Userlist /> },
-
             { path: "/admin/product/:productId", element: <ProductDetails /> },
-
             { path: "/vendor", element: <VendorHomePage /> },
+            {path:"/report/sessions/every",element:<Sessions/>},
+            {path:"/report/accounts/deleted",element:<DeletedAccounts/>},
+            {path:"/report/porfile/lastupdate",element:<LastProfileUpdate/>},
 
-            {path:"/sessions/every",element:<Sessions/>},
 
             //user
             {path:"/report/sessions/users",element:<UserSessions/>},

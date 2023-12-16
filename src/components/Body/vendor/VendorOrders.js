@@ -32,7 +32,7 @@ const VendorOrdersPage = () => {
   ) : (
     <div className="max-w-4xl mx-auto bg-white p-8 my-8 rounded-md">
       <h2 className="mb-4 text-2xl md:text-4xl lg:text-5xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white border-gray-500">
-        Vendor Orders
+        Merchant Orders
       </h2>
       <div className="mb-4">
         {orders.map((order) => (
