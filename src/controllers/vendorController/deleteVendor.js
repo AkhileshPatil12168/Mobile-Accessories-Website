@@ -26,7 +26,7 @@ const deleteVendor = async (req, res) => {
 
         let { password } = data;
 
-        let user = await userModel.findById(userId).lean();
+        let user = await vendorModel.findById(userId).lean();
         if (!user || user.isDeleted == true)
             return res.status(400).send({ status: false, message: "User not Exist" });
 
