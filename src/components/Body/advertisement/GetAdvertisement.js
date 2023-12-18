@@ -22,8 +22,8 @@ const Advertisement = () => {
   };
   const handleCount = async () => {
     try {
-      await axios.put(process.env.backendapi + "/ad/" + advertisementData._id);
-      navigate(`/product/${advertisementData.productId}`);
+      await axios.put(process.env.backendapi + "/ad/" + advertisementData?.data?._id);
+      navigate(`/product/${advertisementData?.data?._id}`);
     } catch (error) {
       console.log(error);
     }
@@ -32,12 +32,13 @@ const Advertisement = () => {
     getAdvertisement();
   }, []);
   return (
+    advertisementData.status?
     <div className="flex justify-center cursor-pointer mb-4" onClick={handleCount}>
       <img
         className="h-60 bg-gradient-to-r  from-cyan-500 to-blue-500 mx-7 rounded"
-        src={advertisementData.advertisementImage}
+        src={advertisementData?.data?.advertisementImage}
       ></img>
-    </div>
+    </div>:<></>
   );
 };
 
