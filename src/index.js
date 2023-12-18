@@ -14,7 +14,7 @@ app.use(cookieParser());
 app.use(
   "*",
   cors({
-    origin: ["https://camas.website", "http://localhost:3001"],
+    origin: ["https://camas.website", "http://localhost:3001","https://sdbg7nhh-3001.inc1.devtunnels.ms"],
     credentials: true,
   })
   );
