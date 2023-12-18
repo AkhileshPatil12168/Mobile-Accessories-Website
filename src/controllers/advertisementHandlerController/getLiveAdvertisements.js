@@ -18,7 +18,11 @@ const getLiveAdvertisement = async (req, res) => {
       })
       .select({ advertisementImage: 1, productId: 1 })
       .lean();
-    return res.status(200).send(result);
+      if(!result)
+    return res.status(400).send({ status: false, message: "no advertisement available" });
+
+    return res.status(200).send({ status: true, data:result });
+
   } catch (error) {
     return res.status(500).send({ status: false, message: error.message });
   }
