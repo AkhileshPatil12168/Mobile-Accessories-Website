@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 
 const orderModel = require("../../models/orderModel");
+const orderedProductModel = require("../../models/orderedProductsModel")
 
 const { isValidObjectId } = require("../../utils/validators");
 
@@ -27,24 +28,33 @@ const deleteOrder = async (req, res) => {
             return res.status(403).send({ status: false, message: "please login again" });
 
         const orderStatus = await orderModel
-            .findById(orderId, { isDeleted: false })
-            .select({ status: 1 })
-            .lean();
-        if (orderStatus.status == "pending")
+          .findById(orderId, { isDeleted: false })
+          .populate({ path: "items.orderedProductId", select: "OrderStatus" })
+          .select({ items: 1 })
+          .lean();
+        // console.log(orderStatus.items)
+
+        for (const { orderedProductId } of orderStatus.items) {
+          if (orderedProductId.OrderStatus == "pending")
             return res
-                .status(400)
-                .send({ status: false, message: "this order can not be deleted" });
+              .status(400)
+              .send({ status: false, message: "this order can not be deleted" });
+        }
 
                 let updateData = {
-                    isDeleted: true 
+                    isDeleted: true ,
+                    deletedAt : (Date.now() + 19800000)
                 };
-                updateData.deletedAt = Date.now() + 19800000;
-
         let deletedOrder = await orderModel.findByIdAndUpdate(
             orderId,
             updateData,
             { new: true }
-        );
+        ).lean();
+
+        for (const { orderedProductId } of deletedOrder.items) {
+          await orderedProductModel.findByIdAndUpdate(orderedProductId, updateData);
+        }
+   
 
         return res.status(204).send({ status: true, message: "order is deleted", data: deletedOrder });
     } catch (error) {

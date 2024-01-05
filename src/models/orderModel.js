@@ -14,9 +14,9 @@ const orderSchema = new mongoose.Schema(
             trim: true,
         },
         phone: {
-          type: String,
-          required: true,
-          trim: true,
+            type: String,
+            required: true,
+            trim: true,
         },
         email: {
             type: String,
@@ -54,18 +54,10 @@ const orderSchema = new mongoose.Schema(
             },
         },
         items: [
-            {
-                productId: {
-                    type: ObjectId,
-                    ref: "product",
-                },
-                quantity: {
-                    type: Number,
-                },
-                title: { type: String },
-                price: { type: Number },
-                productImage: [],
-            },
+            {orderedProductId:{
+                type:ObjectId,
+                ref:"Ordered_products"
+            }}
         ],
         totalPrice: {
             type: Number,
@@ -80,23 +72,30 @@ const orderSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
-        orderdedDate : {
-            type : Date
+        orderdedDate: {
+            type: Date,
         },
-        deliveredDate :{
-            type:Date
-        },
-        cancelledDate :{
-            type:Date
-        },
-        cancellable: {
-            type: Boolean,
-            default: true,
-        },
-        status: {
+        
+        paymentMethod: {
             type: String,
-            default: "pending",
-            enum: ["pending", "completed", "cancelled"],
+            default:"cash on delivery",
+            enum: ["cash on delivery", "razorpay"],
+        },
+        
+        paymentStatus: {
+            type: String,
+            enum: ["pending", "completed"],
+        },
+        razorpayId: {
+            razorpay_payment_id: {
+                type: String,
+            },
+            razorpay_order_id: {
+                type: String,
+            },
+            razorpay_signature: {
+                type: String,
+            },
         },
 
         deletedAt: {

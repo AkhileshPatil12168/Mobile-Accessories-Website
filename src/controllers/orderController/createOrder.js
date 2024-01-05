@@ -4,6 +4,7 @@ const userModel = require("../../models/userModel");
 const cartModel = require("../../models/cartModel");
 const orderModel = require("../../models/orderModel");
 const productModel = require("../../models/productModel");
+const orderedProductModel = require("../../models/orderedProductsModel")
 
 const {
     emptyBody,
@@ -204,7 +205,7 @@ const createOrder = async (req, res) => {
 
         const productData = await productModel
             .find({ _id: { $in: productIds }, isDeleted: false })
-            .select({ available_Quantity: 1 })
+            .select({ available_Quantity: 1,vendorId:1 }) 
             .lean();
         if (productData.length==0)
             return res.status(400).send({ status: false, message: "product not found" });
@@ -224,36 +225,57 @@ const createOrder = async (req, res) => {
             }
         }
 
+
         const orderData = {
             userId: userId,
             name: name,
             phone: phone,
             email: email,
             address: address,
-            items: cart.items,
+            //items: cart.items,
             totalPrice: cart.totalPrice,
             totalItems: cart.totalItems,
             totalQuantity: cart.totalQuantity,
             orderdedDate: orderdedDate,
             isFreeShipping: cart.isFreeShipping,
-            status: "pending",
         };
 
-        const orderCreated = await orderModel.create(orderData);
-       
+        const createOrder = await orderModel.create(orderData);
+
+        const orderId = createOrder["_id"] 
+
+
+        const orderedProducts = cart.items.map((product) => {
+          return { ...product, totalPrice: product.price * product.quantity,userId:userId ,orderId};
+        });
+
+        const orderedProductId = [];
+        for (let product of orderedProducts) {
+          let { _id } = await orderedProductModel.create(product);
+          orderedProductId.push({orderedProductId:_id});
+        }
+ 
+        const orderCreated = await orderModel
+          .findByIdAndUpdate(orderId, { items: orderedProductId }, { new: true })
+          .populate({
+            path: "items.orderedProductId",
+          })
+          .lean();
 
         await cartModel.findByIdAndUpdate(
-            cart["_id"],
+            cart["_id"], 
             { items: [], totalPrice: 0, totalItems: 0, totalQuantity: 0 },
             { new: true }
         );
+
         for (let cartItem of cart.items) {
             await productModel.findByIdAndUpdate(cartItem.productId, {
                 $inc: { available_Quantity: -cartItem.quantity },
             });
         }
+     
 
-        return res.status(201).send({ status: true, message: "Success", data: orderCreated });
+        return res.status(201).send({ status: true, message: "Success", data: {...orderData, items:orderedProducts} });
     } catch (error) {
         res.status(500).send({ status: false, message: error.message });
     }

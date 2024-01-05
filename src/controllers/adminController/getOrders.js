@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const orderedProductModel = require("../../models/orderedProductsModel")
 
 const orderModel = require("../../models/orderModel");
 const { isValidObjectId, isValidStatus } = require("../../utils/validators");
@@ -38,11 +39,28 @@ const getOrdersAdmin = async (req, res) => {
         const data = {};
         if (status) data.status = status;
 
-        let orderData = await orderModel
-            .find(data)
-            .sort({ orderdedDate: -1 })
-            .select({ deliveredDate: 1, items: 1, totalPrice: 1, status: 1, orderdedDate: 1,cancelledDate:1,deliveredDate:1 })
-            .lean();
+            // let orderData = await orderModel
+            //   .find(data)
+            //   .sort({ orderdedDate: -1 })
+            //   .populate({
+            //     path: "items.orderedProductId",
+            //     select:
+            //       "productId vendorId orderId quantity title price totalPrice productImage OrderStatus cancelledDate deliveredDate",
+            //   })
+            //   .select({ deliveredDate: 1, items: 1, totalPrice: 1, status: 1, orderdedDate: 1 })
+            //   .lean();
+            let orderData = await orderedProductModel
+      .find(data)
+      .populate({
+        path: "orderId",
+        select: "name phone email OrderStatus paymentStatus orderdedDate",
+      })
+      .sort({ createdAt: -1 })
+      .select({
+        isDeleted:0, deletedAt:0
+      })
+      .lean();
+
         if (orderData.length == 0)
             return res.status(404).send({ status: false, message: "orders Not Found" });
 
@@ -54,9 +72,8 @@ const getOrdersAdmin = async (req, res) => {
 
 const getOrderByIdAdmin = async (req, res) => {
     try {
-        let userId = req.params.userId;
+        const { userId, orderId } = req.params;
         const decodedToken = req.verifyed;
-        const orderId = req.params.orderId;
 
         if (!userId)
             return res.status(400).send({ status: false, message: "Please provide userId." });
@@ -78,11 +95,20 @@ const getOrderByIdAdmin = async (req, res) => {
         if (!checkAdmin)
             return res.status(403).send({ status: false, message: "please login again" });
 
-        let orderData = await orderModel
-            .findById(orderId)
-            .select({  deletedAt: 0, isDeleted: 0 })
-            .lean();
-        if (!orderData) return res.status(404).send({ status: false, message: "order Not Found" });
+    //    let orderData = await orderModel
+    //      .findOne({ _id: orderId, isDeleted: false })
+    //      .populate({
+    //        path: "items.orderedProductId",
+    //        select:
+    //          "productId vendorId orderId quantity title price totalPrice productImage OrderStatus",
+    //      })
+    //      .lean()
+    //      .select({ deletedAt: 0, isDeleted: 0 })
+    //      .lean();
+    let orderData = await orderedProductModel
+      .findById(orderId).populate({path:"orderId",select:"name email phone address orderdedDate"})
+      .select({ deletedAt: 0, isDeleted: 0 })
+      .lean();
 
         return res.status(200).send({ status: true, message: "success", data: orderData });
     } catch (error) {

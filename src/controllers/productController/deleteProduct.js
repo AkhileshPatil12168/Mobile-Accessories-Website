@@ -1,10 +1,27 @@
 const productModel = require("../../models/productModel");
+const vendorModel = require("../../models/vendorModel");
+
 const {  isValidObjectId,} = require("../../utils/validators");
 
 
 const deleteProduct = async function (req, res) {
     try {
-        let productId = req.params.productId
+        let { productId, userId } = req.params;
+
+    const decodedToken = req.verifyed;
+
+    if (!isValidObjectId(userId))
+      return res
+        .status(403)
+        .send({ status: false, message: "please login again" });
+    let isCorrectUser = await bcrypt.compare(userId, decodedToken.userId);
+
+    if (!isCorrectUser)
+      return res
+        .status(403)
+        .send({ status: false, message: "please login again" });
+
+
 
         if (!productId) return res.status(400).send({ status: false, message: "provide Product Id" })
 

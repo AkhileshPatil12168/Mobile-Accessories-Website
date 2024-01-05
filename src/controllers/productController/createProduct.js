@@ -1,18 +1,60 @@
+const bcrypt = require("bcrypt");
+
 const productModel = require("../../models/productModel");
+const vendorModel = require("../../models/vendorModel");
+const ratingModel = require("../../models/productRatingModel");
+
+
+
 const uploadFile = require("../Amazom S3 Bucket/bucketController");
 const {
   emptyBody,
   isValidString,
   validTrim,
   isValidImage,
+  isValidObjectId,
 } = require("../../utils/validators");
 
 const createProduct = async function (req, res) {
   try {
+    let userId = req.params.userId;
+    const decodedToken = req.verifyed;
+
+    if (!isValidObjectId(userId))
+      return res
+        .status(403)
+        .send({ status: false, message: "please login again" });
+    let isCorrectUser = await bcrypt.compare(userId, decodedToken.userId);
+
+    if (!isCorrectUser)
+      return res
+        .status(403)
+        .send({ status: false, message: "please login again" });
+
     if (emptyBody(req.body))
       return res
         .status(400)
         .send({ status: false, message: "provide some data" });
+
+    const checkVendor = await vendorModel
+      .findById(userId)
+      .select({ isSuspended: 1, isApproved: 1 })
+      .lean();
+    if (!checkVendor)
+      return res
+        .status(401)
+        .send({ status: false, message: "only vendors can add products" });
+    if (checkVendor.isSuspended)
+      return res
+        .status(401)
+        .send({
+          status: false,
+          message: "Your account is suspended. Plese connect the admin",
+        });
+    if (!checkVendor.isApproved)
+      return res
+        .status(401)
+        .send({ status: false, message: "Your are still not approved." });
     let data = req.body;
     let {
       title,
@@ -24,13 +66,13 @@ const createProduct = async function (req, res) {
       isFreeShipping,
       productImage,
     } = data;
-    let files = req.files;    
+    let files = req.files;
 
-    if (!title) 
+    if (!title)
       return res
         .status(400)
         .send({ status: false, message: "title must be present" });
-    if (!isValidString(title))   
+    if (!isValidString(title))
       return res
         .status(400)
         .send({ status: false, message: "title is in incorrect format" });
@@ -52,41 +94,25 @@ const createProduct = async function (req, res) {
         .send({ status: false, message: "description is in incorrect format" });
     description = validTrim(description);
 
-   
-    category = category.split(", ")  
+    category = category.split(","); 
 
     if (!category || category.length == 0)
       return res
         .status(400)
         .send({ status: false, message: "categorys are requried" });
-    for (let eachCategory of category) {
-      let final = validTrim(eachCategory);
-      if (final == "")
-        return res
-          .status(400)
-          .send({
-            status: false,
-            message: "empty category cannot be provided",
-          });
-    }
 
-    if (!compatible_models )
-    return res
-    .status(400)
-    .send({ status: false, message: "category is requried" });
+         category = category.map(value => value.trim()).filter(value =>value)
    
-    compatible_models = compatible_models.split(", ")
-    for (let eachModel of compatible_models) {
-      let final = validTrim(eachModel);
-      if (final == "")
-        return res
-          .status(400)
-          .send({
-            status: false,
-            message: "empty model name cannot be provided",
-          });
-    }
 
+    if (!compatible_models)
+      return res
+        .status(400)
+        .send({ status: false, message: "category is requried" });
+
+    compatible_models = compatible_models.split(","); 
+
+    compatible_models = compatible_models.map(value => value.trim()).filter(value =>value)
+  
     if (!price || price == 0)
       return res
         .status(400)
@@ -111,7 +137,7 @@ const createProduct = async function (req, res) {
       isFreeShipping = validTrim(isFreeShipping);
     }
 
-    if (!available_Quantity )
+    if (!available_Quantity)
       return res.status(400).send({
         status: false,
         message: "quantity is mandatory",
@@ -129,9 +155,7 @@ const createProduct = async function (req, res) {
         message: "should have at least one product",
       });
 
-    
-
-    if (files.length == 0)  
+    if (files.length == 0)
       return res
         .status(400)
         .send({ status: false, message: "provide a product image" });
@@ -140,12 +164,15 @@ const createProduct = async function (req, res) {
         .status(400)
         .send({ status: false, message: "provide a valid image" });
 
-    let productImagePromises =  await files.map(  (img) =>  uploadFile(img, "product/"));
-    productImage = await Promise.all(productImagePromises)
+    let productImagePromises = await files.map((img) =>
+      uploadFile(img, "product/")
+    );
+    productImage = await Promise.all(productImagePromises);
 
     //await uploadFile(files[0]);
 
-    const product = {   
+    const product = {
+      vendorId: userId,
       title: title,
       description: description,
       price: price,
@@ -158,12 +185,18 @@ const createProduct = async function (req, res) {
 
     const createdProduct = await productModel.create(product);
 
+    const productRating= await ratingModel.create({productId:createdProduct["_id"]})
+    
+    const UpdatedProduct = await productModel.findByIdAndUpdate(createdProduct["_id"],{$set:{
+      ratings:productRating["_id"]
+    }},{new:true})
+
     return res
       .status(201)
-      .send({ status: true, message: "Success", data: createdProduct });
+      .send({ status: true, message: "Product added successfully", data: UpdatedProduct });
   } catch (error) {
     return res.status(500).send({ status: false, message: error.message });
   }
-}; 
+};
 
 module.exports = createProduct;

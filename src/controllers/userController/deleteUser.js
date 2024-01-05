@@ -1,4 +1,6 @@
 const userModel = require("../../models/userModel");
+const roleModel = require("../../models/roleModel");
+
 const bcrypt = require("bcrypt");
 
 const { isValidObjectId, emptyBody } = require("../../utils/validators");
@@ -35,6 +37,11 @@ const deleteUser = async (req, res) => {
 
         let updateData = await userModel.findByIdAndUpdate(
             userId,
+            { isDeleted: true },
+            { new: true }
+        );
+        let updateRoleData = await roleModel.findOneAndUpdate(
+            {originalId:userId},
             { isDeleted: true },
             { new: true }
         );
