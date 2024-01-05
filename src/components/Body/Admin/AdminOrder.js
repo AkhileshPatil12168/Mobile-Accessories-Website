@@ -2,10 +2,9 @@ import Cookies from "universal-cookie";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import timeConverter from "../../util/timeConverter";
 
 const Items = (props) => {
-    const { productImage, title, quantity, price, index } = props;
+    const { productImage, title, quantity, price, index } = props.orderedProductId;
     const [bgColor, setBgColor] = useState("");
     useEffect(() => {
         if (index % 2 == 0) setBgColor("bg-gray-200");
@@ -31,105 +30,89 @@ const Items = (props) => {
         </div>
     );
 };
-const Order = () => {
+const AdminOrder = () => {
     const navigate = useNavigate();
     const cookies = new Cookies();
-    const cUserId = cookies.get("user");
+    const cAdminId = cookies.get("Admin");
     const { orderId } = useParams();
 
     console.log(orderId);
 
     const [order, setOrder] = useState({});
-    const [orderResponse, setOrderResponse] = useState();
-
+    const [updateResponse, setUpdateResponse] = useState("");
     const orderDetails = async () => {
         try {
             const response = await axios.get(
-                process.env.backendapi+`/user/${cUserId}/order/${orderId}`,
+                process.env.backendapi+`/admin/${cAdminId}/order/${orderId}`,
                 { withCredentials: true }
             );
-            setOrder(response.data.data);
-            console.log(response.data.data);
+            const order = response.data.data;
+            setOrder(order);
+            console.log(order);
         } catch (error) {
             console.log(error);
         }
     };
-
-    const cancelOrder = async () => {
+    const updateOrder = async (status) => {
         try {
             const response = await axios.put(
-                process.env.backendapi+`/user/${cUserId}/order/cancleorder/${orderId}`,
-                { cancle: true },
+                process.env.backendapi+`/admin/${cAdminId}/order/${orderId}`,
+                { status: status },
                 { withCredentials: true }
             );
 
             const updatedOrder = response.data.data;
-            const responseStatus = response.status;
+            const responseMessage = response.data.message;
             setOrder(updatedOrder);
-            setOrderResponse(responseStatus);
+            setUpdateResponse(responseMessage);
         } catch (error) {
             console.log(error);
         }
     };
-
-    const deleteOrder = async () => {
-        try {
-            const response = await axios.delete(
-                process.env.backendapi+`/user/${cUserId}/order/deleteorder/${orderId}`,
-                { withCredentials: true }
-            );
-
-            const updatedOrder = response.data.data;
-            const responseStatus = response.status;
-            setOrder(updatedOrder);
-            setOrderResponse(responseStatus);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    useEffect(() => {
-        if (orderResponse == 204) {
-            setOrderResponse(null);
-            navigate("/orders");
-        } else {
-            setOrderResponse(null);
-            orderDetails();
-        }
-    }, [orderResponse]);
 
     useEffect(() => {
         orderDetails();
-    }, []);
+    }, [updateResponse]);
 
-    return !cUserId ? (
+    // useEffect(() => {
+    //     orderDetails();
+    // }, []);
+    console.log(order.cancellable);
+
+    return !cAdminId ? (
         navigate("/login")
     ) : (
-        <div className="container  py-4 px-20">
-            <p className="text-2xl font-bold mb-4">Order Details</p>
+        <div className="container mx-auto p-4">
+            <h1 className="text-2xl font-bold mb-4">Order Details</h1>
 
             <div className="flex flex-wrap -mx-2">
-                <div className="w-full px-2 mb-4">
+                {/* <div className="w-full px-2 mb-4">
                     <div className="border border-gray-300 rounded p-4 overflow-auto">
                         <h2 className="text-lg font-bold mb-4">Items</h2>
                         <div className="border max-h-52	 border-gray-300 rounded p-4 overflow-auto">
                             {order?.items?.map((item, index) => (
-                                <Link to={"/product/" + item.productId}>
+                                <Link to={"/products/" + item.productId}>
                                     <Items {...{ ...item, index: index }} key={index} />
                                 </Link>
                             ))}
                         </div>
                     </div>
-                </div>
+                </div> */}
+                {(order?.productImage)? (
+                <img
+                  src={order?.productImage[0]}
+                  alt={`Product Image ${order?.productImage[0]}`}
+                ></img>
+              ) : (
+                <img></img>
+              )}
 
                 <div className="w-full  px-2 mb-4">
                     <div className="border border-gray-300 rounded p-4">
                         <h2 className="text-lg font-bold mb-4">Order Information</h2>
+                        
                         <p className="mb-2">
-                            <strong>Total Items:</strong> {order?.totalItems}
-                        </p>
-                        <p className="mb-2">
-                            <strong>Total Quantity:</strong> {order?.totalQuantity}
+                            <strong>Total Quantity:</strong> {order?.quantity}
                         </p>
                         <p className="mb-2">
                             <strong>Total Price:</strong> ₹{order?.totalPrice}
@@ -138,16 +121,13 @@ const Order = () => {
                             <strong>Free Shipping:</strong> {order?.isFreeShipping ? "Yes" : "No"}
                         </p>
                         <p className="mb-2">
-                            <strong>Ordered Date:</strong> {order?.orderdedDate?order?.orderdedDate?.slice(0, 10):""}
+                            <strong>Ordered Date:</strong> {order?.orderId?.orderdedDate}
                         </p>
                         <p className="mb-2">
-                            <strong>Ordered time:</strong> {order?.orderdedDate?timeConverter(order?.orderdedDate?.slice(11, 16)):""}
+                            <strong>Cancellable:</strong> {order.cancellable ? "Yes" : "No"}
                         </p>
                         <p className="mb-2">
-                            <strong>Cancellable:</strong> {order?.cancellable ? "Yes" : "No"}
-                        </p>
-                        <p className="mb-2">
-                            <strong>Status:</strong> {order?.status}
+                            <strong>Status:</strong> {order?.OrderStatus}
                         </p>
                     </div>
                 </div>
@@ -156,13 +136,13 @@ const Order = () => {
                     <div className="border border-gray-300 rounded p-4">
                         <h2 className="text-lg font-bold mb-4">Personal Information</h2>
                         <p className="mb-2">
-                            <strong>Name:</strong> {order?.name}
+                            <strong>Name:</strong> {order?.orderId?.name}
                         </p>
                         <p className="mb-2">
-                            <strong>Email:</strong> {order?.email}
+                            <strong>Email:</strong> {order?.orderId?.email}
                         </p>
                         <p className="mb-2">
-                            <strong>Phone Number:</strong> {order?.phone}
+                            <strong>Phone Number:</strong> {order?.orderId?.phone}
                         </p>
                     </div>
                 </div>
@@ -171,13 +151,13 @@ const Order = () => {
                     <div className="border border-gray-300 rounded p-4">
                         <h2 className="text-lg font-bold mb-4">Shipping Address</h2>
                         <p className="mb-2">
-                            <strong>Street:</strong> {order?.address?.shipping?.street}
+                            <strong>Street:</strong> {order?.orderId?.address?.shipping?.street}
                         </p>
                         <p className="mb-2">
-                            <strong>City:</strong> {order?.address?.shipping?.city}
+                            <strong>City:</strong> {order?.orderId?.address?.shipping?.city}
                         </p>
                         <p className="mb-2">
-                            <strong>Pincode:</strong> {order?.address?.shipping?.pincode}
+                            <strong>Pincode:</strong> {order?.orderId?.address?.shipping?.pincode}
                         </p>
                     </div>
                 </div>
@@ -186,36 +166,36 @@ const Order = () => {
                     <div className="border border-gray-300 rounded p-4">
                         <h2 className="text-lg font-bold mb-4">Billing Address</h2>
                         <p className="mb-2">
-                            <strong>Street:</strong> {order?.address?.billing?.street}
+                            <strong>Street:</strong> {order?.orderId?.address?.billing?.street}
                         </p>
                         <p className="mb-2">
-                            <strong>City:</strong> {order?.address?.billing?.city}
+                            <strong>City:</strong> {order?.orderId?.address?.billing?.city}
                         </p>
                         <p className="mb-2">
-                            <strong>Pincode:</strong> {order?.address?.billing?.pincode}
+                            <strong>Pincode:</strong> {order?.orderId?.address?.billing?.pincode}
                         </p>
                     </div>
                 </div>
             </div>
             <div className="flex justify-end ">
-                {order?.status != "pending" ? (
+                {order.OrderStatus == "pending" ? (
                     <div className="pr-2">
                         <button
-                            onClick={() => deleteOrder()}
-                            className="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-red-500"
+                            onClick={() => updateOrder("completed")}
+                            className="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-green-500"
                         >
-                            Delete Order
+                            Complete Order
                         </button>
                     </div>
                 ) : (
                     <></>
                 )}
 
-                {order?.cancellable && order?.status == "pending" ? (
+                {order.cancellable && order.OrderStatus == "pending" ? (
                     <div>
                         <button
-                            onClick={() => cancelOrder()}
-                            className="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-red-500"
+                            onClick={() => updateOrder("cancelled")}
+                            className="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-red-600 "
                         >
                             Cancel Order
                         </button>
@@ -227,4 +207,4 @@ const Order = () => {
         </div>
     );
 };
-export default Order;
+export default AdminOrder;

@@ -57,11 +57,9 @@ const ShimmerOrders = () => {
     return (
         <div className="px-20 ">
             <p className="text-center text-lg font-bold">orders</p>
-            <div className="animate-pulse">{Array(2)
-                    .fill("")
-                    .map((s) => (
+            <div className="animate-pulse">
                         <Order key={Math.random()} />
-                    ))}</div>
+        </div>
             
             
         </div>

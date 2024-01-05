@@ -6,7 +6,7 @@ import Cookies from "universal-cookie";
 const CreateOrder = () => {
     const cookies = new Cookies();
     const navigate = useNavigate();
-    const cUserId = cookies.get("user");
+    const cUserId = cookies.get("User");
 
     const [summery, setSummery] = useState({});
     const [userData, setUserData] = useState({});
@@ -147,7 +147,7 @@ const CreateOrder = () => {
 
     useEffect(() => {
         if (orderId) {
-            navigate(`/user/order/${orderId}`);
+            navigate(`/user/orders`);
         }
     }, [orderId]);
 
@@ -324,10 +324,16 @@ const CreateOrder = () => {
 
             <div className="flex justify-end mt-4">
                 <button
-                    onClick={createOrder}
-                    className="btn bg-blue-500 text-white px-4 py-2 rounded"
+                    onClick={()=>navigate("/cart")}
+                    className="btn bg-blue-500 text-white px-4 py-2 rounded mr-10 "
                 >
-                    Place Order
+                    back to cart
+                </button>
+                <button
+                    onClick={createOrder}
+                    className="btn bg-green-500 text-white px-4 py-2 rounded "
+                >
+                    proceed to payment  
                 </button>
             </div>
         </div>

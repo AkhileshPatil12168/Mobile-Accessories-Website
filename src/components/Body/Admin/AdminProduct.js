@@ -3,10 +3,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const CreateProduct = () => {
+const ProductAdmin = () => {
     const navigate = useNavigate();
     const cookies = new Cookies();
-    const cAdminId = cookies.get("admin");
+    const cAdminId = cookies.get("Admin");
 
     const [details, setDetails] = useState({
         title: "",
@@ -64,7 +64,8 @@ const CreateProduct = () => {
 
             let response = await axios.post(
                 process.env.backendapi+`/admin/${cAdminId}/create/product`,
-                formData,{withCredentials:true}
+                formData,
+                { withCredentials: true }
             );
             console.log(response);
             setRes(response.data.message);
@@ -243,4 +244,4 @@ const CreateProduct = () => {
     );
 };
 
-export default CreateProduct;
+export default ProductAdmin;
